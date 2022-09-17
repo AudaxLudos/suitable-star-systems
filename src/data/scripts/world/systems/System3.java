@@ -12,9 +12,11 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
+import data.campaign.procgen.themes.CustomThemeGenerator;
 import data.scripts.ASS_Utils;
 
 public class System3 {
@@ -33,12 +35,12 @@ public class System3 {
         PlanetAPI star = system.initStar("system3", "star_blue_supergiant", 1500f, 872f, 17f, 0.5f, 6f);
 
         // Create custom entities
-        float customAngle1 = random.nextFloat() * 360f;
+        float randomAngle1 = random.nextFloat() * 360f;
         SectorEntityToken coronalTap = system.addCustomEntity(null, null, "coronal_tap", "neutral");
-        coronalTap.setCircularOrbit(star, (customAngle1) % 360f, 2000f, 200f);
+        coronalTap.setCircularOrbit(star, (randomAngle1) % 360f, 2000f, 200f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
-        jumpPoint1.setCircularOrbit(star, (customAngle1 + 180f) % 360f, 2000f, 200f);
+        jumpPoint1.setCircularOrbit(star, (randomAngle1 + 180f) % 360f, 2000f, 200f);
         system.addEntity(jumpPoint1);
 
         // Add ring 1
@@ -90,16 +92,16 @@ public class System3 {
         planet4Market.addCondition("high_gravity");
 
         // Create custom entities
-        float customAngle2 = random.nextFloat() * 360f;
+        float randomAngle2 = random.nextFloat() * 360f;
         SectorEntityToken commRelay = system.addCustomEntity(null, null, "comm_relay", "neutral");
-        commRelay.setCircularOrbit(star, customAngle2, 8000f, 800f);
+        commRelay.setCircularOrbit(star, randomAngle2, 8000f, 800f);
         SectorEntityToken navBuoy = system.addCustomEntity(null, null, "nav_buoy", "neutral");
-        navBuoy.setCircularOrbit(star, (customAngle2 + 90f) % 360f, 8000f, 800f);
+        navBuoy.setCircularOrbit(star, (randomAngle2 + 90f) % 360f, 8000f, 800f);
         SectorEntityToken sensorArray = system.addCustomEntity(null, null, "sensor_array", "neutral");
-        sensorArray.setCircularOrbit(star, (customAngle2 + 180f) % 360f, 8000f, 800f);
+        sensorArray.setCircularOrbit(star, (randomAngle2 + 180f) % 360f, 8000f, 800f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
-        jumpPoint2.setCircularOrbit(star, (customAngle2 + 270f) % 360f, 8000f, 800f);
+        jumpPoint2.setCircularOrbit(star, (randomAngle2 + 270f) % 360f, 8000f, 800f);
         system.addEntity(jumpPoint2);
 
         // Add ring 2
@@ -115,5 +117,28 @@ public class System3 {
         float radius = system.getMaxRadiusInHyperspace();
         editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f);
         editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f, 0.25f);
+
+        // Generate custom entities
+        CustomThemeGenerator theme = new CustomThemeGenerator();
+        StarSystemData systemData = CustomThemeGenerator.computeSystemData(system);
+        theme.addResearchStations(systemData, 0.75f, 1, 1, theme.createStringPicker(new Object[] {
+            "station_research_remnant", Float.valueOf(10f) }));
+        theme.addMiningStations(systemData, 0.75f, 1, 2, theme.createStringPicker(new Object[] {
+            "station_mining_remnant", Float.valueOf(10f) }));
+        theme.addShipGraveyard(systemData, 0.75f, 1, 3, theme.createStringPicker(new Object[] {
+            "tritachyon", Float.valueOf(10f),
+            "hegemony", Float.valueOf(7f),
+            "independent", Float.valueOf(3f) }));
+        theme.addDerelictShips(systemData, 75f, 1, 7, theme.createStringPicker(new Object[] {
+            "tritachyon", Float.valueOf(10f),
+            "hegemony", Float.valueOf(7f),
+            "independent", Float.valueOf(3f) }));
+        theme.addCaches(systemData, 0.75f, 1, 3, theme.createStringPicker(new Object[] {
+            "weapons_cache_remnant", Float.valueOf(10f),
+            "weapons_cache_small_remnant", Float.valueOf(10f),
+            "supply_cache", Float.valueOf(10f),
+            "supply_cache_small", Float.valueOf(10f),
+            "equipment_cache", Float.valueOf(10f),
+            "equipment_cache_small", Float.valueOf(10f) }));
     }
 }

@@ -12,9 +12,11 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
+import data.campaign.procgen.themes.CustomThemeGenerator;
 import data.scripts.ASS_Utils;
 
 public class System1 {
@@ -33,14 +35,14 @@ public class System1 {
         PlanetAPI star = system.initStar("system1", "star_orange", 750f, 400f, 10f, 05f, 3f);
 
         // Create custom entities
-        float customAngle1 = random.nextFloat() * 360f;
+        float randomAngle1 = random.nextFloat() * 360f;
         SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation.setCircularOrbit(star, customAngle1, 2000f, 200f);
+        stableLocation.setCircularOrbit(star, randomAngle1, 2000f, 200f);
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "inactive_gate", "neutral");
-        inactiveGate.setCircularOrbit(star, (customAngle1 + 120f) % 360f, 2000f, 200f);
+        inactiveGate.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 2000f, 200f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
-        jumpPoint1.setCircularOrbit(star, (customAngle1 - 120f) % 360f, 2000f, 200f);
+        jumpPoint1.setCircularOrbit(star, (randomAngle1 - 120f) % 360f, 2000f, 200f);
         system.addEntity(jumpPoint1);
 
         // Create planet 1
@@ -89,14 +91,14 @@ public class System1 {
         planet4Market.addCondition("high_gravity");
 
         // Create custom entities
-        float customAngle2 = random.nextFloat() * 360f;
+        float randomAngle2 = random.nextFloat() * 360f;
         SectorEntityToken stableLocation2 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation2.setCircularOrbit(star, customAngle2, 8000f, 800f);
+        stableLocation2.setCircularOrbit(star, randomAngle2, 8000f, 800f);
         SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation3.setCircularOrbit(star, (customAngle2 + 120f) % 360f, 8000f, 800f);
+        stableLocation3.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 8000f, 800f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
-        jumpPoint2.setCircularOrbit(star, (customAngle2 - 120f) % 360f, 8000f, 800f);
+        jumpPoint2.setCircularOrbit(star, (randomAngle2 - 120f) % 360f, 8000f, 800f);
         system.addEntity(jumpPoint2);
 
         // Create asteroid belt 2
@@ -114,5 +116,28 @@ public class System1 {
         float radius = system.getMaxRadiusInHyperspace();
         editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f);
         editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f, 0.25f);
+
+        // Generate custom entities
+        CustomThemeGenerator theme = new CustomThemeGenerator();
+        StarSystemData systemData = CustomThemeGenerator.computeSystemData(system);
+        theme.addResearchStations(systemData, 0.25f, 1, 1, theme.createStringPicker(new Object[] {
+            "station_research_remnant", Float.valueOf(10f) }));
+        theme.addMiningStations(systemData, 0.25f, 1, 2, theme.createStringPicker(new Object[] {
+            "station_mining_remnant", Float.valueOf(10f) }));
+        theme.addShipGraveyard(systemData, 0.25f, 1, 1, theme.createStringPicker(new Object[] {
+            "tritachyon", Float.valueOf(10f),
+            "hegemony", Float.valueOf(7f),
+            "independent", Float.valueOf(3f) }));
+        theme.addDerelictShips(systemData, 0.25f, 1, 3, theme.createStringPicker(new Object[] {
+            "tritachyon", Float.valueOf(10f),
+            "hegemony", Float.valueOf(7f),
+            "independent", Float.valueOf(3f) }));
+        theme.addCaches(systemData, 0.25f, 1, 1, theme.createStringPicker(new Object[] {
+            "weapons_cache_remnant", Float.valueOf(10f),
+            "weapons_cache_small_remnant", Float.valueOf(10f),
+            "supply_cache", Float.valueOf(10f),
+            "supply_cache_small", Float.valueOf(10f),
+            "equipment_cache", Float.valueOf(10f),
+            "equipment_cache_small", Float.valueOf(10f) }));
     }
 }
