@@ -1,0 +1,12 @@
+{
+    "id": "ass",
+    "name": "Acceptable Star Systems",
+    "author": "Audax",
+    "version": {
+        "major": 0,
+        "minor": 0,
+        "patch": 1
+    },
+    "description": "Adds star systems that is good enough to colonize",
+    "gameVersion": "0.95.1a-RC6"
+}
