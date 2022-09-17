@@ -49,7 +49,7 @@ public class System2 {
         stableLocation.setCircularOrbit(star, entities1Angle, 3000f, 300f);
         SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, "stable_location", "neutral");
         stableLocation3.setCircularOrbit(star, (entities1Angle + 120f) % 360f, 3000f, 300f);
-        JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(systemName, "Inner System Jump-point");
+        JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
         jumpPoint1.setCircularOrbit(star, (entities1Angle - 120f) % 360f, 3000f, 300f);
         system.addEntity(jumpPoint1);
@@ -97,7 +97,7 @@ public class System2 {
         stableLocation2.setCircularOrbit(star, entities2Angle, 9000f, 900f);
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "derelict_cryosleeper", "neutral");
         inactiveGate.setCircularOrbit(star, (entities2Angle + 120f) % 360f, 9000f, 900f);
-        JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(systemName, "Fringe Jump-point");
+        JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
         jumpPoint2.setCircularOrbit(star, (entities2Angle - 120f) % 360f, 9000f, 900f);
         system.addEntity(jumpPoint2);

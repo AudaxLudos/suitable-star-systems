@@ -12,4 +12,9 @@
         "d:\\Starsector\\starsector-core\\xstream-1.4.10.jar",
         "d:\\Starsector\\starsector-core\\lwjgl_util.jar"
     ],
+    "java.project.exportJar.targetPath": "ASS.jar",
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    "[java]": {
+        "editor.detectIndentation": false
+    },
 }
