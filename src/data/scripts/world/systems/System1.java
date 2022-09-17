@@ -20,9 +20,9 @@ import data.scripts.ASS_Utils;
 public class System1 {
     public void generate(SectorAPI sector) {
         // Get character seed
-        Random random = StarSystemGenerator.random;
+        Random random = new Random(StarSystemGenerator.random.nextLong());
         // Get star system
-        StarSystemAPI system = sector.createStarSystem("system1");
+        StarSystemAPI system = sector.getStarSystem("system1");
 
         // Rename system with procedural name
         String systemName = ASS_Utils.generateProceduralName("star", null);

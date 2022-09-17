@@ -7,7 +7,7 @@ import data.scripts.world.ASS_Gen;
 
 public class ASS_ModPlugin extends BaseModPlugin {
     @Override
-    public void onNewGame() {
+    public void onNewGameAfterEconomyLoad() {
         new ASS_Gen().generate(Global.getSector());
     }
 }
