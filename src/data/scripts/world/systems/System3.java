@@ -22,7 +22,7 @@ public class System3 {
         // Get character seed
         Random random = StarSystemGenerator.random;
         // Get star system
-        StarSystemAPI system = sector.createStarSystem("system2");
+        StarSystemAPI system = sector.createStarSystem("system3");
 
         // Rename system with procedural name
         String systemName = ASS_Utils.generateProceduralName("star", null);
@@ -30,7 +30,7 @@ public class System3 {
         // system.setName(systemName);
 
         // Create star for system
-        PlanetAPI star = system.initStar("systemC", "star_blue_supergiant", 1500f, 872f, 17f, 0.5f, 6f);
+        PlanetAPI star = system.initStar("system3", "star_blue_supergiant", 1500f, 872f, 17f, 0.5f, 6f);
 
         // Create custom entities
         float entities1Angle = random.nextFloat() * 360f;

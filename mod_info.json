@@ -8,5 +8,9 @@
         "patch": 1
     },
     "description": "Adds star systems that is good enough to colonize",
-    "gameVersion": "0.95.1a-RC6"
+    "gameVersion": "0.95.1a-RC6",
+    "jars": [
+        "ASS.jar"
+    ],
+    "modPlugin":"data.scripts.ASS_ModPlugin"
 }
