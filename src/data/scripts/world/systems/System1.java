@@ -1,9 +1,13 @@
 package data.scripts.world.systems;
 
+import java.awt.Color;
 import java.util.Random;
 
+import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.JumpPointAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorAPI;
+import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
@@ -20,8 +24,24 @@ public class System1 {
         // Get star system
         StarSystemAPI system = sector.createStarSystem("system1");
 
+        // Rename system with procedural name
+        String systemName = ASS_Utils.generateProceduralName("star", null);
+        // system.setBaseName(systemName);
+        // system.setName(systemName);
+
         // Create star for system
         PlanetAPI star = system.initStar("system1", "star_orange", 750f, 400f, 10f, 05f, 3f);
+
+        // Create custom entities
+        float entities1Angle = random.nextFloat() * 360f;
+        SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
+        stableLocation.setCircularOrbit(star, entities1Angle, 2000f, 200f);
+        SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "inactive_gate", "neutral");
+        inactiveGate.setCircularOrbit(star, (entities1Angle + 120f) % 360f, 2000f, 200f);
+        JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
+        jumpPoint1.setStandardWormholeToHyperspaceVisual();
+        jumpPoint1.setCircularOrbit(star, (entities1Angle - 120f) % 360f, 2000f, 200f);
+        system.addEntity(jumpPoint1);
 
         // Create planet 1
         String planet1Name = ASS_Utils.generateProceduralName("planet", star.getName());
@@ -45,6 +65,11 @@ public class System1 {
         planet2Market.addCondition("habitable");
         planet2Market.addCondition("hot");
 
+        // Create asteroid belt 2
+        String ring1Name = ASS_Utils.generateProceduralName("asteroid_belt", star.getName());
+        system.addAsteroidBelt(star, 128, 5000f, 256f, 500f, 500f, "asteroid_belt", ring1Name);
+        system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 5000f, 500f);
+
         // Create planet 3
         String planet3Name = ASS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet3 = system.addPlanet(planet3Name.toLowerCase(), star, planet3Name, "barren-desert", random.nextFloat() * 360f, 90f, 6000f, 600f);
@@ -62,6 +87,22 @@ public class System1 {
         MarketAPI planet4Market = planet4.getMarket();
         planet4Market.addCondition("volatiles_diffuse");
         planet4Market.addCondition("high_gravity");
+
+        // Create custom entities
+        float entities2Angle = random.nextFloat() * 360f;
+        SectorEntityToken stableLocation2 = system.addCustomEntity(null, null, "stable_location", "neutral");
+        stableLocation2.setCircularOrbit(star, entities2Angle, 8000f, 800f);
+        SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, "stable_location", "neutral");
+        stableLocation3.setCircularOrbit(star, (entities2Angle + 120f) % 360f, 8000f, 800f);
+        JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
+        jumpPoint2.setStandardWormholeToHyperspaceVisual();
+        jumpPoint2.setCircularOrbit(star, (entities2Angle - 120f) % 360f, 8000f, 800f);
+        system.addEntity(jumpPoint2);
+
+        // Create asteroid belt 2
+        String ring2Name = ASS_Utils.generateProceduralName("asteroid_belt", star.getName());
+        system.addAsteroidBelt(star, 64, 9000f, 256f, 900f, 900f, "asteroid_belt", ring2Name);
+        system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 9000f, 900f);
 
         // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);
