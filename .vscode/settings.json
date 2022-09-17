@@ -1,0 +1,15 @@
+{
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.7",
+            "path": "C:\\Program Files\\Java\\jdk1.7.0_80",
+            "default": true
+        }
+    ],
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "d:\\Starsector\\starsector-core\\starfarer.api.jar",
+        "d:\\Starsector\\starsector-core\\xstream-1.4.10.jar",
+        "d:\\Starsector\\starsector-core\\lwjgl_util.jar"
+    ],
+}
