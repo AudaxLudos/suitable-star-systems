@@ -11,6 +11,8 @@ import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
+import data.scripts.ASS_Utils;
+
 public class System1 {
     public void generate(SectorAPI sector) {
         // Get character seed
@@ -22,7 +24,7 @@ public class System1 {
         PlanetAPI star = system.initStar("system1", "star_orange", 750f, 400f, 10f, 05f, 3f);
 
         // Create planet 1
-        String planet1Name = "Planet1";
+        String planet1Name = ASS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_castiron", random.nextFloat() * 360f, 90f, 3000f, 300f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
@@ -32,7 +34,7 @@ public class System1 {
         planet1Market.addCondition("hot");
 
         // Create planet 2
-        String planet2Name = "Planet2";
+        String planet2Name = ASS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet2 = system.addPlanet(planet2Name.toLowerCase(), star, planet2Name, "arid", random.nextFloat() * 360f, 130f, 4000f, 400f);
         Misc.initConditionMarket(planet2);
         MarketAPI planet2Market = planet2.getMarket();
@@ -44,7 +46,7 @@ public class System1 {
         planet2Market.addCondition("hot");
 
         // Create planet 3
-        String planet3Name = "Planet3";
+        String planet3Name = ASS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet3 = system.addPlanet(planet3Name.toLowerCase(), star, planet3Name, "barren-desert", random.nextFloat() * 360f, 90f, 6000f, 600f);
         Misc.initConditionMarket(planet3);
         MarketAPI planet3Market = planet3.getMarket();
@@ -54,7 +56,7 @@ public class System1 {
         planet3Market.addCondition("thin_atmosphere");
 
         // Create planet 4
-        String planet4Name = "Planet4";
+        String planet4Name = ASS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), star, planet4Name, "gas_giant", random.nextFloat() * 360f, 250f, 7000f, 700f);
         Misc.initConditionMarket(planet4);
         MarketAPI planet4Market = planet4.getMarket();
