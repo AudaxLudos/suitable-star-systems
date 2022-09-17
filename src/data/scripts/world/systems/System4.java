@@ -3,7 +3,9 @@ package data.scripts.world.systems;
 import java.awt.Color;
 import java.util.Random;
 
+import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.LocationAPI;
 import com.fs.starfarer.api.campaign.NascentGravityWellAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
@@ -19,12 +21,13 @@ import com.fs.starfarer.api.impl.campaign.terrain.StarCoronaTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
 import data.campaign.procgen.themes.CustomThemeGenerator;
+import data.campaign.procgen.themes.OmegaStationFleetManager;
 import data.scripts.ASS_Utils;
 
 public class System4 {
     public void generate(SectorAPI sector) {
         // Get character seed
-        Random random = new Random(StarSystemGenerator.random.nextLong());
+        Random random = StarSystemGenerator.random;
         // Get star system
         StarSystemAPI system = sector.getStarSystem("system4");
 
@@ -136,6 +139,21 @@ public class System4 {
             "supply_cache_small", Float.valueOf(10f),
             "equipment_cache", Float.valueOf(10f),
             "equipment_cache_small", Float.valueOf(10f) }));
+        // Add omega station 1 that spawns omega fleets
+        float station1Radius = planet1.getRadius() + 150f;
+        CampaignFleetAPI station1 = ASS_Utils.addAIBattlestation(planet1, true, station1Radius, station1Radius / 10f);
+        OmegaStationFleetManager station1Fleets = new OmegaStationFleetManager((SectorEntityToken)station1, 1f, 0, 4, 15f);
+        system.addScript((EveryFrameScript)station1Fleets);
+        // Add omega station 2 that spawns omega fleets
+        float station2Radius = planet2.getRadius() + 150f;
+        CampaignFleetAPI station2 = ASS_Utils.addAIBattlestation(planet2, true, station2Radius, station2Radius / 10f);
+        OmegaStationFleetManager station2Fleets = new OmegaStationFleetManager((SectorEntityToken)station2, 1f, 0, 4, 15f);
+        system.addScript((EveryFrameScript)station2Fleets);
+        // Add omega station 1 that spawns omega fleets
+        float station3Radius = planet3.getRadius() + 150f;
+        CampaignFleetAPI station3 = ASS_Utils.addAIBattlestation(planet3, true, station3Radius, station3Radius / 10f);
+        OmegaStationFleetManager station3Fleets = new OmegaStationFleetManager((SectorEntityToken)station3, 1f, 0, 4, 15f);
+        system.addScript((EveryFrameScript)station3Fleets);
 
         // Remove star after entity generation
         system.removeEntity((SectorEntityToken)tempStar);

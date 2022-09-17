@@ -3,6 +3,7 @@ package data.scripts.world.systems;
 import java.awt.Color;
 import java.util.Random;
 
+import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.JumpPointAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
@@ -12,7 +13,10 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.RemnantSystemType;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
@@ -22,7 +26,7 @@ import data.scripts.ASS_Utils;
 public class System1 {
     public void generate(SectorAPI sector) {
         // Get character seed
-        Random random = new Random(StarSystemGenerator.random.nextLong());
+        Random random = StarSystemGenerator.random;
         // Get star system
         StarSystemAPI system = sector.getStarSystem("system1");
 
@@ -139,5 +143,9 @@ public class System1 {
             "supply_cache_small", Float.valueOf(10f),
             "equipment_cache", Float.valueOf(10f),
             "equipment_cache_small", Float.valueOf(10f) }));
+        RemnantThemeGenerator.addBeacon(system, RemnantSystemType.DESTROYED);
+        // Add dormant or active remnant fleets
+        RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 4, 8, 4, 8, 0.25f);
+        system.addScript((EveryFrameScript)remnantFleets);
     }
 }

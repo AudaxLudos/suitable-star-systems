@@ -21,7 +21,7 @@ import data.scripts.world.systems.System4;
 public class ASS_Gen implements SectorGeneratorPlugin {
     @Override
     public void generate(SectorAPI sector) {
-        Random random = new Random(StarSystemGenerator.random.nextLong());
+        Random random = StarSystemGenerator.random;
         List<StarSystemAPI> systems = sector.getStarSystems();
         List<Constellation> constellations = new ArrayList<Constellation>();
         for (StarSystemAPI system : systems) {

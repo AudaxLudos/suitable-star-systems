@@ -3,7 +3,9 @@ package data.scripts.world.systems;
 import java.awt.Color;
 import java.util.Random;
 
+import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.JumpPointAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorAPI;
@@ -12,7 +14,11 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantStationFleetManager;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.RemnantSystemType;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
@@ -22,7 +28,7 @@ import data.scripts.ASS_Utils;
 public class System3 {
     public void generate(SectorAPI sector) {
         // Get character seed
-        Random random = new Random(StarSystemGenerator.random.nextLong());
+        Random random = StarSystemGenerator.random;
         // Get star system
         StarSystemAPI system = sector.getStarSystem("system3");
 
@@ -140,5 +146,19 @@ public class System3 {
             "supply_cache_small", Float.valueOf(10f),
             "equipment_cache", Float.valueOf(10f),
             "equipment_cache_small", Float.valueOf(10f) }));
+        RemnantThemeGenerator.addBeacon(system, RemnantSystemType.RESURGENT);
+        // Add dormant or active remnant fleets
+        RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 8, 16, 16, 32, 0.75f);
+        system.addScript((EveryFrameScript)remnantFleets);
+        // Add remnant station 1 that spawns remnant fleets
+        float station1Radius = planet2.getRadius() + 150f;
+        CampaignFleetAPI station1 = ASS_Utils.addAIBattlestation(planet2, false, station1Radius, station1Radius / 10f);
+        RemnantStationFleetManager station1Fleets = new RemnantStationFleetManager((SectorEntityToken)station1, 1f, 0, 8, 15f, 16, 32);
+        system.addScript((EveryFrameScript)station1Fleets);
+        // Add remnant station 2 that spawns remnant fleets
+        float station2Radius = planet3.getRadius() + 150f;
+        CampaignFleetAPI station2 = ASS_Utils.addAIBattlestation(planet3, false, station2Radius, station2Radius / 10f);
+        RemnantStationFleetManager station2Fleets = new RemnantStationFleetManager((SectorEntityToken)station2, 1f, 0, 8, 15f, 16, 32);
+        system.addScript((EveryFrameScript)station2Fleets);
     }
 }
