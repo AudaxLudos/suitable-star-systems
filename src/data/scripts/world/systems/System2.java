@@ -67,9 +67,9 @@ public class System2 {
         planet2Market.addCondition("mild_climate");
         planet2Market.addCondition("hot");
 
-        // Create asteroid belt 2
-        String ring2Name = ASS_Utils.generateProceduralName("asteroid_belt", star.getName());
-        system.addAsteroidBelt(star, 64, 5000f, 256f, 500f, 500f, "asteroid_belt", ring2Name);
+        // Create asteroid belt 1
+        String ring1Name = ASS_Utils.generateProceduralName("asteroid_belt", star.getName());
+        system.addAsteroidBelt(star, 64, 5000f, 256f, 500f, 500f, "asteroid_belt", ring1Name);
         system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 5000f, 500f);
 
         // Create planet 3
