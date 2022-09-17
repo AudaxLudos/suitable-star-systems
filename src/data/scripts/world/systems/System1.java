@@ -33,14 +33,14 @@ public class System1 {
         PlanetAPI star = system.initStar("system1", "star_orange", 750f, 400f, 10f, 05f, 3f);
 
         // Create custom entities
-        float entities1Angle = random.nextFloat() * 360f;
+        float customAngle1 = random.nextFloat() * 360f;
         SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation.setCircularOrbit(star, entities1Angle, 2000f, 200f);
+        stableLocation.setCircularOrbit(star, customAngle1, 2000f, 200f);
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "inactive_gate", "neutral");
-        inactiveGate.setCircularOrbit(star, (entities1Angle + 120f) % 360f, 2000f, 200f);
+        inactiveGate.setCircularOrbit(star, (customAngle1 + 120f) % 360f, 2000f, 200f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
-        jumpPoint1.setCircularOrbit(star, (entities1Angle - 120f) % 360f, 2000f, 200f);
+        jumpPoint1.setCircularOrbit(star, (customAngle1 - 120f) % 360f, 2000f, 200f);
         system.addEntity(jumpPoint1);
 
         // Create planet 1
@@ -89,14 +89,14 @@ public class System1 {
         planet4Market.addCondition("high_gravity");
 
         // Create custom entities
-        float entities2Angle = random.nextFloat() * 360f;
+        float customAngle2 = random.nextFloat() * 360f;
         SectorEntityToken stableLocation2 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation2.setCircularOrbit(star, entities2Angle, 8000f, 800f);
+        stableLocation2.setCircularOrbit(star, customAngle2, 8000f, 800f);
         SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation3.setCircularOrbit(star, (entities2Angle + 120f) % 360f, 8000f, 800f);
+        stableLocation3.setCircularOrbit(star, (customAngle2 + 120f) % 360f, 8000f, 800f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
-        jumpPoint2.setCircularOrbit(star, (entities2Angle - 120f) % 360f, 8000f, 800f);
+        jumpPoint2.setCircularOrbit(star, (customAngle2 - 120f) % 360f, 8000f, 800f);
         system.addEntity(jumpPoint2);
 
         // Create asteroid belt 2

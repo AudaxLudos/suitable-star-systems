@@ -44,14 +44,14 @@ public class System2 {
         planet1Market.addCondition("very_hot");
 
         // Create custom entities
-        float entities1Angle = random.nextFloat() * 360f;
+        float customAngle1 = random.nextFloat() * 360f;
         SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation.setCircularOrbit(star, entities1Angle, 3000f, 300f);
+        stableLocation.setCircularOrbit(star, customAngle1, 3000f, 300f);
         SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation3.setCircularOrbit(star, (entities1Angle + 120f) % 360f, 3000f, 300f);
+        stableLocation3.setCircularOrbit(star, (customAngle1 + 120f) % 360f, 3000f, 300f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
-        jumpPoint1.setCircularOrbit(star, (entities1Angle - 120f) % 360f, 3000f, 300f);
+        jumpPoint1.setCircularOrbit(star, (customAngle1 - 120f) % 360f, 3000f, 300f);
         system.addEntity(jumpPoint1);
 
         // Create planet 2
@@ -92,14 +92,14 @@ public class System2 {
         planet4Market.addCondition("toxic_atmosphere");
 
         // Create custom entities
-        float entities2Angle = random.nextFloat() * 360f;
+        float customAngle2 = random.nextFloat() * 360f;
         SectorEntityToken stableLocation2 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation2.setCircularOrbit(star, entities2Angle, 9000f, 900f);
+        stableLocation2.setCircularOrbit(star, customAngle2, 9000f, 900f);
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "derelict_cryosleeper", "neutral");
-        inactiveGate.setCircularOrbit(star, (entities2Angle + 120f) % 360f, 9000f, 900f);
+        inactiveGate.setCircularOrbit(star, (customAngle2 + 120f) % 360f, 9000f, 900f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
-        jumpPoint2.setCircularOrbit(star, (entities2Angle - 120f) % 360f, 9000f, 900f);
+        jumpPoint2.setCircularOrbit(star, (customAngle2 - 120f) % 360f, 9000f, 900f);
         system.addEntity(jumpPoint2);
 
         // Auto generate jump points

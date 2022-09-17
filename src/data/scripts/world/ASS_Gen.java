@@ -16,6 +16,7 @@ import com.fs.starfarer.api.util.Misc;
 import data.scripts.world.systems.System1;
 import data.scripts.world.systems.System2;
 import data.scripts.world.systems.System3;
+import data.scripts.world.systems.System4;
 
 public class ASS_Gen implements SectorGeneratorPlugin {
     @Override
@@ -28,7 +29,7 @@ public class ASS_Gen implements SectorGeneratorPlugin {
                 constellations.add(system.getConstellation());
         }
 
-        // Randomly put systems into different constellations
+        // Randomly put system 1 into a random constellation
         StarSystemAPI system1 = sector.createStarSystem("system1");
         Constellation constellation1 = getNearestConstellation(new Vector2f(-6000f, -6000f), constellations);
         Vector2f location1 = findLocationInConstellation(constellation1, random);
@@ -38,7 +39,7 @@ public class ASS_Gen implements SectorGeneratorPlugin {
         system1.getLocation().set(location1);
         new System1().generate(sector);
 
-        // Randomly put systems into different constellations
+        // Randomly put system 2 into a random constellation
         StarSystemAPI system2 = sector.createStarSystem("system2");
         Constellation constellation2 = getNearestConstellation(constellation1.getLocation(), constellations);
         Vector2f location2 = findLocationInConstellation(constellation2, random);
@@ -48,7 +49,7 @@ public class ASS_Gen implements SectorGeneratorPlugin {
         system2.getLocation().set(location2);
         new System2().generate(sector);
 
-        // Randomly put systems into different constellations
+        // Randomly put system 3 into a random constellation
         StarSystemAPI system3 = sector.createStarSystem("system3");
         Constellation constellation3 = getNearestConstellation(constellation1.getLocation(), constellations);
         Vector2f location3 = findLocationInConstellation(constellation3, random);
@@ -57,6 +58,16 @@ public class ASS_Gen implements SectorGeneratorPlugin {
         system3.setConstellation(constellation3);
         system3.getLocation().set(location3);
         new System3().generate(sector);
+
+        // Randomly put system 4 into a random constellation
+        StarSystemAPI system4 = sector.createStarSystem("system4");
+        Constellation constellation4 = getNearestConstellation(constellation1.getLocation(), constellations);
+        Vector2f location4 = findLocationInConstellation(constellation4, random);
+        constellations.remove(constellation4);
+        constellation4.getSystems().add(system4);
+        system4.setConstellation(constellation4);
+        system4.getLocation().set(location4);
+        new System4().generate(sector);
     }
 
     public Vector2f findLocationInConstellation(Constellation constellation, Random random) {
