@@ -170,5 +170,6 @@ public class System4 {
         well.setColorOverride(new Color(125, 50, 255));
         hyper.addEntity((SectorEntityToken)well);
         well.autoUpdateHyperLocationBasedOnInSystemEntityAtRadius((SectorEntityToken)systemCenter, 0f);
+        Global.getSector().getMemoryWithoutUpdate().set("$ttBlackSite_well", well);
     }
 }
