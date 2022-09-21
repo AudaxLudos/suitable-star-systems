@@ -1,0 +1,16 @@
+id,trigger,conditions,script,text,options,notes
+# INTERNAL AFFAIRS,,,,,,
+ASS_Q1P1_BlurbBar,ASS_Q1P1_blurbBar,,,"A Tri-Tachyon executive sits alone at a table, quietly drinking wine and looking displeased about whatever's on their Tri-Pad.",,
+ASS_Q1P1_OptionBar,ASS_Q1P1_optionBar,,,,ASS_Q1P1_startBar:See what the wine-drinking executive is annoyed about,
+ASS_Q1P1_OfferTextBar,DialogOptionSelected,$option == ASS_Q1P1_startBar,$missionId = ASS_Q1P1,Survey a planet for me.,"contact_acceptBar:Accept
+contact_declineBarNoContinue:Decline",
+ASS_Q1P1_PlanetInteraction,DialogOptionSelected,"$ASS_Q1P1_targetPlanet score:1000
+Call $global.ASS_Q1P1_ref updateData
+$option == surveyPerform
+!$global.ASS_Q1P1_dataFound","$global.ASS_Q1P1_dataFound = true
+$global.ASS_Q1P1_returnHere = true
+Call $global.ASS_Q1P1_ref updateStage",Data retrieved,,
+ASS_Q1P1_ReturnToPerson,PickGreeting,"$ASS_Q1P1_returnHere score:1000
+Call $global.ASS_Q1P1_ref updateData","ShowPersonVisual
+$global.ASS_Q1P1_completed = true
+Call $global.ASS_Q1P1_ref updateStage",Thank you for the data. Here is for your troubles.,,
