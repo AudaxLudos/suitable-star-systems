@@ -65,7 +65,7 @@ public class ASS_Utils {
             TexAndIndex tex = getTextureAndIndex();
             float orbitDays = middleRadius / (30f + 10f * random.nextFloat());
             RingBandAPI visual = (RingBandAPI)focus.getStarSystem().addRingBand((SectorEntityToken)focus, "misc", tex.tex, 256f,
-                    tex.index, Color.WHITE, bandWidth, middleRadius + bandWidth / 2f, -orbitDays);
+                tex.index, Color.WHITE, bandWidth, middleRadius + bandWidth / 2f, -orbitDays);
             float spiralFactor = 2f + random.nextFloat() * 5f;
             visual.setSpiral(true);
             visual.setMinSpiralRadius(0f);
@@ -75,8 +75,8 @@ public class ASS_Utils {
 
         List<SectorEntityToken> rings = new ArrayList<SectorEntityToken>();
         SectorEntityToken ring = focus.getStarSystem().addTerrain("ring",
-                new BaseRingTerrain.RingParams(finalRadius, finalRadius / 2f,
-                        (SectorEntityToken)focus, null));
+            new BaseRingTerrain.RingParams(finalRadius, finalRadius / 2f,
+                (SectorEntityToken)focus, null));
         ring.addTag("accretion_disk");
         if (((CampaignTerrainAPI)ring).getPlugin() instanceof RingSystemTerrainPlugin)
             ((RingSystemTerrainPlugin)((CampaignTerrainAPI)ring).getPlugin()).setNameForTooltip("Accretion Disk");
@@ -85,20 +85,20 @@ public class ASS_Utils {
     }
 
     public static void createMagneticField(SectorEntityToken focus, float bandWidthInEngine, float middleRadius, float innerRadius, float outerRadius,
-            float auroraFreqency) {
+        float auroraFreqency) {
         Random random = StarSystemGenerator.random;
         int baseIndex = (int)(MagFieldGenPlugin.baseColors.length * random.nextDouble());
         int auroraIndex = (int)(MagFieldGenPlugin.auroraColors.length * random.nextDouble());
         SectorEntityToken magneticField = focus.getStarSystem().addTerrain("magnetic_field",
-                new MagneticFieldTerrainPlugin.MagneticFieldParams(
-                        bandWidthInEngine,
-                        middleRadius,
-                        focus,
-                        innerRadius,
-                        outerRadius,
-                        MagFieldGenPlugin.baseColors[baseIndex],
-                        auroraFreqency,
-                        MagFieldGenPlugin.auroraColors[auroraIndex]));
+            new MagneticFieldTerrainPlugin.MagneticFieldParams(
+                bandWidthInEngine,
+                middleRadius,
+                focus,
+                innerRadius,
+                outerRadius,
+                MagFieldGenPlugin.baseColors[baseIndex],
+                auroraFreqency,
+                MagFieldGenPlugin.auroraColors[auroraIndex]));
         magneticField.setCircularOrbit(focus, 0f, 0f, 0f);
     }
 
