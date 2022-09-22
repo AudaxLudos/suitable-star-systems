@@ -87,15 +87,20 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
 
         setCreditReward(CreditReward.HIGH);
 
-        // Create a fleet based on trigger and current stage
-        beginInRangeOfEntityTrigger(planet, 500f, Stage.RETURN_TO_PERSON);
+        // Create ship graveyard during survey planet stage
+        beginStageTrigger(Stage.SURVEY_PLANET);
+        triggerSpawnShipGraveyard(Factions.INDEPENDENT, 8, 16, new LocData(planet, false));
+        endTrigger();
+
+        // Create a fleet near entity after completing survey planet
+        beginStageTrigger(Stage.RETURN_TO_PERSON);
         triggerCreateFleet(FleetSize.MAXIMUM, FleetQuality.SMOD_3, Factions.REMNANTS, FleetTypes.INSPECTION_FLEET, planet);
         triggerSetFleetOfficers(OfficerNum.ALL_SHIPS, OfficerQuality.AI_ALPHA);
         triggerAutoAdjustFleetStrengthExtreme();
         triggerFleetAllowLongPursuit();
         triggerSetFleetAlwaysPursue();
         triggerFleetNoJump();
-        triggerPickLocationAroundEntity(planet, 250f);
+        triggerPickLocationAroundEntity(planet, 100f);
         triggerSpawnFleetAtPickedLocation();
         triggerOrderFleetInterceptPlayer();
         endTrigger();
@@ -104,10 +109,11 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
     }
 
     protected void updateInteractionDataImpl() {
-        set("$ASS_Q1P1_dist", getDistanceLY(system));
+        set("$ASS_Q1P1_distance", getDistanceLY(system));
         set("$ASS_Q1P1_systemName", system.getNameWithLowercaseTypeShort());
         set("$ASS_Q1P1_planetName", planet.getFullName());
         set("$ASS_Q1P1_reward", Misc.getWithDGS(getCreditsReward()));
+        set("$ASS_Q1P1_minorReward", Misc.getWithDGS(20000));
     }
 
     @Override
