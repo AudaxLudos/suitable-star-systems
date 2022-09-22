@@ -9,6 +9,7 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.ids.Voices;
@@ -30,16 +31,17 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
     protected PersonAPI person;
 
     public boolean shouldShowAtMarket(MarketAPI market) {
-        return market.getFactionId().equals(Factions.TRITACHYON);
+        return market.getFactionId().equals(Factions.INDEPENDENT);
     }
 
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
+        // Create or find a quest giver
         if (barEvent) {
-            setGiverRank(Ranks.AGENT);
+            setGiverRank(Ranks.CITIZEN);
             setGiverPost(Ranks.POST_EXECUTIVE);
             setGiverImportance(PersonImportance.HIGH);
-            setGiverFaction(Factions.TRITACHYON);
+            setGiverFaction(Factions.INDEPENDENT);
             setGiverTags(Tags.CONTACT_MILITARY);
             setGiverVoice(Voices.BUSINESS);
             findOrCreateGiver(createdAt, true, false);
@@ -55,16 +57,14 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
         if (!setGlobalReference("$ASS_Q1P1_ref"))
             return false;
 
-        if (barEvent)
-            setGiverIsPotentialContactOnSuccess(1f);
-
+        // Find and pick a planet to use for quest
         requireSystemTags(ReqMode.ANY, new String[] { Tags.THEME_REMNANT, Tags.THEME_REMNANT_MAIN, Tags.THEME_REMNANT_RESURGENT });
         requireSystemTags(ReqMode.NOT_ANY, new String[] { Tags.THEME_REMNANT_NO_FLEETS, Tags.THEME_REMNANT_SECONDARY, Tags.THEME_REMNANT_SUPPRESSED });
         preferSystemUnexplored();
         requirePlanetNotStar();
         requirePlanetNotGasGiant();
-        requirePlanetNotFullySurveyed();
         requirePlanetWithRuins();
+        preferPlanetNotFullySurveyed();
 
         planet = pickPlanet();
         if (planet == null)
@@ -72,25 +72,42 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
 
         system = planet.getStarSystem();
 
+        // set up starting and end stages
         setStartingStage(Stage.SURVEY_PLANET);
         addSuccessStages(Stage.COMPLETED);
         setNoAbandon();
 
+        // Make this locations important
         makeImportant(planet, "$ASS_Q1P1_targetPlanet", Stage.SURVEY_PLANET);
         makeImportant(person, "$ASS_Q1P1_returnHere", Stage.RETURN_TO_PERSON);
 
+        // Flags that can be use to enter the next stage
         connectWithGlobalFlag(Stage.SURVEY_PLANET, Stage.RETURN_TO_PERSON, "$ASS_Q1P1_returnHere");
         setStageOnGlobalFlag(Stage.COMPLETED, "$ASS_Q1P1_completed");
 
-        setCreditReward(CreditReward.VERY_HIGH);
+        setCreditReward(CreditReward.HIGH);
+
+        // Create a fleet based on trigger and current stage
+        beginInRangeOfEntityTrigger(planet, 500f, Stage.RETURN_TO_PERSON);
+        triggerCreateFleet(FleetSize.MAXIMUM, FleetQuality.SMOD_3, Factions.REMNANTS, FleetTypes.INSPECTION_FLEET, planet);
+        triggerSetFleetOfficers(OfficerNum.ALL_SHIPS, OfficerQuality.AI_ALPHA);
+        triggerAutoAdjustFleetStrengthExtreme();
+        triggerFleetAllowLongPursuit();
+        triggerSetFleetAlwaysPursue();
+        triggerFleetNoJump();
+        triggerPickLocationAroundEntity(planet, 250f);
+        triggerSpawnFleetAtPickedLocation();
+        triggerOrderFleetInterceptPlayer();
+        endTrigger();
 
         return true;
     }
 
     protected void updateInteractionDataImpl() {
-        set("$ASS_Q1P1_reward", Misc.getWithDGS(getCreditsReward()));
-        set("$ASS_Q1P1_systemName", system.getNameWithLowercaseTypeShort());
         set("$ASS_Q1P1_dist", getDistanceLY(system));
+        set("$ASS_Q1P1_systemName", system.getNameWithLowercaseTypeShort());
+        set("$ASS_Q1P1_planetName", planet.getFullName());
+        set("$ASS_Q1P1_reward", Misc.getWithDGS(getCreditsReward()));
     }
 
     @Override
@@ -129,6 +146,6 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
 
     @Override
     public String getBaseName() {
-        return "ASS: Survey planet";
+        return "ASS: System Investigation";
     }
 }
