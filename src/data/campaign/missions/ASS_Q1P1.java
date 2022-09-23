@@ -89,20 +89,21 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
 
         // Create ship graveyard during survey planet stage
         beginStageTrigger(Stage.SURVEY_PLANET);
-        triggerSpawnShipGraveyard(Factions.INDEPENDENT, 8, 16, new LocData(planet, false));
+        triggerSpawnShipGraveyard(Factions.INDEPENDENT, 16, 32, new LocData(planet, false));
         endTrigger();
 
         // Create a fleet near entity after completing survey planet
         beginStageTrigger(Stage.RETURN_TO_PERSON);
-        triggerCreateFleet(FleetSize.MAXIMUM, FleetQuality.SMOD_3, Factions.REMNANTS, FleetTypes.INSPECTION_FLEET, planet);
+        triggerCreateFleet(FleetSize.MAXIMUM, FleetQuality.SMOD_3, Factions.REMNANTS, FleetTypes.PATROL_LARGE, planet);
         triggerSetFleetOfficers(OfficerNum.ALL_SHIPS, OfficerQuality.AI_ALPHA);
         triggerAutoAdjustFleetStrengthExtreme();
+        triggerMakeHostileAndAggressive();
         triggerFleetAllowLongPursuit();
         triggerSetFleetAlwaysPursue();
-        triggerFleetNoJump();
-        triggerPickLocationAroundEntity(planet, 100f);
+        triggerPickLocationAroundPlayer(1000f);
         triggerSpawnFleetAtPickedLocation();
         triggerOrderFleetInterceptPlayer();
+        triggerOrderFleetEBurn(1f);
         endTrigger();
 
         return true;
@@ -113,7 +114,6 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
         set("$ASS_Q1P1_systemName", system.getNameWithLowercaseTypeShort());
         set("$ASS_Q1P1_planetName", planet.getFullName());
         set("$ASS_Q1P1_reward", Misc.getWithDGS(getCreditsReward()));
-        set("$ASS_Q1P1_minorReward", Misc.getWithDGS(20000));
     }
 
     @Override
@@ -121,9 +121,9 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
         float opad = 10f;
         // Color h = Misc.getHighlightColor();
         if (currentStage == Stage.SURVEY_PLANET) {
-            info.addPara("Go to the " + system.getNameWithLowercaseTypeShort() + " system then find the planet and survey it.", opad);
+            info.addPara("Go to the " + system.getNameWithLowercaseTypeShort() + " and investigate the planet " + planet.getName() + ".", opad);
         } else if (currentStage == Stage.RETURN_TO_PERSON) {
-            info.addPara("Return to ~Quest Giver~ at ~System~ and give the data to them", opad);
+            info.addPara("Return to " + person.getName().getFullName() + " at the " + system.getNameWithLowercaseTypeShort() + " and tell " + person.getHimOrHer() + " about what you found", opad);
         }
     }
 
@@ -131,10 +131,10 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
     public boolean addNextStepText(TooltipMakerAPI info, Color tc, float pad) {
         // Color h = Misc.getHighlightColor();
         if (currentStage == Stage.SURVEY_PLANET) {
-            info.addPara("Survey the planet " + planet.getFullName(), tc, pad);
+            info.addPara("Investigate the " + system.getNameWithLowercaseTypeShort(), tc, pad);
             return true;
         } else if (currentStage == Stage.RETURN_TO_PERSON) {
-            info.addPara("Return the data to ~Quest Giver~", tc, pad);
+            info.addPara("Return to " + person.getName().getFullName(), tc, pad);
             return true;
         }
         return false;

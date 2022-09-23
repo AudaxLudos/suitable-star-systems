@@ -2,17 +2,18 @@ id,trigger,conditions,script,text,options,notes
 "#RULESET_NAME ASS",,,,,,
 ,,,,,,
 # ASS Q1 P1,,,,,,
-ASS_Q1P1_BlurbBar,ASS_Q1P1_blurbBar,,,"A business$manOrWoman sits alone at a table, annoyed about what's on their Tri-Pad. After a while $heOrShe starts scanning the bar looking for someone, up until $heOrShe sees you.",,
-ASS_Q1P1_OptionBar,ASS_Q1P1_optionBar,,,,"ASS_Q1P1_barText1:See what the business$manOrWoman wants from you",
-ASS_Q1P1_BarText1,DialogOptionSelected,"$option == ASS_Q1P1_barText1","$missionId = ASS_Q1P1","As you take a sit next to the business$manOrWoman $heOrShe starts talking and says ""I am glad you can take a hint captain, I am $personName an $personPost for this planet. As for you captain..."" $heOrShe pauses, lifts the Tri-Pad in $hisOrHer hand and continues, ""I already know who you are, so let's skip the introductions"".
+ASS_Q1P1_BlurbBar,ASS_Q1P1_blurbBar,,,"A $manOrWoman sits alone at a table, annoyed about what's on their Tri-Pad. After a while $heOrShe starts scanning the bar looking for someone, up until $heOrShe sees you.",,
+ASS_Q1P1_OptionBar,ASS_Q1P1_optionBar,,,,"ASS_Q1P1_barText1:See what the $manOrWoman wants from you",
+ASS_Q1P1_BarText1,DialogOptionSelected,"$option == ASS_Q1P1_barText1","$missionId = ASS_Q1P1","As you take a sit next to the $manOrWoman $heOrShe starts talking and says ""I am glad you can take a hint Captain, I am $personName an $personPost for this planet. As for you captain..."" $heOrShe pauses, lifts the Tri-Pad in $hisOrHer hand and continues, ""I already know who you are, so let's skip the introductions"".
 
-""The reason why I called you here is because of an ""accident"", because of it my position has been weakened. I need a third-party to ""fix"" things, but doing so affects your reputation with others. Are you still willing to do this knowing the risks?""","ASS_Q1P1_barText2:Of course
+""The reason why I called you here is because of an ""accident"", because of it my position has been weakened. I need a third-party to ""fix"" things, but doing so may affect your reputation with others. Are you still willing to do this knowing the risks?""","ASS_Q1P1_barText2:Of course
 contact_declineBarNoContinue:Let me think about it",
-ASS_Q1P1_BarText2,DialogOptionSelected,"$option == ASS_Q1P1_barText2","SetTextHighlights $ASS_Q1P1_planetName $ASS_Q1P1_systemName $ASS_Q1P1_distance $ASS_Q1P1_reward","After accepting the conditions, $personName slides $hisOrHer Tri-Pad towards you. It displays preliminary data of two fleets.
+ASS_Q1P1_BarText2,DialogOptionSelected,"$option == ASS_Q1P1_barText2","SetTextHighlights $ASS_Q1P1_distance $ASS_Q1P1_systemName $ASS_Q1P1_planetName $ASS_Q1P1_reward
+Call $ASS_Q1P1_ref showMap ""Target: $ASS_Q1P1_systemName""","After accepting the conditions, $personName slides $hisOrHer Tri-Pad towards you. It displays preliminary data of a fleet.
 
 $heOrShe leans over and grumbles ""Due to that ""accident"" an officer from the hegemony visited me asking about preliminary data of my fleets, I ignored there demands, but after a while my position started getting pressured; more inspections, higher trade tariffs, you know the deal.""
 
-$heOrShe then continues ""I need you to go to the last known location of my expedition and investigation fleets they where near a planet called $ASS_Q1P1_planetName in the $ASS_Q1P1_systemName $ASS_Q1P1_distance lightyears away. Find out what happened to my fleets and I will award you with $ASS_Q1P1_reward credits.""
+$heOrShe then continues ""I need you to go to the last known location of my expedition fleet they where $ASS_Q1P1_distance lightyears away in the $ASS_Q1P1_systemName near a planet called $ASS_Q1P1_planetName. Find out what happened to my fleets and I will award you with $ASS_Q1P1_reward credits.""
 
 He then adds ""And maybe, get answers to why these officers are here.""","contact_acceptBar:Understood",
 ASS_Q1P1_SurveyText1,DialogOptionSelected,"$ASS_Q1P1_targetPlanet score:1000
@@ -20,28 +21,31 @@ Call $global.ASS_Q1P1_ref updateData
 $option == surveyPerform
 !$global.ASS_Q1P1_clueFound","$global.ASS_Q1P1_clueFound = true","While doing a preliminary scan your sensors officer signals you ""Captain, the fleets sent out by $personName crashed here or was destroyed in orbit. they seem to be looking for something but scans haven't revealed anything yet. I'll continue scanning and signal you if anything comes up.""
 
-After a while the officer signals you ""Captain, an anomaly appeared but the location is unknown, doing an in-depth scan returns no additional information. I would recommend doing a full planetary survey and sending out an exploration team to look for it""",,
+After a while the sensors officer signals you ""Captain, an anomaly appeared I've done an in-depth scan but no additional information is being returned. Doing a full planetary survey may reveal its location allowing us to send an exploration team to look for it""",,
 ASS_Q1P1_ExploreText1,DialogOptionSelected,"$option == salExplore
 !$global.ASS_Q1P1_dataCacheFound","$global.ASS_Q1P1_dataCacheFound = true
 $global.ASS_Q1P1_returnHere = true
 Call $global.ASS_Q1P1_ref updateStage","After finding the exact location of the anomaly, you send out an exploration team to go to it. 
 
-After a while an exploration officer contacts you ""Captain, we found the anomaly, it is some sort of data cache but most of the data within are encrypted and we don't have the specialize personnel to decrypt them.""
+After a while an exploration officer contacts you ""Captain, we found the anomaly, it is some sort of data cache but most of the data within are encrypted and we don't have the specialize equipment or personnel to decrypt them.""
 
-he pauses then continues ""At this point we can continue on with the exploration or return with the data cache and finish the mission""","salExplore:Continue the expedition
+he pauses then continues ""At this point we can continue on with the exploration or return with the data cache to finish the mission""","salExplore:Continue the expedition
 defaultLeave:Return with the data cache",
 ASS_Q1P1_ReturnText1,PickGreeting,"$ASS_Q1P1_returnHere score:1000
-Call $global.ASS_Q1P1_ref updateData",,"You contact $personName but before you can say anything $heOrShe then tells you to go to $HisOrHer office to talk in private.
+Call $global.ASS_Q1P1_ref updateData","ShowPersonVisual","You contact $personName but before you can say anything $heOrShe tells you to go to $HisOrHer office to talk in private.
 
-As soon as you arrive he welcomes you ""Captain, I am glad you made it back, it has been difficult after you left. Inspections are stricter and gathering information has been harder. But it seems that you didn't leave empty handed, what did you find?""
+As soon as you arrive, he welcomes you ""Captain, I am glad you made it back, it has been difficult after you left. Inspections are stricter and gathering information has been harder. But it seems that you didn't leave empty handed, what did you find?""
 
 ","ASS_Q1P1_returnText2:Tell $himOrHer about the [REDACTED] fleet
 ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
-ASS_Q1P1_ReturnText2,DialogOptionSelected,"$option == ASS_Q1P1_returnText2","AddCredits 20000
-Highlight $ASS_Q1P1_minorReward","""I see, I already knew about them, but didn't expect my fleets to cross with such a foe. Thank you, with this I can explain to there families what truly happened."" 
-
-deep in thought he continues ""I have troubled you, here $ASS_Q1P1_minorReward credits I hope you did not lose much meeting them.""","ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
+ASS_Q1P1_ReturnText2,DialogOptionSelected,"$option == ASS_Q1P1_returnText2",,"""I see, I already knew about them, but didn't expect my fleets to cross with such a foe. Thank you, with this I can explain to there families what truly happened."" ","ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
 ASS_Q1P1_ReturnText3,DialogOptionSelected,"$option == ASS_Q1P1_returnText3","$global.ASS_Q1P1_completed = true
-Call $global.ASS_Q1P1_ref updateStage","""I have the specialize equipment and personnel to decrypt the data cache, but it would take a while to do so, especially when all these hegemony officers are around. I will contact you once its done""","defaultLeave:Return with the data cache",
+Call $global.ASS_Q1P1_ref updateStage","""Looks like we found the reason why the hegemony are here"" he says, while intrigued
+
+""I can decrypt the data cache but its too risky especially when hegemony officers are prowling around.""
+
+$heOrShe then gives you a choice ""I can decrypt the data cache but it would take a while, or you can find someone else decrypt the data cache. Just make sure to comeback to me, I want to know what other secrets the hegemony are hiding.""","ASS_Q1P1_leave:Give $himOrHer the data cache
+ASS_Q1P1_leave:Find someone else to decrypt the data cache",
+ASS_Q1P1_LeaveText1,DialogOptionSelected,"$option == ASS_Q1P1_leave","DismissDialog",,,
 "#END ASS Q1 P1",,,,,,
 
