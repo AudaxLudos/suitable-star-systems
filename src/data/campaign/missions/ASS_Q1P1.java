@@ -31,7 +31,10 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
     protected PersonAPI person;
 
     public boolean shouldShowAtMarket(MarketAPI market) {
-        return market.getFactionId().equals(Factions.INDEPENDENT);
+        return (market.getStarSystem().getId().equals("Corvus") ||
+            market.getStarSystem().getId().equals("Arcadia") ||
+            market.getStarSystem().getId().equals("Samarra")) &&
+            market.getFactionId().equals(Factions.INDEPENDENT);
     }
 
     @Override
