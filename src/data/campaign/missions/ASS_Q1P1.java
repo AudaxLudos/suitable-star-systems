@@ -2,6 +2,7 @@ package data.campaign.missions;
 
 import java.awt.Color;
 
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.PersonImportance;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
@@ -31,9 +32,9 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
     protected PersonAPI person;
 
     public boolean shouldShowAtMarket(MarketAPI market) {
-        return (market.getStarSystem().getId().equals("Corvus") ||
-            market.getStarSystem().getId().equals("Arcadia") ||
-            market.getStarSystem().getId().equals("Samarra")) &&
+        return (market.getStarSystem().getId().equals("corvus") ||
+            market.getStarSystem().getId().equals("arcadia") ||
+            market.getStarSystem().getId().equals("samarra")) &&
             market.getFactionId().equals(Factions.INDEPENDENT);
     }
 
@@ -53,6 +54,8 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
         person = getPerson();
         if (person == null)
             return false;
+
+        Global.getSector().getMemoryWithoutUpdate().set("$ASS_Q1P1_person", person);
 
         if (!setPersonMissionRef(person, "$ASS_Q1P1_ref"))
             return false;
@@ -114,8 +117,8 @@ public class ASS_Q1P1 extends HubMissionWithBarEvent {
 
     protected void updateInteractionDataImpl() {
         set("$ASS_Q1P1_distance", getDistanceLY(system));
-        set("$ASS_Q1P1_systemName", system.getNameWithLowercaseTypeShort());
-        set("$ASS_Q1P1_planetName", planet.getFullName());
+        set("$ASS_Q1P1_system", system.getNameWithLowercaseTypeShort());
+        set("$ASS_Q1P1_planet", planet.getFullName());
         set("$ASS_Q1P1_reward", Misc.getWithDGS(getCreditsReward()));
     }
 

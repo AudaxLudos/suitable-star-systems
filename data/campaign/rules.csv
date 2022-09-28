@@ -23,16 +23,17 @@ Call $global.ASS_Q1P1_ref updateStage","You send out an exploration team to find
 ASS_Q1P1_ReturnText1,PickGreeting,"$ASS_Q1P1_returnHere score:1000
 Call $global.ASS_Q1P1_ref updateData","ShowPersonVisual","You contact $personName but before you can say anything $heOrShe tells you to go to $HisOrHer office to talk in private.
 
-As soon as you arrive, $personName welcomes you ""Captain, I am glad you made it back, it has been difficult, COMSEC is forcing there way in, it won't be long before they get what they want. I hope that you have found some useful information for me, what did you find?""","ASS_Q1P1_returnText2:Tell $himOrHer about the [REDACTED] fleet
+As soon as you arrive, $personName welcomes you ""Captain, you made it back, it has been difficult, COMSEC is forcing there way in, it won't be long before they get what they want. I hope that you have found some useful information for me.""","ASS_Q1P1_returnText2:Tell $himOrHer about the [REDACTED] fleet
 ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
-ASS_Q1P1_ReturnText2,DialogOptionSelected,"$option == ASS_Q1P1_returnText2",,"""I see, I already knew about them, but didn't expect my fleets to cross with such a foe. Thank you, with this I can explain to there families what truly happened."" ","ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
+ASS_Q1P1_ReturnText2,DialogOptionSelected,"$option == ASS_Q1P1_returnText2",,"""So the rumors were real,"" $heOrShe pondered, ""thank you captain, I can at least tell the people that the expedition fleet died valiantly against a stronger foe. But this can't be it, these rumors have existed within the core worlds for some time surely theirs more?""","ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
 ASS_Q1P1_ReturnText3,DialogOptionSelected,"$option == ASS_Q1P1_returnText3","$global.ASS_Q1P1_completed = true
-Call $global.ASS_Q1P1_ref updateStage","Bewildered $heOrShe says, ""So that is the reason why COMSEC are here,"" after pondering $heOrShe continues, ""I am sorry Captain but I can't decrypt the data core, its too risky, especially when COMSEC officers are here. There might be someone within the Galatia Academy or Tri-Tachyon to decrypt the data core. Just make sure to return to me, I wanna know what secrets the hegemony are hiding to the point where they would pressure me.""","defaultLeave:Find someone to decrypt the data cache",
+Call $global.ASS_Q1P1_ref updateStage
+$player.ASS_Q1P1 = true","Bewildered $heOrShe says, ""So that is the reason why COMSEC are here,"" after pondering $heOrShe continues, ""I am sorry Captain but I can't decrypt the data core, its too risky, especially when COMSEC officers are here. There might be someone within the Galatia Academy or Tri-Tachyon to decrypt the data core. Just make sure to return to me, I wanna know what secrets the hegemony are hiding to the point where they would pressure me.""","defaultLeave:Find someone to decrypt the data cache",
 "#END ASS Q1 P1",,,,,,
 ,,,,,,
 # ASS Q1 P2,,,,,,
 ASS_Q1P2_BlurbBar,ASS_Q1P2_blurbBar,,,"You see a $manOrWoman surrounded by Tri-Pads, $heOrShe looks proficient with technology but $heOrShe seems to be disgruntled, saying ""no"" everytime $heOrShe interacts with one of $hisOrHer Tri-Pads.",,
-ASS_Q1P2_OptionBar,ASS_Q1P2_optionBar,,,,"ASS_Q1P2_barText1:See if $heOrShe is interested in decrypting [REDACTED] data",
+ASS_Q1P2_OptionBar,ASS_Q1P2_optionBar,"$player.ASS_Q1P1 == true",,,"ASS_Q1P2_barText1:See if $heOrShe is interested in decrypting [REDACTED] data",
 ASS_Q1P2_BarText1_1,DialogOptionSelected,"$option == ASS_Q1P2_barText1
 $player.credits >= $ASS_Q1P2_askingPrice","$missionId = ASS_Q1P2
 SetTextHighlights $ASS_Q1P2_askingPrice","The moment you mention that word $heOrShe stops whatever $heOrShe was doing and says, ""It's gonna cost you, the hegemony and even the Tri-Tachyon are sensitive about that information, even worse if COMSEC is involved,"" she ponders then says, ""$ASS_Q1P2_askingPrice credits thats my asking price, it may look expensive but holding information regarding that is dangerous. Do we have a deal?""","ASS_Q1P2_barText2_1:Pay her $ASS_Q1P2_askingPrice credits
@@ -43,26 +44,36 @@ contact_declineBarNoContinue:Let me think about it",
 ASS_Q1P2_BarText2_1,DialogOptionSelected,"$option == ASS_Q1P2_barText2_1","SubCredits $ASS_Q1P2_askingPrice","You tell $himOrHer to follow you, after a while you introduce $himOrHer to the data core.
 
 ""This is quite the discovery, It's different to the [REDACTED] I've encountered. This will take a while, give me a month to decrypt and consolidate the data. I will signal you when to comeback.""","contact_acceptBarNoText:Understood",
-ASS_Q1P2_BarText2_2,DialogOptionSelected,"$option == ASS_Q1P2_barText2_2",,"""Look, I am interested in what your offering, but I won't ask for anything lower. As I've said the risk involved are dangerous, I need a guarantee. Come back when you can accept my initial conditions."" ","defaultLeave:Leave",
-ASS_Q1P2_CommText1,PickGreeting,"$ASS_Q1P2_goBackTo score:1000
+ASS_Q1P2_BarText2_2,DialogOptionSelected,"$option == ASS_Q1P2_barText2_2",,"""Look, I am interested in what your offering, but I won't ask for anything lower. As I've said the risk involved are dangerous, I need a guarantee. Come back when you can accept my initial conditions."" ","contact_declineBarNoContinue:Leave",
+ASS_Q1P2_CommText1,PickGreeting,"$ASS_Q1P2_getDataFrom score:1000
 Call $global.ASS_Q1P2_ref updateData","ShowPersonVisual","You contact the $personPost and tell $himOrHer to meet you at your ship. You then ask $himOrHer what they have uncovered.
 
 ""It's great to see you captain, the data core you gave me was damaged, the data I decrypted is fragmented, but I was able to consolidate some information. The data shows a hidden fleet at a system, its job was surveillance and protection. I don't know what they were observing or defending but I do know that the ships within are mostly REMNANT, but there was a ship that I did not understand, the only clue that I uncovered was the word,"" $heOrShe emphasizes, ""OMEGA.""","ASS_Q1P2_commText2:Grab the data and report back to the executive",
 ASS_Q1P2_CommText2,DialogOptionSelected,"$option == ASS_Q1P2_commText2","$global.ASS_Q1P2_reportHere = true
 Call $global.ASS_Q1P2_ref updateStage","Before you could leave $personName contacts you, ""Captain, I don't know what you are involved in, but I do want to participate. If you ever want something decrypted, researched, or experimented my comms are open.""","defaultLeave:I will think about it",
-ASS_Q1P2_FleetEncounter,BeginFleetEncounter,"$ASS_Q1P2_reportTo score: 1000
+ASS_Q1P2_FleetEncounter,BeginFleetEncounter,"$ASS_Q1P2_reportToFleet score:1000
 Call $global.ASS_Q1P2_ref updateData","FleetDesc
 HailPlayer",,,
-ASS_Q1P2_FleetText1,OpenCommLink,"$entity.ASS_Q1P2_reportTo score: 1000
-Call $global.ASS_Q1P2_ref updateData","$global.ASS_Q1P2_reportHere = true
-Call $global.ASS_Q1P2_ref updateStage","Captain our boss captured free her","defaultLeave:Ok",
-ASS_Q1P2_MarketOpen,OpenInteractionDialog,"$ASS_Q1P2_reportFleet score: 1000
-Call $global.ASS_Q1P2_ref updateData
-!$ASS_Q1P2_addedRaidObjective","AddRaidObjective genericIcon ""Conduct jailbreak operation"" $ASS_Q1P2_danger 3000 ASS_Q1P2_MarketRaidDone
-$ASS_Q1P2_addedRaidObjective = true
+ASS_Q1P2_FleetText1,OpenCommLink,"$entity.ASS_Q1P2_reportToFleet score:1000
+Call $global.ASS_Q1P2_ref updateData",,"As you accept the comm request the captain of the fleet speaks out to you, ""Captain! ~Q1 Person~ has been taken by COMSEC, the mounting pressure was too much and our ~Q1 Person Post~ got indicted for conspiracy.""","ASS_Q1P2_fleetText2:Ask why ~Q1 Person~ did not escape
+ASS_Q1P2_fleetText3:Ask where is ~Q1 person~ taken
+",
+ASS_Q1P2_FleetText2,DialogOptionSelected,"$option == ASS_Q1P2_fleetText2",,"""We already had plans, but COMSEC was far ahead of us before we could enact any of it... It was too late.""","ASS_Q1P2_fleetText3:Ask where is ~Q1 person~ taken",
+ASS_Q1P2_FleetText3,DialogOptionSelected,"$option == ASS_Q1P2_fleetText3","$global.ASS_Q1P2_freeHere = true
+Call $global.ASS_Q1P2_ref updateStage","""From what I've gathered they took ~Q1 Person~ to ~Planet name~ around ~System distance~ lightyears away in the ~System name~. We could only gather this much, we don't know what you'd need to free ~Q1 Person~.""","cutCommLink:Understood",
+ASS_Q1P2_MarketOpen,OpenInteractionDialog,"$market.ASS_Q1P2_freePersonFrom score:1000
+Call $market.ASS_Q1P2_ref updateData
+!$ASS_Q1P2_addedRaidObjective","AddRaidObjective genericIcon ""Conduct jailbreak operation"" EXTREME 3000 ASS_Q1P2_RaidDone
+$ASS_Q1P2_addedRaidObjective = true 0
 FireBest OpenInteractionDialog",,,
-ASS_Q1P2_MarketRaidDone,ASS_Q1P2_MarketRaidDone,,"$ASS_Q1P2_freeHere = true
-Call $market.jabr_ref updateStage","test",,
+ASS_Q1P2_MarketRaidDone,ASS_Q1P2_RaidDone,"Call $market.ASS_Q1P2_ref updateData",,"A weak disheveled $manOrWoman looks at you, ""I thought you would never arrive,"" $heOrShe pauses, ""thank you, Captain.""","ASS_Q1P2_raidDoneText1:Ask $himOrHer what happened
+ASS_Q1P2_raidDoneText2:Ask $himOrHer where to go",
+ASS_Q1P2_RaidDoneText1,DialogOptionSelected,"$option == ASS_Q1P2_raidDoneText1",,"$heOrShe musters the strength to speak, ""A close official whose family was part of the expedition fleet, betrayed me. I knew it could happen, I should've been faster.""","ASS_Q1P2_raidDoneText2:Ask $himOrHer where to go",
+ASS_Q1P2_RaidDoneText2,DialogOptionSelected,"$option == ASS_Q1P2_raidDoneText2","$global.ASS_Q1P2_marketHere = true
+Call $global.ASS_Q1P2_ref updateStage","""Donn in Hybrasil,"" she says, before fainting.","defaultLeave:Understood",
+ASS_Q1P2_NewMarketText1,OpenInteractionDialog,"$market.ASS_Q1P2_personTo score:2000","ShowDefaultVisual
+$global.ASS_Q1P2_remnantHere = true
+Call $global.ASS_Q1P2_ref updateStage","Thank you captain continue what you was doing baby","defaultLeave:Understood",
 ASS_Q1P2_RemnantDefeated,ASS_Q1P2_RemnantDefeated,,"Call $global.ASS_Q1P2_ref remnantDefeated",,,
 ASS_Q1P2_CacheText1,PopulateSalvageOptions1,"$ASS_Q1P2_cache score:1000
 Call $global.ASS_Q1P2_ref updateData","$global.ASS_Q1P2_returnHere = true
@@ -73,4 +84,8 @@ $global.ASS_Q1P2_completed = true
 Call $global.ASS_Q1P2_ref updateStage","Noice noice","ASS_Q1P2_leave:Done",
 ASS_Q1P2_LeaveText1,DialogOptionSelected,"$option == ASS_Q1P2_leave","DismissDialog",,,
 "#END ASS Q1 P2",,,,,,
+,,,,,,
+# ASS Q1 P3,,,,,,
+NEW RULE,,,,,,
+"#END ASS Q1 P3",,,,,,
 
