@@ -20,7 +20,7 @@ import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
-public class ASS_Q1P1 extends HubMissionWithBarEvent {
+public class UGPhase1 extends HubMissionWithBarEvent {
     public static enum Stage {
         SURVEY_PLANET,
         RETURN_TO_PERSON,

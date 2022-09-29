@@ -1,16 +1,16 @@
 {
-    "id": "ass",
-    "name": "Acceptable Star Systems",
+    "id": "ug",
+    "name": "Unknown Genesis",
     "author": "Audax",
     "version": {
         "major": 0,
         "minor": 0,
         "patch": 1
     },
-    "description": "Adds star systems that is good enough to colonize",
+    "description": "Adds 3 star systems with varying difficulty to fully colonize and a quest that leads to a [SUPERREDACTED] system",
     "gameVersion": "0.95.1a-RC6",
     "jars": [
-        "ASS.jar"
+        "UG.jar"
     ],
-    "modPlugin":"data.scripts.ASS_ModPlugin"
+    "modPlugin": "data.scripts.UG_ModPlugin"
 }

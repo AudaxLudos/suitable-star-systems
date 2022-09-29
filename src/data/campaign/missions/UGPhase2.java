@@ -26,7 +26,7 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.MarketCMD;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
-public class ASS_Q1P2 extends HubMissionWithBarEvent {
+public class UGPhase2 extends HubMissionWithBarEvent {
     public static enum Stage {
         WAIT,
         GET_DATA,

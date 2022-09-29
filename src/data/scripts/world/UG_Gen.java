@@ -18,7 +18,7 @@ import data.scripts.world.systems.System2;
 import data.scripts.world.systems.System3;
 import data.scripts.world.systems.System4;
 
-public class ASS_Gen implements SectorGeneratorPlugin {
+public class UG_Gen implements SectorGeneratorPlugin {
     @Override
     public void generate(SectorAPI sector) {
         Random random = StarSystemGenerator.random;

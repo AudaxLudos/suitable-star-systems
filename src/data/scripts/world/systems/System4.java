@@ -22,7 +22,7 @@ import com.fs.starfarer.api.util.Misc;
 
 import data.campaign.procgen.themes.CustomThemeGenerator;
 import data.campaign.procgen.themes.OmegaStationFleetManager;
-import data.scripts.ASS_Utils;
+import data.scripts.UG_Utils;
 
 public class System4 {
     public void generate(SectorAPI sector) {
@@ -32,7 +32,7 @@ public class System4 {
         StarSystemAPI system = sector.getStarSystem("system4");
 
         // Rename system with procedural name
-        String systemName = ASS_Utils.generateProceduralName("star", null);
+        String systemName = UG_Utils.generateProceduralName("star", null);
         // system.setBaseName(systemName);
         // system.setName(systemName);
 
@@ -53,7 +53,7 @@ public class System4 {
 
         // Create planet 1
         float randomAngle2 = random.nextFloat() * 360f;
-        String planet1Name = ASS_Utils.generateProceduralName("planet", systemCenter.getName());
+        String planet1Name = UG_Utils.generateProceduralName("planet", systemCenter.getName());
         PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), systemCenter, planet1Name, "barren_castiron", randomAngle2, 220f, 4000f, 400f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
@@ -65,10 +65,10 @@ public class System4 {
         planet1Market.addCondition("no_atmosphere");
         planet1Market.addCondition("very_hot");
         // Add accretion disk to planet 1
-        ASS_Utils.createAccretionDisk(planet1, 8, planet1.getRadius() + 512f);
+        UG_Utils.createAccretionDisk(planet1, 8, planet1.getRadius() + 512f);
 
         // Create planet 2
-        String planet2Name = ASS_Utils.generateProceduralName("planet", systemCenter.getName());
+        String planet2Name = UG_Utils.generateProceduralName("planet", systemCenter.getName());
         PlanetAPI planet2 = system.addPlanet(planet2Name.toLowerCase(), systemCenter, planet2Name, "terran", (randomAngle2 + 120f) % 360f, 220f, 4000f, 400f);
         Misc.initConditionMarket(planet2);
         MarketAPI planet2Market = planet2.getMarket();
@@ -90,7 +90,7 @@ public class System4 {
         }
 
         // Create planet 3
-        String planet3Name = ASS_Utils.generateProceduralName("planet", systemCenter.getName());
+        String planet3Name = UG_Utils.generateProceduralName("planet", systemCenter.getName());
         PlanetAPI planet3 = system.addPlanet(planet3Name.toLowerCase(), systemCenter, planet3Name, "gas_giant", (randomAngle2 - 120f) % 360f, 220f, 4000f, 400f);
         Misc.initConditionMarket(planet3);
         MarketAPI planet3Market = planet3.getMarket();
@@ -102,11 +102,11 @@ public class System4 {
         planet3Market.addCondition("ruins_vast");
         planet3Market.addCondition("very_hot");
         // Add ring and magnetic field to planet 3
-        ASS_Utils.createMagneticField(planet3, 500f, planet3.getRadius() + 750f, planet3.getRadius() + 500f, planet3.getRadius() + 1000f, 1f);
+        UG_Utils.createMagneticField(planet3, 500f, planet3.getRadius() + 750f, planet3.getRadius() + 500f, planet3.getRadius() + 1000f, 1f);
         system.addRingBand(planet3, "misc", "rings_dust0", 256f, 3, Color.white, 256f, planet3.getRadius() + 500f, planet3.getRadius() + 500f / 10f, "ring", null);
 
         // Add ring and magnetic field around system
-        ASS_Utils.createMagneticField(systemCenter, 500f, 6250f, 6000f, 6500f, 1f);
+        UG_Utils.createMagneticField(systemCenter, 500f, 6250f, 6000f, 6500f, 1f);
         system.addRingBand(systemCenter, "misc", "rings_dust0", 256f, 3, Color.white, 256f, 6000f, 600f, "ring", null);
 
         // Clear nebula in hyperspace
@@ -141,17 +141,17 @@ public class System4 {
             "equipment_cache_small", Float.valueOf(10f) }));
         // Add omega station 1 that spawns omega fleets
         float station1Radius = planet1.getRadius() + 150f;
-        CampaignFleetAPI station1 = ASS_Utils.addAIBattlestation(planet1, true, station1Radius, station1Radius / 10f);
+        CampaignFleetAPI station1 = UG_Utils.addAIBattlestation(planet1, true, station1Radius, station1Radius / 10f);
         OmegaStationFleetManager station1Fleets = new OmegaStationFleetManager((SectorEntityToken)station1, 1f, 0, 4, 15f);
         system.addScript((EveryFrameScript)station1Fleets);
         // Add omega station 2 that spawns omega fleets
         float station2Radius = planet2.getRadius() + 150f;
-        CampaignFleetAPI station2 = ASS_Utils.addAIBattlestation(planet2, true, station2Radius, station2Radius / 10f);
+        CampaignFleetAPI station2 = UG_Utils.addAIBattlestation(planet2, true, station2Radius, station2Radius / 10f);
         OmegaStationFleetManager station2Fleets = new OmegaStationFleetManager((SectorEntityToken)station2, 1f, 0, 4, 15f);
         system.addScript((EveryFrameScript)station2Fleets);
         // Add omega station 1 that spawns omega fleets
         float station3Radius = planet3.getRadius() + 150f;
-        CampaignFleetAPI station3 = ASS_Utils.addAIBattlestation(planet3, true, station3Radius, station3Radius / 10f);
+        CampaignFleetAPI station3 = UG_Utils.addAIBattlestation(planet3, true, station3Radius, station3Radius / 10f);
         OmegaStationFleetManager station3Fleets = new OmegaStationFleetManager((SectorEntityToken)station3, 1f, 0, 4, 15f);
         system.addScript((EveryFrameScript)station3Fleets);
 

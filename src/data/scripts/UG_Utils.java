@@ -28,7 +28,7 @@ import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 
-public class ASS_Utils {
+public class UG_Utils {
     public static String generateProceduralName(String tag, String parent) {
         NamePick namePick = ProcgenUsedNames.pickName(tag, parent, null);
         String name = namePick.nameWithRomanSuffixIfAny;
