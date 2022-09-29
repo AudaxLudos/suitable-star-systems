@@ -14,7 +14,7 @@ import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithBarEvent;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
-public class UGPhase2 extends HubMissionWithBarEvent {
+public class UGPhase5 extends HubMissionWithBarEvent {
     public static enum Stage {
         WAIT,
         GET_DATA,
@@ -29,26 +29,14 @@ public class UGPhase2 extends HubMissionWithBarEvent {
 
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
-        // Create or find a quest giver
-        if (barEvent) {
-            setGiverRank(Ranks.CITIZEN);
-            setGiverPost(Ranks.POST_SCIENTIST);
-            setGiverImportance(PersonImportance.HIGH);
-            setGiverFaction(Factions.TRITACHYON);
-            setGiverTags(Tags.CONTACT_SCIENCE);
-            setGiverVoice(Voices.SCIENTIST);
-            findOrCreateGiver(createdAt, true, false);
-        }
-
-        person = getPerson();
+        person = (PersonAPI)Global.getSector().getMemoryWithoutUpdate().get("$UGPhase2_person");
         if (person == null)
             return false;
-        Global.getSector().getMemoryWithoutUpdate().set("$UGPhase2_person", person);
 
-        if (!setPersonMissionRef(person, "$UGPhase2_ref"))
+        if (!setPersonMissionRef(person, "$UGPhase5_ref"))
             return false;
 
-        if (!setGlobalReference("$UGPhase2_ref"))
+        if (!setGlobalReference("$UGPhase5_ref"))
             return false;
 
         // set up starting and end stages
@@ -57,16 +45,16 @@ public class UGPhase2 extends HubMissionWithBarEvent {
         addSuccessStages(Stage.COMPLETED);
 
         // Make this locations important
-        makeImportant(person, "$UGPhase2_getDataFrom", Stage.GET_DATA);
+        makeImportant(person, "$UGPhase5_getDataFrom", Stage.GET_DATA);
 
         connectWithDaysElapsed(Stage.WAIT, Stage.GET_DATA, 1f);
-        setStageOnGlobalFlag(Stage.COMPLETED, "$UGPhase2_completed");
+        setStageOnGlobalFlag(Stage.COMPLETED, "$UGPhase5_completed");
 
         return true;
     }
 
     protected void updateInteractionDataImpl() {
-        set("$UGPhase2_askingPrice", Misc.getWithDGS(100000f));
+        set("$UGPhase5_askingPrice", Misc.getWithDGS(100000f));
     }
 
     @Override
@@ -94,6 +82,6 @@ public class UGPhase2 extends HubMissionWithBarEvent {
 
     @Override
     public String getBaseName() {
-        return "Unknown Genesis: The Discovery";
+        return "Unknown Genesis: The Truth";
     }
 }

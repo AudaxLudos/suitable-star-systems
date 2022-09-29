@@ -59,9 +59,9 @@ public class UGPhase3 extends HubMissionWithBarEvent {
             return false;
 
         // set up starting and end stages
+        setStoryMission();
         setStartingStage(Stage.REPORT_TO_PERSON);
         addSuccessStages(Stage.COMPLETED);
-        setNoAbandon();
 
         // Make this locations important
         makeImportant(person.getMarket(), "$UGPhase3_reportTo", Stage.REPORT_TO_PERSON);

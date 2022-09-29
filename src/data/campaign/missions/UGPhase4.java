@@ -60,9 +60,9 @@ public class UGPhase4 extends HubMissionWithBarEvent {
             return false;
 
         // set up starting and end stages
+        setStoryMission();
         setStartingStage(Stage.WAIT);
         addSuccessStages(Stage.COMPLETED);
-        setNoAbandon();
 
         // Make this locations important
         makeImportant(person, "$UGPhase4_talkTo", Stage.TALK_TO_PERSON);
@@ -145,6 +145,6 @@ public class UGPhase4 extends HubMissionWithBarEvent {
 
     @Override
     public String getBaseName() {
-        return "Unknown Genesis: The Fight";
+        return "Unknown Genesis: The Skirmish";
     }
 }

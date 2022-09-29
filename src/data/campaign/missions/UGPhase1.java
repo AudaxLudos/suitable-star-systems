@@ -5,7 +5,6 @@ import java.awt.Color;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.PersonImportance;
 import com.fs.starfarer.api.campaign.PlanetAPI;
-import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
@@ -16,7 +15,6 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.ids.Voices;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithBarEvent;
 import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode;
-import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
@@ -54,7 +52,6 @@ public class UGPhase1 extends HubMissionWithBarEvent {
         person = getPerson();
         if (person == null)
             return false;
-
         Global.getSector().getMemoryWithoutUpdate().set("$UGPhase1_person", person);
 
         if (!setPersonMissionRef(person, "$UGPhase1_ref"))
@@ -79,9 +76,9 @@ public class UGPhase1 extends HubMissionWithBarEvent {
         system = planet.getStarSystem();
 
         // set up starting and end stages
+        setStoryMission();
         setStartingStage(Stage.SURVEY_PLANET);
         addSuccessStages(Stage.COMPLETED);
-        setNoAbandon();
 
         // Make this locations important
         makeImportant(planet, "$UGPhase1_targetPlanet", Stage.SURVEY_PLANET);
@@ -129,7 +126,8 @@ public class UGPhase1 extends HubMissionWithBarEvent {
         if (currentStage == Stage.SURVEY_PLANET) {
             info.addPara("Go to the " + system.getNameWithLowercaseTypeShort() + " and investigate the planet " + planet.getName() + ".", opad);
         } else if (currentStage == Stage.RETURN_TO_PERSON) {
-            info.addPara("Return to " + person.getName().getFullName() + " at the " + system.getNameWithLowercaseTypeShort() + " and tell " + person.getHimOrHer() + " about what you found", opad);
+            info.addPara("Return to " + person.getName().getFullName() + " and tell " + person.getHimOrHer() + " about what you found", opad);
+            addStandardMarketDesc(person.getNameString() + " is located " + person.getMarket().getOnOrAt(), person.getMarket(), info, opad);
         }
     }
 
@@ -144,16 +142,6 @@ public class UGPhase1 extends HubMissionWithBarEvent {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public SectorEntityToken getMapLocation(SectorMapAPI map) {
-        if (currentStage == Stage.SURVEY_PLANET) {
-            return getMapLocationFor(system.getCenter());
-        } else if (currentStage == Stage.RETURN_TO_PERSON) {
-            return getMapLocationFor(person.getMarket().getStarSystem().getCenter());
-        }
-        return null;
     }
 
     @Override
