@@ -158,6 +158,6 @@ public class UGPhase1 extends HubMissionWithBarEvent {
 
     @Override
     public String getBaseName() {
-        return "The Unknown Gensis: The Search";
+        return "Unknown Genesis: The Search";
     }
 }
