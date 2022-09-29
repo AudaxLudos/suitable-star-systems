@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
@@ -40,7 +39,7 @@ public class UGPhase4 extends HubMissionWithBarEvent {
 
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
-        person = (PersonAPI)Global.getSector().getMemoryWithoutUpdate().get("$UGPhase1_person");
+        person = getImportantPerson("UGPerson1");
         if (person == null)
             return false;
 

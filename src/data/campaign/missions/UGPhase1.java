@@ -2,7 +2,6 @@ package data.campaign.missions;
 
 import java.awt.Color;
 
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.PersonImportance;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
@@ -52,7 +51,7 @@ public class UGPhase1 extends HubMissionWithBarEvent {
         person = getPerson();
         if (person == null)
             return false;
-        Global.getSector().getMemoryWithoutUpdate().set("$UGPhase1_person", person);
+        person.setId("UGPerson1");
 
         if (!setPersonMissionRef(person, "$UGPhase1_ref"))
             return false;

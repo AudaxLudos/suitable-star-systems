@@ -2,14 +2,9 @@ package data.campaign.missions;
 
 import java.awt.Color;
 
-import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.campaign.PersonImportance;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
-import com.fs.starfarer.api.impl.campaign.ids.Ranks;
-import com.fs.starfarer.api.impl.campaign.ids.Tags;
-import com.fs.starfarer.api.impl.campaign.ids.Voices;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithBarEvent;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -29,7 +24,7 @@ public class UGPhase5 extends HubMissionWithBarEvent {
 
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
-        person = (PersonAPI)Global.getSector().getMemoryWithoutUpdate().get("$UGPhase2_person");
+        person = getImportantPerson("UGPerson2");
         if (person == null)
             return false;
 

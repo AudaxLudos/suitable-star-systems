@@ -29,7 +29,7 @@ public class UGPhase3 extends HubMissionWithBarEvent {
 
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
-        person = (PersonAPI)Global.getSector().getMemoryWithoutUpdate().get("$UGPhase1_person");
+        person = getImportantPerson("UGPerson1");
         if (person == null)
             return false;
 
