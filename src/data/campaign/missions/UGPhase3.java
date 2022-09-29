@@ -3,15 +3,10 @@ package data.campaign.missions;
 import java.awt.Color;
 
 import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.campaign.CampaignFleetAPI;
-import com.fs.starfarer.api.campaign.PlanetAPI;
-import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
-import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithBarEvent;
-import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.MarketCMD;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -24,9 +19,6 @@ public class UGPhase3 extends HubMissionWithBarEvent {
         COMPLETED,
     }
 
-    protected PlanetAPI planet;
-    protected StarSystemAPI system;
-    protected CampaignFleetAPI fleet;
     protected PersonAPI person;
     protected MarketAPI newMarket;
     protected MarketAPI targetMarket;
@@ -46,20 +38,6 @@ public class UGPhase3 extends HubMissionWithBarEvent {
 
         if (!setGlobalReference("$UGPhase3_ref"))
             return false;
-
-        // Find and pick a planet to use for quest
-        requireSystemTags(ReqMode.ANY, new String[] { Tags.THEME_REMNANT, Tags.THEME_REMNANT_MAIN, Tags.THEME_REMNANT_RESURGENT });
-        requireSystemTags(ReqMode.NOT_ANY, new String[] { Tags.THEME_REMNANT_NO_FLEETS, Tags.THEME_REMNANT_SECONDARY, Tags.THEME_REMNANT_SUPPRESSED });
-        preferSystemUnexplored();
-        requirePlanetNotGasGiant();
-        requirePlanetNotStar();
-        preferPlanetNotFullySurveyed();
-
-        planet = pickPlanet();
-        if (planet == null)
-            return false;
-
-        system = planet.getStarSystem();
 
         requireMarketIsNot(createdAt);
         requireMarketFactionNotPlayer();
@@ -114,7 +92,7 @@ public class UGPhase3 extends HubMissionWithBarEvent {
             addStandardMarketDesc(person.getNameString() + " is being held " + targetMarket.getOnOrAt(), targetMarket, info, opad);
         } else if (currentStage == Stage.PERSON_TO_MARKET) {
             info.addPara("Escort " + person.getNameString() + " to the system " + person.getHeOrShe() + " mentioned", opad);
-            addStandardMarketDesc(person.getNameString() + " has a sanctuary " + targetMarket.getOnOrAt(), targetMarket, info, opad);
+            addStandardMarketDesc(person.getNameString() + " has a sanctuary " + newMarket.getOnOrAt(), newMarket, info, opad);
         }
     }
 
@@ -122,13 +100,13 @@ public class UGPhase3 extends HubMissionWithBarEvent {
     public boolean addNextStepText(TooltipMakerAPI info, Color tc, float pad) {
         // Color h = Misc.getHighlightColor();
         if (currentStage == Stage.REPORT_TO_PERSON) {
-            info.addPara("Report back to ~Q1 Person~", tc, pad);
+            info.addPara("Report back to " + person.getNameString(), tc, pad);
             return true;
         } else if (currentStage == Stage.SET_PERSON_FREE) {
-            info.addPara("Free ~Q1 Person~", tc, pad);
+            info.addPara("Free " + person.getNameString() + " from captivity", tc, pad);
             return true;
         } else if (currentStage == Stage.PERSON_TO_MARKET) {
-            info.addPara("Send ~Q1 Person~", tc, pad);
+            info.addPara("Escort " + person.getNameString() + " to " + person.getHisOrHer() + " sanctuary", tc, pad);
             return true;
         }
         return false;

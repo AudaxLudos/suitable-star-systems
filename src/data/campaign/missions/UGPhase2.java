@@ -84,10 +84,10 @@ public class UGPhase2 extends HubMissionWithBarEvent {
     @Override
     public boolean addNextStepText(TooltipMakerAPI info, Color tc, float pad) {
         if (currentStage == Stage.WAIT) {
-            info.addPara("Wait for 1 day", tc, pad);
+            info.addPara("Wait until " + person.getNameString() + " decrypts the data core", tc, pad);
             return true;
         } else if (currentStage == Stage.GET_DATA) {
-            info.addPara("Return to ~Q2 Person~", tc, pad);
+            info.addPara("Return to " + person.getNameString(), tc, pad);
             return true;
         }
         return false;
