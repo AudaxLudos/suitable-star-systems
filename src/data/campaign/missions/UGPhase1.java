@@ -55,12 +55,12 @@ public class UGPhase1 extends HubMissionWithBarEvent {
         if (person == null)
             return false;
 
-        Global.getSector().getMemoryWithoutUpdate().set("$ASS_Q1P1_person", person);
+        Global.getSector().getMemoryWithoutUpdate().set("$UGPhase1_person", person);
 
-        if (!setPersonMissionRef(person, "$ASS_Q1P1_ref"))
+        if (!setPersonMissionRef(person, "$UGPhase1_ref"))
             return false;
 
-        if (!setGlobalReference("$ASS_Q1P1_ref"))
+        if (!setGlobalReference("$UGPhase1_ref"))
             return false;
 
         // Find and pick a planet to use for quest
@@ -84,12 +84,12 @@ public class UGPhase1 extends HubMissionWithBarEvent {
         setNoAbandon();
 
         // Make this locations important
-        makeImportant(planet, "$ASS_Q1P1_targetPlanet", Stage.SURVEY_PLANET);
-        makeImportant(person, "$ASS_Q1P1_returnHere", Stage.RETURN_TO_PERSON);
+        makeImportant(planet, "$UGPhase1_targetPlanet", Stage.SURVEY_PLANET);
+        makeImportant(person, "$UGPhase1_returnHere", Stage.RETURN_TO_PERSON);
 
         // Flags that can be use to enter the next stage
-        connectWithGlobalFlag(Stage.SURVEY_PLANET, Stage.RETURN_TO_PERSON, "$ASS_Q1P1_returnHere");
-        setStageOnGlobalFlag(Stage.COMPLETED, "$ASS_Q1P1_completed");
+        connectWithGlobalFlag(Stage.SURVEY_PLANET, Stage.RETURN_TO_PERSON, "$UGPhase1_returnHere");
+        setStageOnGlobalFlag(Stage.COMPLETED, "$UGPhase1_completed");
 
         setCreditReward(CreditReward.HIGH);
 
@@ -116,10 +116,10 @@ public class UGPhase1 extends HubMissionWithBarEvent {
     }
 
     protected void updateInteractionDataImpl() {
-        set("$ASS_Q1P1_distance", getDistanceLY(system));
-        set("$ASS_Q1P1_system", system.getNameWithLowercaseTypeShort());
-        set("$ASS_Q1P1_planet", planet.getFullName());
-        set("$ASS_Q1P1_reward", Misc.getWithDGS(getCreditsReward()));
+        set("$UGPhase1_distance", getDistanceLY(system));
+        set("$UGPhase1_system", system.getNameWithLowercaseTypeShort());
+        set("$UGPhase1_planet", planet.getFullName());
+        set("$UGPhase1_reward", Misc.getWithDGS(getCreditsReward()));
     }
 
     @Override

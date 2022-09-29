@@ -67,13 +67,13 @@ public class UGPhase2 extends HubMissionWithBarEvent {
         if (q2Person == null)
             return false;
 
-        q1Person = (PersonAPI)Global.getSector().getMemoryWithoutUpdate().get("$ASS_Q1P1_person");
-        Global.getSector().getMemoryWithoutUpdate().set("$ASS_Q1P2_person", q2Person);
+        q1Person = (PersonAPI)Global.getSector().getMemoryWithoutUpdate().get("$UGPhase1_person");
+        Global.getSector().getMemoryWithoutUpdate().set("$UGPhase2_person", q2Person);
 
-        if (!setPersonMissionRef(q2Person, "$ASS_Q1P2_ref"))
+        if (!setPersonMissionRef(q2Person, "$UGPhase2_ref"))
             return false;
 
-        if (!setGlobalReference("$ASS_Q1P2_ref"))
+        if (!setGlobalReference("$UGPhase2_ref"))
             return false;
 
         // Find and pick a planet to use for quest
@@ -106,7 +106,7 @@ public class UGPhase2 extends HubMissionWithBarEvent {
         if (newMarket == null)
             return false;
 
-        if (!setMarketMissionRef(targetMarket, "$ASS_Q1P2_ref"))
+        if (!setMarketMissionRef(targetMarket, "$UGPhase2_ref"))
             return false;
 
         // set up starting and end stages
@@ -115,19 +115,19 @@ public class UGPhase2 extends HubMissionWithBarEvent {
         setNoAbandon();
 
         // Make this locations important
-        makeImportant(q2Person, "$ASS_Q1P2_getDataFrom", Stage.GET_DATA);
+        makeImportant(q2Person, "$UGPhase2_getDataFrom", Stage.GET_DATA);
         makeImportant(q1Person.getMarket(), null, Stage.REPORT_TO_PERSON);
-        makeImportant(targetMarket, "$ASS_Q1P2_freePersonFrom", Stage.SET_PERSON_FREE);
-        makeImportant(newMarket, "$ASS_Q1P2_personTo", Stage.PERSON_TO_MARKET);
-        makeImportant(q1Person, "$ASS_Q1P2_returnTo", Stage.RETURN_TO_PERSON);
+        makeImportant(targetMarket, "$UGPhase2_freePersonFrom", Stage.SET_PERSON_FREE);
+        makeImportant(newMarket, "$UGPhase2_personTo", Stage.PERSON_TO_MARKET);
+        makeImportant(q1Person, "$UGPhase2_returnTo", Stage.RETURN_TO_PERSON);
 
         connectWithDaysElapsed(Stage.WAIT, Stage.GET_DATA, 1f);
-        connectWithGlobalFlag(Stage.GET_DATA, Stage.REPORT_TO_PERSON, "$ASS_Q1P2_reportHere");
-        connectWithGlobalFlag(Stage.REPORT_TO_PERSON, Stage.SET_PERSON_FREE, "$ASS_Q1P2_freeHere");
-        connectWithGlobalFlag(Stage.SET_PERSON_FREE, Stage.PERSON_TO_MARKET, "$ASS_Q1P2_marketHere");
-        connectWithGlobalFlag(Stage.PERSON_TO_MARKET, Stage.KILL_FLEET, "$ASS_Q1P2_remnantHere");
-        connectWithGlobalFlag(Stage.KILL_FLEET, Stage.RETURN_TO_PERSON, "$ASS_Q1P2_returnHere");
-        setStageOnGlobalFlag(Stage.COMPLETED, "$ASS_Q1P2_completed");
+        connectWithGlobalFlag(Stage.GET_DATA, Stage.REPORT_TO_PERSON, "$UGPhase2_reportHere");
+        connectWithGlobalFlag(Stage.REPORT_TO_PERSON, Stage.SET_PERSON_FREE, "$UGPhase2_freeHere");
+        connectWithGlobalFlag(Stage.SET_PERSON_FREE, Stage.PERSON_TO_MARKET, "$UGPhase2_marketHere");
+        connectWithGlobalFlag(Stage.PERSON_TO_MARKET, Stage.KILL_FLEET, "$UGPhase2_remnantHere");
+        connectWithGlobalFlag(Stage.KILL_FLEET, Stage.RETURN_TO_PERSON, "$UGPhase2_returnHere");
+        setStageOnGlobalFlag(Stage.COMPLETED, "$UGPhase2_completed");
 
         beginWithinHyperspaceRangeTrigger(q1Person.getMarket().getStarSystem(), 1f, true, Stage.REPORT_TO_PERSON);
         triggerHideCommListing(q1Person);
@@ -136,7 +136,7 @@ public class UGPhase2 extends HubMissionWithBarEvent {
         triggerFleetInterceptPlayerNearby(false, Stage.REPORT_TO_PERSON);
         triggerPickLocationAroundPlayer(100f);
         triggerSpawnFleetAtPickedLocation();
-        triggerFleetMakeImportant("$ASS_Q1P2_reportToFleet", Stage.REPORT_TO_PERSON);
+        triggerFleetMakeImportant("$UGPhase2_reportToFleet", Stage.REPORT_TO_PERSON);
         triggerOrderFleetInterceptPlayer(false, true);
         triggerOrderFleetEBurn(1f);
         endTrigger();
@@ -158,8 +158,8 @@ public class UGPhase2 extends HubMissionWithBarEvent {
         triggerSetPatrol();
         triggerPickLocationAroundEntity(planet, 1000f);
         triggerSpawnFleetAtPickedLocation();
-        triggerFleetMakeImportant("$ASS_Q1P2_remnant", Stage.KILL_FLEET);
-        triggerFleetAddDefeatTrigger("ASS_Q1P2_RemnantDefeated");
+        triggerFleetMakeImportant("$UGPhase2_remnant", Stage.KILL_FLEET);
+        triggerFleetAddDefeatTrigger("UGPhase2_RemnantDefeated");
         endTrigger();
         List<CampaignFleetAPI> fleets = runStageTriggersReturnFleets(Stage.KILL_FLEET);
         fleet = fleets.get(0);
@@ -173,7 +173,7 @@ public class UGPhase2 extends HubMissionWithBarEvent {
             beginStageTrigger(Stage.KILL_FLEET);
             SectorEntityToken loc = this.fleet.getContainingLocation().createToken(this.fleet.getLocation());
             triggerSpawnEntity(Entities.WEAPONS_CACHE_REMNANT, new LocData(loc));
-            triggerEntityMakeImportant("$ASS_Q1P2_cache", Stage.KILL_FLEET);
+            triggerEntityMakeImportant("$UGPhase2_cache", Stage.KILL_FLEET);
             endTrigger();
             return true;
         }
@@ -181,9 +181,9 @@ public class UGPhase2 extends HubMissionWithBarEvent {
     }
 
     protected void updateInteractionDataImpl() {
-        set("$ASS_Q1P2_askingPrice", Misc.getWithDGS(100000f));
-        set("$ASS_Q1P2_danger", MarketCMD.RaidDangerLevel.EXTREME);
-        set("$ASS_Q1P2_marines", Misc.getWithDGS(getMarinesRequiredForCustomObjective(targetMarket, MarketCMD.RaidDangerLevel.EXTREME)));
+        set("$UGPhase2_askingPrice", Misc.getWithDGS(100000f));
+        set("$UGPhase2_danger", MarketCMD.RaidDangerLevel.EXTREME);
+        set("$UGPhase2_marines", Misc.getWithDGS(getMarinesRequiredForCustomObjective(targetMarket, MarketCMD.RaidDangerLevel.EXTREME)));
     }
 
     @Override

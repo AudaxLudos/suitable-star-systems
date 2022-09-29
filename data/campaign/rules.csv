@@ -1,37 +1,37 @@
 id,trigger,conditions,script,text,options,notes
-"#RULESET_NAME ASS",,,,,,
+"#RULESET_NAME The Unknown Genesis",,,,,,
 ,,,,,,
-# ASS Q1 P1,,,,,,
-ASS_Q1P1_BlurbBar,ASS_Q1P1_blurbBar,,,"A $manOrWoman sits alone at a VIP table while using their Tri-Pad. After a while $heOrShe starts scanning the bar, until $heOrShe glances at you.",,
-ASS_Q1P1_OptionBar,ASS_Q1P1_optionBar,,,,"ASS_Q1P1_barText1:See why the $manOrWoman looked at you",
-ASS_Q1P1_BarText1,DialogOptionSelected,"$option == ASS_Q1P1_barText1","$missionId = ASS_Q1P1","As you sit across the $manOrWoman $heOrShe says, ""I am glad you can take a hint Captain, I am $personName an $personPost of this planet. As for you captain,"" $heOrShe pauses, ""I already know who are, so let us skip the introductions,"" $heOrShe continues, ""But before we begin there are certain risks in what I am about to tell you, risks that will ruin your reputation with others. Are you still willing to listen after knowing?""","ASS_Q1P1_barText2:Of course
+# UGPhase1,,,,,,
+UGPhase1_BlurbBar,UGPhase1_blurbBar,,,"A $manOrWoman sits alone at a VIP table while using their Tri-Pad. After a while $heOrShe starts scanning the bar, until $heOrShe glances at you.",,
+UGPhase1_OptionBar,UGPhase1_optionBar,,,,"UGPhase1_barText1:See why the $manOrWoman looked at you",
+UGPhase1_BarText1,DialogOptionSelected,"$option == UGPhase1_barText1","$missionId = UGPhase1","As you sit across the $manOrWoman $heOrShe says, ""I am glad you can take a hint Captain, I am $personName an $personPost of this planet. As for you captain,"" $heOrShe pauses, ""I already know who are, so let us skip the introductions,"" $heOrShe continues, ""But before we begin there are certain risks in what I am about to tell you, risks that will ruin your reputation with others. Are you still willing to listen after knowing?""","UGPhase1_barText2:Of course
 contact_declineBarNoContinue:Let me think about it",
-ASS_Q1P1_BarText2,DialogOptionSelected,"$option == ASS_Q1P1_barText2","SetTextHighlights $ASS_Q1P1_distance $ASS_Q1P1_systemName $ASS_Q1P1_planetName $ASS_Q1P1_reward
-Call $ASS_Q1P1_ref showMap ""Target: $ASS_Q1P1_systemName""","She leans over then quietly explains, ""An expedition fleet I sent out disappeared, I was able to contact them before there fate, they told me they discovered an artifact. So I planned on sending out an investigation fleet,"" $heOrShe grumbles ""but before I could, COMSEC officers suddenly visited me asking about the whereabouts of my fleets. I didn't tell them anything, but soon after my position started getting pressured, higher trade tariffs, more inspections and stricter inspections. Because of this I've been locked out, so here we are.
+UGPhase1_BarText2,DialogOptionSelected,"$option == UGPhase1_barText2","SetTextHighlights $UGPhase1_distance $UGPhase1_systemName $UGPhase1_planetName $UGPhase1_reward
+Call $UGPhase1_ref showMap ""Target: $UGPhase1_systemName""","She leans over then quietly explains, ""An expedition fleet I sent out disappeared, I was able to contact them before there fate, they told me they discovered an artifact. So I planned on sending out an investigation fleet,"" $heOrShe grumbles ""but before I could, COMSEC officers suddenly visited me asking about the whereabouts of my fleets. I didn't tell them anything, but soon after my position started getting pressured, higher trade tariffs, more inspections and stricter inspections. Because of this I've been locked out, so here we are.
 
-""I want you to investigate the last known location of my fleet, they were $ASS_Q1P1_distance light years away, in the $ASS_Q1P1_system, near a planet called $ASS_Q1P1_planet. Find out what happened to my fleet and I will award you with $ASS_Q1P1_reward credits,"" she then adds ""and hopefully get answers to why COMSEC is here.""","contact_acceptBarNoText:Understood",
-ASS_Q1P1_SurveyText1,DialogOptionSelected,"$ASS_Q1P1_targetPlanet score:1000
-Call $global.ASS_Q1P1_ref updateData
+""I want you to investigate the last known location of my fleet, they were $UGPhase1_distance light years away, in the $UGPhase1_systemName, near a planet called $UGPhase1_planetName. Find out what happened to my fleet and I will award you with $UGPhase1_reward credits,"" she then adds ""and hopefully get answers to why COMSEC is here.""","contact_acceptBarNoText:Understood",
+UGPhase1_SurveyText1,DialogOptionSelected,"$UGPhase1_targetPlanet score:1000
+Call $global.UGPhase1_ref updateData
 $option == surveyPerform
-!$global.ASS_Q1P1_clueFound","$global.ASS_Q1P1_clueFound = true","While doing a preliminary scan, your sensors officer signals you, ""Captain, dozens of destroyed ships are scattered all over the area, there is a faint signal but I am unable to pinpoint where, even with an in-depth scan no additional information is being returned. We should do a full planetary survey then send out an exploration team to find it.""",,
-ASS_Q1P1_ExploreText1,DialogOptionSelected,"$ASS_Q1P1_targetPlanet score:1000
-Call $global.ASS_Q1P1_ref updateData
+!$global.UGPhase1_clueFound","$global.UGPhase1_clueFound = true","While doing a preliminary scan, your sensors officer signals you, ""Captain, dozens of destroyed ships are scattered all over the area, there is a faint signal but I am unable to pinpoint where, even with an in-depth scan no additional information is being returned. We should do a full planetary survey then send out an exploration team to find it.""",,
+UGPhase1_ExploreText1,DialogOptionSelected,"$UGPhase1_targetPlanet score:1000
+Call $global.UGPhase1_ref updateData
 $option == salExplore
-!$global.ASS_Q1P1_dataCacheFound","$global.ASS_Q1P1_dataCacheFound = true
-$global.ASS_Q1P1_returnHere = true
-Call $global.ASS_Q1P1_ref updateStage","You send out an exploration team to find the artifact, after a while your exploration officer contacts you, ""Captain, we found the artifact, it's a data core, the data is mostly encrypted and we don't have the personnel or equipment to the job, At this point we could continue with the exploration or leave with the data core.""",,
-ASS_Q1P1_ReturnText1,PickGreeting,"$ASS_Q1P1_returnHere score:1000
-Call $global.ASS_Q1P1_ref updateData","ShowPersonVisual","You contact $personName but before you can say anything $heOrShe tells you to go to $HisOrHer office to talk in private.
+!$global.UGPhase1_dataCoreFound","$global.UGPhase1_dataCoreFound = true
+$global.UGPhase1_returnHere = true
+Call $global.UGPhase1_ref updateStage","You send out an exploration team to find the artifact, after a while your exploration officer contacts you, ""Captain, we found the artifact, it's a data core, the data is mostly encrypted and we don't have the personnel or equipment to the job, At this point we could continue with the exploration or leave with the data core.""",,
+UGPhase1_ReturnText1,PickGreeting,"$UGPhase1_returnHere score:1000
+Call $global.UGPhase1_ref updateData","ShowPersonVisual","You contact $personName but before you can say anything $heOrShe tells you to go to $HisOrHer office to talk in private.
 
-As soon as you arrive, $personName welcomes you ""Captain, you made it back, it has been difficult, COMSEC is forcing there way in, it won't be long before they get what they want. I hope that you have found some useful information for me.""","ASS_Q1P1_returnText2:Tell $himOrHer about the [REDACTED] fleet
-ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
-ASS_Q1P1_ReturnText2,DialogOptionSelected,"$option == ASS_Q1P1_returnText2",,"""So the rumors were real,"" $heOrShe pondered, ""thank you captain, I can at least tell the people that the expedition fleet died valiantly against a stronger foe. But this can't be it, these rumors have existed within the core worlds for some time surely theirs more?""","ASS_Q1P1_returnText3:Tell $himOrHer about the data cache",
-ASS_Q1P1_ReturnText3,DialogOptionSelected,"$option == ASS_Q1P1_returnText3","$global.ASS_Q1P1_completed = true
-Call $global.ASS_Q1P1_ref updateStage
-$player.ASS_Q1P1 = true","Bewildered $heOrShe says, ""So that is the reason why COMSEC are here,"" after pondering $heOrShe continues, ""I am sorry Captain but I can't decrypt the data core, its too risky, especially when COMSEC officers are here. There might be someone within the Galatia Academy or Tri-Tachyon to decrypt the data core. Just make sure to return to me, I wanna know what secrets the hegemony are hiding to the point where they would pressure me.""","defaultLeave:Find someone to decrypt the data cache",
-"#END ASS Q1 P1",,,,,,
+As soon as you arrive, $personName welcomes you ""Captain, you made it back, it has been difficult, COMSEC is forcing there way in, it won't be long before they get what they want. I hope that you have found some useful information for me.""","UGPhase1_returnText2:Tell $himOrHer about the [REDACTED] fleet
+UGPhase1_returnText3:Tell $himOrHer about the data cache",
+UGPhase1_ReturnText2,DialogOptionSelected,"$option == UGPhase1_returnText2",,"""So the rumors were real,"" $heOrShe pondered, ""thank you captain, I can at least tell the people that the expedition fleet died valiantly against a stronger foe. But this can't be it, these rumors have existed within the core worlds for some time surely theirs more?""","UGPhase1_returnText3:Tell $himOrHer about the data cache",
+UGPhase1_ReturnText3,DialogOptionSelected,"$option == UGPhase1_returnText3","$global.UGPhase1_completed = true
+Call $global.UGPhase1_ref updateStage
+$player.UGPhase1 = true","Bewildered $heOrShe says, ""So that is the reason why COMSEC are here,"" after pondering $heOrShe continues, ""I am sorry Captain but I can't decrypt the data core, its too risky, especially when COMSEC officers are here. There might be someone within the Galatia Academy or Tri-Tachyon to decrypt the data core. Just make sure to return to me, I wanna know what secrets the hegemony are hiding to the point where they would pressure me.""","defaultLeave:Find someone to decrypt the data cache",
+"#END UGPhase1",,,,,,
 ,,,,,,
-# ASS Q1 P2,,,,,,
+# UGPhase2,,,,,,
 ASS_Q1P2_BlurbBar,ASS_Q1P2_blurbBar,,,"You see a $manOrWoman surrounded by Tri-Pads, $heOrShe looks proficient with technology but $heOrShe seems to be disgruntled, saying ""no"" everytime $heOrShe interacts with one of $hisOrHer Tri-Pads.",,
 ASS_Q1P2_OptionBar,ASS_Q1P2_optionBar,"$player.ASS_Q1P1 == true",,,"ASS_Q1P2_barText1:See if $heOrShe is interested in decrypting [REDACTED] data",
 ASS_Q1P2_BarText1_1,DialogOptionSelected,"$option == ASS_Q1P2_barText1
@@ -83,9 +83,9 @@ Call $global.ASS_Q1P2_ref updateData","ShowPersonVisual
 $global.ASS_Q1P2_completed = true
 Call $global.ASS_Q1P2_ref updateStage","Noice noice","ASS_Q1P2_leave:Done",
 ASS_Q1P2_LeaveText1,DialogOptionSelected,"$option == ASS_Q1P2_leave","DismissDialog",,,
-"#END ASS Q1 P2",,,,,,
+"#END UGPhase2",,,,,,
 ,,,,,,
-# ASS Q1 P3,,,,,,
+# UGPhase3,,,,,,
 NEW RULE,,,,,,
-"#END ASS Q1 P3",,,,,,
+"#END UGPhase3",,,,,,
 
