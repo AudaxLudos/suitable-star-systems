@@ -32,60 +32,59 @@ $player.UGPhase1 = true","Bewildered $heOrShe says, ""So that is the reason why 
 "#END UGPhase1",,,,,,
 ,,,,,,
 # UGPhase2,,,,,,
-ASS_Q1P2_BlurbBar,ASS_Q1P2_blurbBar,,,"You see a $manOrWoman surrounded by Tri-Pads, $heOrShe looks proficient with technology but $heOrShe seems to be disgruntled, saying ""no"" everytime $heOrShe interacts with one of $hisOrHer Tri-Pads.",,
-ASS_Q1P2_OptionBar,ASS_Q1P2_optionBar,"$player.ASS_Q1P1 == true",,,"ASS_Q1P2_barText1:See if $heOrShe is interested in decrypting [REDACTED] data",
-ASS_Q1P2_BarText1_1,DialogOptionSelected,"$option == ASS_Q1P2_barText1
-$player.credits >= $ASS_Q1P2_askingPrice","$missionId = ASS_Q1P2
-SetTextHighlights $ASS_Q1P2_askingPrice","The moment you mention that word $heOrShe stops whatever $heOrShe was doing and says, ""It's gonna cost you, the hegemony and even the Tri-Tachyon are sensitive about that information, even worse if COMSEC is involved,"" she ponders then says, ""$ASS_Q1P2_askingPrice credits thats my asking price, it may look expensive but holding information regarding that is dangerous. Do we have a deal?""","ASS_Q1P2_barText2_1:Pay her $ASS_Q1P2_askingPrice credits
+UGPhase2_BlurbBar,UGPhase2_blurbBar,,,"You see a $manOrWoman surrounded by Tri-Pads, $heOrShe looks proficient with technology but $heOrShe seems to be disgruntled, saying ""no"" everytime $heOrShe interacts with one of $hisOrHer Tri-Pads.",,
+UGPhase2_OptionBar,UGPhase2_optionBar,"$player.UGPhase1 == true",,,"UGPhase2_barText1:See if $heOrShe is interested in decrypting [REDACTED] data",
+UGPhase2_BarText1_1,DialogOptionSelected,"$option == UGPhase2_barText1
+$player.credits >= $UGPhase2_askingPrice","$missionId = UGPhase2
+SetTextHighlights $UGPhase2_askingPrice","The moment you mention that word $heOrShe stops whatever $heOrShe was doing and says, ""It's gonna cost you, the hegemony and even the Tri-Tachyon are sensitive about that information, even worse if COMSEC is involved,"" she ponders then says, ""$UGPhase2_askingPrice credits thats my asking price, it may look expensive but holding information regarding that is dangerous. Do we have a deal?""","UGPhase2_barText2_1:Pay her $UGPhase2_askingPrice credits
 contact_declineBarNoContinue:Let me think about it",
-ASS_Q1P2_BarText1_2,DialogOptionSelected,"$option == ASS_Q1P2_barText1","$missionId = ASS_Q1P2
-SetTextHighlights $ASS_Q1P2_askingPrice","The moment you mention that word $heOrShe stops whatever $heOrShe was doing and says, ""It's gonna cost you, the hegemony and even the Tri-Tachyon are sensitive about that information, even worse if COMSEC is involved,"" she ponders then says, ""$ASS_Q1P2_askingPrice credits thats my asking price, it may look expensive but holding information regarding that is dangerous. Do we have a deal?""","ASS_Q1P2_barText2_2:Negotiate the price
+UGPhase2_BarText1_2,DialogOptionSelected,"$option == UGPhase2_barText1","$missionId = UGPhase2
+SetTextHighlights $UGPhase2_askingPrice","The moment you mention that word $heOrShe stops whatever $heOrShe was doing and says, ""It's gonna cost you, the hegemony and even the Tri-Tachyon are sensitive about that information, even worse if COMSEC is involved,"" she ponders then says, ""$UGPhase2_askingPrice credits thats my asking price, it may look expensive but holding information regarding that is dangerous. Do we have a deal?""","UGPhase2_barText2_2:Negotiate the price
 contact_declineBarNoContinue:Let me think about it",
-ASS_Q1P2_BarText2_1,DialogOptionSelected,"$option == ASS_Q1P2_barText2_1","SubCredits $ASS_Q1P2_askingPrice","You tell $himOrHer to follow you, after a while you introduce $himOrHer to the data core.
+UGPhase2_BarText2_1,DialogOptionSelected,"$option == UGPhase2_barText2_1","SubCredits $UGPhase2_askingPrice","You tell $himOrHer to follow you, after a while you introduce $himOrHer to the data core.
 
 ""This is quite the discovery, It's different to the [REDACTED] I've encountered. This will take a while, give me a month to decrypt and consolidate the data. I will signal you when to comeback.""","contact_acceptBarNoText:Understood",
-ASS_Q1P2_BarText2_2,DialogOptionSelected,"$option == ASS_Q1P2_barText2_2",,"""Look, I am interested in what your offering, but I won't ask for anything lower. As I've said the risk involved are dangerous, I need a guarantee. Come back when you can accept my initial conditions."" ","contact_declineBarNoContinue:Leave",
-ASS_Q1P2_CommText1,PickGreeting,"$ASS_Q1P2_getDataFrom score:1000
-Call $global.ASS_Q1P2_ref updateData","ShowPersonVisual","You contact the $personPost and tell $himOrHer to meet you at your ship. You then ask $himOrHer what they have uncovered.
+UGPhase2_BarText2_2,DialogOptionSelected,"$option == UGPhase2_barText2_2",,"""Look, I am interested in what your offering, but I won't ask for anything lower. As I've said the risk involved are dangerous, I need a guarantee. Come back when you can accept my initial conditions."" ","contact_declineBarNoContinue:Leave",
+UGPhase2_CommText1,PickGreeting,"$UGPhase2_getDataFrom score:1000
+Call $global.UGPhase2_ref updateData","ShowPersonVisual","You contact the $personPost and tell $himOrHer to meet you at your ship. You then ask $himOrHer what they have uncovered.
 
-""It's great to see you captain, the data core you gave me was damaged, the data I decrypted is fragmented, but I was able to consolidate some information. The data shows a hidden fleet at a system, its job was surveillance and protection. I don't know what they were observing or defending but I do know that the ships within are mostly REMNANT, but there was a ship that I did not understand, the only clue that I uncovered was the word,"" $heOrShe emphasizes, ""OMEGA.""","ASS_Q1P2_commText2:Grab the data and report back to the executive",
-ASS_Q1P2_CommText2,DialogOptionSelected,"$option == ASS_Q1P2_commText2","$global.ASS_Q1P2_reportHere = true
-Call $global.ASS_Q1P2_ref updateStage","Before you could leave $personName contacts you, ""Captain, I don't know what you are involved in, but I do want to participate. If you ever want something decrypted, researched, or experimented my comms are open.""","defaultLeave:I will think about it",
-ASS_Q1P2_FleetEncounter,BeginFleetEncounter,"$ASS_Q1P2_reportToFleet score:1000
-Call $global.ASS_Q1P2_ref updateData","FleetDesc
-HailPlayer",,,
-ASS_Q1P2_FleetText1,OpenCommLink,"$entity.ASS_Q1P2_reportToFleet score:1000
-Call $global.ASS_Q1P2_ref updateData",,"As you accept the comm request the captain of the fleet speaks out to you, ""Captain! ~Q1 Person~ has been taken by COMSEC, the mounting pressure was too much and our ~Q1 Person Post~ got indicted for conspiracy.""","ASS_Q1P2_fleetText2:Ask why ~Q1 Person~ did not escape
-ASS_Q1P2_fleetText3:Ask where is ~Q1 person~ taken
-",
-ASS_Q1P2_FleetText2,DialogOptionSelected,"$option == ASS_Q1P2_fleetText2",,"""We already had plans, but COMSEC was far ahead of us before we could enact any of it... It was too late.""","ASS_Q1P2_fleetText3:Ask where is ~Q1 person~ taken",
-ASS_Q1P2_FleetText3,DialogOptionSelected,"$option == ASS_Q1P2_fleetText3","$global.ASS_Q1P2_freeHere = true
-Call $global.ASS_Q1P2_ref updateStage","""From what I've gathered they took ~Q1 Person~ to ~Planet name~ around ~System distance~ lightyears away in the ~System name~. We could only gather this much, we don't know what you'd need to free ~Q1 Person~.""","cutCommLink:Understood",
-ASS_Q1P2_MarketOpen,OpenInteractionDialog,"$market.ASS_Q1P2_freePersonFrom score:1000
-Call $market.ASS_Q1P2_ref updateData
-!$ASS_Q1P2_addedRaidObjective","AddRaidObjective genericIcon ""Conduct jailbreak operation"" EXTREME 3000 ASS_Q1P2_RaidDone
-$ASS_Q1P2_addedRaidObjective = true 0
-FireBest OpenInteractionDialog",,,
-ASS_Q1P2_MarketRaidDone,ASS_Q1P2_RaidDone,"Call $market.ASS_Q1P2_ref updateData",,"A weak disheveled $manOrWoman looks at you, ""I thought you would never arrive,"" $heOrShe pauses, ""thank you, Captain.""","ASS_Q1P2_raidDoneText1:Ask $himOrHer what happened
-ASS_Q1P2_raidDoneText2:Ask $himOrHer where to go",
-ASS_Q1P2_RaidDoneText1,DialogOptionSelected,"$option == ASS_Q1P2_raidDoneText1",,"$heOrShe musters the strength to speak, ""A close official whose family was part of the expedition fleet, betrayed me. I knew it could happen, I should've been faster.""","ASS_Q1P2_raidDoneText2:Ask $himOrHer where to go",
-ASS_Q1P2_RaidDoneText2,DialogOptionSelected,"$option == ASS_Q1P2_raidDoneText2","$global.ASS_Q1P2_marketHere = true
-Call $global.ASS_Q1P2_ref updateStage","""Donn in Hybrasil,"" she says, before fainting.","defaultLeave:Understood",
-ASS_Q1P2_NewMarketText1,OpenInteractionDialog,"$market.ASS_Q1P2_personTo score:2000","ShowDefaultVisual
-$global.ASS_Q1P2_remnantHere = true
-Call $global.ASS_Q1P2_ref updateStage","Thank you captain continue what you was doing baby","defaultLeave:Understood",
-ASS_Q1P2_RemnantDefeated,ASS_Q1P2_RemnantDefeated,,"Call $global.ASS_Q1P2_ref remnantDefeated",,,
-ASS_Q1P2_CacheText1,PopulateSalvageOptions1,"$ASS_Q1P2_cache score:1000
-Call $global.ASS_Q1P2_ref updateData","$global.ASS_Q1P2_returnHere = true
-Call $global.ASS_Q1P2_ref updateStage","You got a data chip within the cache, encrypted data look similar to the first one, we might be able to piece together stuff.",,
-ASS_Q1P2_ReturnText1,PickGreeting,"$ASS_Q1P2_returnHere score:1000
-Call $global.ASS_Q1P2_ref updateData","ShowPersonVisual
-$global.ASS_Q1P2_completed = true
-Call $global.ASS_Q1P2_ref updateStage","Noice noice","ASS_Q1P2_leave:Done",
-ASS_Q1P2_LeaveText1,DialogOptionSelected,"$option == ASS_Q1P2_leave","DismissDialog",,,
+""It's great to see you captain, the data core you gave me was damaged, the data I decrypted is fragmented, but I was able to consolidate some information. The data shows a hidden fleet at a system, its job was surveillance and protection. I don't know what they were observing or defending but I do know that the ships within are mostly REMNANT, but there was a ship that I did not understand, the only clue that I uncovered was the word,"" $heOrShe emphasizes, ""OMEGA.""","UGPhase2_commText2:Grab the data and report back to the executive",
+UGPhase2_CommText2,DialogOptionSelected,"$option == UGPhase2_commText2","$global.UGPhase2_reportHere = true
+Call $global.UGPhase2_ref updateStage","Before you could leave $personName contacts you, ""Captain, I don't know what you are involved in, but I do want to participate. If you ever want something decrypted, researched, or experimented my comms are open.""","defaultLeave:I will think about it",
 "#END UGPhase2",,,,,,
 ,,,,,,
 # UGPhase3,,,,,,
-NEW RULE,,,,,,
+UGPhase3_FleetEncounter,BeginFleetEncounter,"$UGPhase3_reportToFleet score:1000
+Call $global.UGPhase3_ref updateData","FleetDesc
+HailPlayer",,,
+UGPhase3_FleetText1,OpenCommLink,"$entity.UGPhase3_reportToFleet score:1000
+Call $global.UGPhase3_ref updateData",,"As you accept the comm request the captain of the fleet speaks out to you, ""Captain! ~Q1 Person~ has been taken by COMSEC, the mounting pressure was too much and our ~Q1 Person Post~ got indicted for conspiracy.""","UGPhase3_fleetText2:Ask why ~Q1 Person~ did not escape
+UGPhase3_fleetText3:Ask where is ~Q1 person~ taken
+",
+UGPhase3_FleetText2,DialogOptionSelected,"$option == UGPhase3_fleetText2",,"""We already had plans, but COMSEC was far ahead of us before we could enact any of it... It was too late.""","UGPhase3_fleetText3:Ask where is ~Q1 person~ taken",
+UGPhase3_FleetText3,DialogOptionSelected,"$option == UGPhase3_fleetText3","$global.UGPhase3_freeHere = true
+Call $global.UGPhase3_ref updateStage","""From what I've gathered they took ~Q1 Person~ to ~Planet name~ around ~System distance~ lightyears away in the ~System name~. We could only gather this much, we don't know what you'd need to free ~Q1 Person~.""","cutCommLink:Understood",
+UGPhase3_MarketOpen,OpenInteractionDialog,"$market.UGPhase3_freePersonFrom score:1000
+Call $market.UGPhase3_ref updateData
+!$UGPhase3_addedRaidObjective","AddRaidObjective genericIcon ""Conduct jailbreak operation"" EXTREME 3000 UGPhase3_RaidDone
+$UGPhase3_addedRaidObjective = true 0
+FireBest OpenInteractionDialog",,,
+UGPhase3_MarketRaidDone,UGPhase3_RaidDone,"Call $market.UGPhase3_ref updateData",,"A weak disheveled $manOrWoman looks at you, ""I thought you would never arrive,"" $heOrShe pauses, ""thank you, Captain.""","UGPhase3_raidDoneText1:Ask $himOrHer what happened
+UGPhase3_raidDoneText2:Ask $himOrHer where to go",
+UGPhase3_RaidDoneText1,DialogOptionSelected,"$option == UGPhase3_raidDoneText1",,"$heOrShe musters the strength to speak, ""A close official whose family was part of the expedition fleet, betrayed me. I knew it could happen, I should've been faster.""","UGPhase3_raidDoneText2:Ask $himOrHer where to go",
+UGPhase3_RaidDoneText2,DialogOptionSelected,"$option == UGPhase3_raidDoneText2","$global.UGPhase3_marketHere = true
+Call $global.UGPhase3_ref updateStage","""Donn in Hybrasil,"" she says, before fainting.","defaultLeave:Understood",
+UGPhase3_NewMarketText1,OpenInteractionDialog,"$market.UGPhase3_personTo score:2000","ShowDefaultVisual
+$global.UGPhase3_remnantHere = true
+Call $global.UGPhase3_ref updateStage","Thank you captain continue what you was doing baby","defaultLeave:Understood",
+UGPhase3_RemnantDefeated,UGPhase3_RemnantDefeated,,"Call $global.UGPhase3_ref remnantDefeated",,,
+UGPhase3_CacheText1,PopulateSalvageOptions1,"$UGPhase3_cache score:1000
+Call $global.UGPhase3_ref updateData","$global.UGPhase3_returnHere = true
+Call $global.UGPhase3_ref updateStage","You got a data chip within the cache, encrypted data look similar to the first one, we might be able to piece together stuff.",,
+UGPhase3_ReturnText1,PickGreeting,"$UGPhase3_returnHere score:1000
+Call $global.UGPhase3_ref updateData","ShowPersonVisual
+$global.UGPhase3_completed = true
+Call $global.UGPhase3_ref updateStage","Noice noice","UGPhase3_leave:Done",
+UGPhase3_LeaveText1,DialogOptionSelected,"$option == UGPhase3_leave","DismissDialog",,,
 "#END UGPhase3",,,,,,
 

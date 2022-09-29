@@ -117,8 +117,8 @@ public class UGPhase1 extends HubMissionWithBarEvent {
 
     protected void updateInteractionDataImpl() {
         set("$UGPhase1_distance", getDistanceLY(system));
-        set("$UGPhase1_system", system.getNameWithLowercaseTypeShort());
-        set("$UGPhase1_planet", planet.getFullName());
+        set("$UGPhase1_systemName", system.getNameWithLowercaseTypeShort());
+        set("$UGPhase1_planetName", planet.getFullName());
         set("$UGPhase1_reward", Misc.getWithDGS(getCreditsReward()));
     }
 
@@ -158,6 +158,6 @@ public class UGPhase1 extends HubMissionWithBarEvent {
 
     @Override
     public String getBaseName() {
-        return "ASS: System Investigation";
+        return "The Unknown Gensis: The Search";
     }
 }
