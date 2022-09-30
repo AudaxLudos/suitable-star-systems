@@ -1,3 +1,0 @@
-bar event id,tags,freq,prob,min dur,max dur,min timeout,max timeout,min accepted timeout,max accepted timeout,plugin
-UGPhase1,"priority, non_repeatable",100,100,30,40,15,20,10000,10000,data.campaign.missions.UGPhase1
-UGPhase2,"priority, non_repeatable",100,100,30,40,15,20,10000,10000,data.campaign.missions.UGPhase2
