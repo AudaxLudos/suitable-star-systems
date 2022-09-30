@@ -35,8 +35,8 @@ public class System1 {
 
         // Rename system with procedural name
         String systemName = SSS_Utils.generateProceduralName("star", null);
-        // system.setBaseName(systemName);
-        // system.setName(systemName);
+        system.setBaseName(systemName);
+        system.setName(systemName);
 
         // Create star for system
         PlanetAPI star = system.initStar("system1", "star_orange", 750f, 400f, 10f, 05f, 3f);
@@ -45,8 +45,8 @@ public class System1 {
         float randomAngle1 = random.nextFloat() * 360f;
         SectorEntityToken commRelay = system.addCustomEntity(null, null, "comm_relay", "neutral");
         commRelay.setCircularOrbit(star, randomAngle1, 2000f, 200f);
-        SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "inactive_gate", "neutral");
-        inactiveGate.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 2000f, 200f);
+        SectorEntityToken derelictCryosleeper = system.addCustomEntity(null, null, "derelict_cryosleeper", "neutral");
+        derelictCryosleeper.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 2000f, 200f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
         jumpPoint1.setCircularOrbit(star, (randomAngle1 - 120f) % 360f, 2000f, 200f);

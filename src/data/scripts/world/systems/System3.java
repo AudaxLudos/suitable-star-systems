@@ -35,8 +35,8 @@ public class System3 {
 
         // Rename system with procedural name
         String systemName = SSS_Utils.generateProceduralName("star", null);
-        // system.setBaseName(systemName);
-        // system.setName(systemName);
+        system.setBaseName(systemName);
+        system.setName(systemName);
 
         // Create star for system
         PlanetAPI star = system.initStar("system3", "star_blue_supergiant", 1500f, 872f, 17f, 0.5f, 6f);
@@ -147,7 +147,7 @@ public class System3 {
             "equipment_cache_small", Float.valueOf(10f) }));
         RemnantThemeGenerator.addBeacon(system, RemnantSystemType.RESURGENT);
         // Add dormant or active remnant fleets
-        RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 8, 16, 16, 32, 0.75f);
+        RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 8, 16, 8, 16, 0.75f);
         system.addScript((EveryFrameScript)remnantFleets);
         // Add remnant station 1 that spawns remnant fleets
         float station1Radius = planet2.getRadius() + 150f;

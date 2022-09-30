@@ -35,8 +35,8 @@ public class System2 {
 
         // Rename system with procedural name
         String systemName = SSS_Utils.generateProceduralName("star", null);
-        // system.setBaseName(systemName);
-        // system.setName(systemName);
+        system.setBaseName(systemName);
+        system.setName(systemName);
 
         // Create star for system
         PlanetAPI star = system.initStar("system2", "star_yellow", 900f, 400f, 10f, 0.5f, 3f);
@@ -53,8 +53,8 @@ public class System2 {
 
         // Create custom entities
         float randomAngle1 = random.nextFloat() * 360f;
-        SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation.setCircularOrbit(star, randomAngle1, 3000f, 300f);
+        SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "inactive_gate", "neutral");
+        inactiveGate.setCircularOrbit(star, randomAngle1, 3000f, 300f);
         SectorEntityToken commRelay = system.addCustomEntity(null, null, "comm_relay", "neutral");
         commRelay.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 3000f, 300f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
@@ -105,8 +105,8 @@ public class System2 {
         float randomAngle2 = random.nextFloat() * 360f;
         SectorEntityToken sensorArray = system.addCustomEntity(null, null, "sensor_array", "neutral");
         sensorArray.setCircularOrbit(star, randomAngle2, 9000f, 900f);
-        SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "derelict_cryosleeper", "neutral");
-        inactiveGate.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 9000f, 900f);
+        SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
+        stableLocation.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 9000f, 900f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
         jumpPoint2.setCircularOrbit(star, (randomAngle2 - 120f) % 360f, 9000f, 900f);
@@ -150,7 +150,7 @@ public class System2 {
             "equipment_cache_small", Float.valueOf(10f) }));
         RemnantThemeGenerator.addBeacon(system, RemnantSystemType.SUPPRESSED);
         // Add dormant or active remnant fleets
-        RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 6, 12, 8, 16, 0.5f);
+        RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 6, 12, 6, 12, 0.5f);
         system.addScript((EveryFrameScript)remnantFleets);
         // Add remnant station 1 that spawns remnant fleets
         float station1Radius = planet2.getRadius() + 150f;
