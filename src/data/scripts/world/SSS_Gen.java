@@ -1,8 +1,9 @@
 package data.scripts.world;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -21,11 +22,13 @@ public class SSS_Gen implements SectorGeneratorPlugin {
     @Override
     public void generate(SectorAPI sector) {
         Random random = StarSystemGenerator.random;
-        List<StarSystemAPI> systems = sector.getStarSystems();
-        List<Constellation> constellations = new ArrayList<Constellation>();
-        for (StarSystemAPI system : systems) {
-            if (system.isProcgen() && !constellations.contains(system.getConstellation()))
-                constellations.add(system.getConstellation());
+        Set<Constellation> constellations = new HashSet<Constellation>();
+        for (StarSystemAPI system : sector.getStarSystems()) {
+            if (!system.isInConstellation())
+                continue;
+            Constellation c = system.getConstellation();
+            if (c != null)
+                constellations.add(c);
         }
 
         // Randomly put system 1 into a random constellation
@@ -92,7 +95,7 @@ public class SSS_Gen implements SectorGeneratorPlugin {
         return new Vector2f(centroidX / systems.size(), centroidY / systems.size());
     }
 
-    public Constellation getNearestConstellation(Vector2f origin, List<Constellation> constellations) {
+    public Constellation getNearestConstellation(Vector2f origin, Set<Constellation> constellations) {
         float minDist = Float.MAX_VALUE;
         Constellation closest = null;
         for (Constellation constellation : constellations) {
