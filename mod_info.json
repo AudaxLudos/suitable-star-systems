@@ -1,16 +1,16 @@
 {
-    "id": "ug",
-    "name": "Unknown Genesis",
+    "id": "sss",
+    "name": "Suitable Star Systems",
     "author": "Audax",
     "version": {
-        "major": 0,
+        "major": 1,
         "minor": 0,
-        "patch": 1
+        "patch": 0
     },
-    "description": "Adds 3 star systems with varying difficulty to fully colonize and a quest that leads to a [SUPERREDACTED] system",
+    "description": "Adds star systems to different constellations around the core worlds with varying difficulty that can be colonized",
     "gameVersion": "0.95.1a-RC6",
     "jars": [
-        "UG.jar"
+        "SSS.jar"
     ],
-    "modPlugin": "data.scripts.UG_ModPlugin"
+    "modPlugin": "data.scripts.SSS_ModPlugin"
 }

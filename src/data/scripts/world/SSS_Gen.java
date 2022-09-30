@@ -16,9 +16,8 @@ import com.fs.starfarer.api.util.Misc;
 import data.scripts.world.systems.System1;
 import data.scripts.world.systems.System2;
 import data.scripts.world.systems.System3;
-import data.scripts.world.systems.System4;
 
-public class UG_Gen implements SectorGeneratorPlugin {
+public class SSS_Gen implements SectorGeneratorPlugin {
     @Override
     public void generate(SectorAPI sector) {
         Random random = StarSystemGenerator.random;
@@ -58,16 +57,6 @@ public class UG_Gen implements SectorGeneratorPlugin {
         system3.setConstellation(constellation3);
         system3.getLocation().set(location3);
         new System3().generate(sector);
-
-        // Randomly put system 4 into a random constellation
-        StarSystemAPI system4 = sector.createStarSystem("system4");
-        Constellation constellation4 = getNearestConstellation(constellation1.getLocation(), constellations);
-        Vector2f location4 = findLocationInConstellation(constellation4, random);
-        constellations.remove(constellation4);
-        constellation4.getSystems().add(system4);
-        system4.setConstellation(constellation4);
-        system4.getLocation().set(location4);
-        new System4().generate(sector);
     }
 
     public Vector2f findLocationInConstellation(Constellation constellation, Random random) {

@@ -13,6 +13,8 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
@@ -20,8 +22,7 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.R
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 
-import data.campaign.procgen.themes.CustomThemeGenerator;
-import data.scripts.UG_Utils;
+import data.scripts.SSS_Utils;
 
 public class System1 {
     public void generate(SectorAPI sector) {
@@ -31,7 +32,7 @@ public class System1 {
         StarSystemAPI system = sector.getStarSystem("system1");
 
         // Rename system with procedural name
-        String systemName = UG_Utils.generateProceduralName("star", null);
+        String systemName = SSS_Utils.generateProceduralName("star", null);
         // system.setBaseName(systemName);
         // system.setName(systemName);
 
@@ -50,7 +51,7 @@ public class System1 {
         system.addEntity(jumpPoint1);
 
         // Create planet 1
-        String planet1Name = UG_Utils.generateProceduralName("planet", star.getName());
+        String planet1Name = SSS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_castiron", random.nextFloat() * 360f, 90f, 3000f, 300f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
@@ -60,7 +61,7 @@ public class System1 {
         planet1Market.addCondition("hot");
 
         // Create planet 2
-        String planet2Name = UG_Utils.generateProceduralName("planet", star.getName());
+        String planet2Name = SSS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet2 = system.addPlanet(planet2Name.toLowerCase(), star, planet2Name, "arid", random.nextFloat() * 360f, 130f, 4000f, 400f);
         Misc.initConditionMarket(planet2);
         MarketAPI planet2Market = planet2.getMarket();
@@ -72,12 +73,12 @@ public class System1 {
         planet2Market.addCondition("hot");
 
         // Create asteroid belt 1
-        String ring1Name = UG_Utils.generateProceduralName("asteroid_belt", star.getName());
+        String ring1Name = SSS_Utils.generateProceduralName("asteroid_belt", star.getName());
         system.addAsteroidBelt(star, 128, 5000f, 256f, 500f, 500f, "asteroid_belt", ring1Name);
         system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 5000f, 500f);
 
         // Create planet 3
-        String planet3Name = UG_Utils.generateProceduralName("planet", star.getName());
+        String planet3Name = SSS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet3 = system.addPlanet(planet3Name.toLowerCase(), star, planet3Name, "barren-desert", random.nextFloat() * 360f, 90f, 6000f, 600f);
         Misc.initConditionMarket(planet3);
         MarketAPI planet3Market = planet3.getMarket();
@@ -87,7 +88,7 @@ public class System1 {
         planet3Market.addCondition("thin_atmosphere");
 
         // Create planet 4
-        String planet4Name = UG_Utils.generateProceduralName("planet", star.getName());
+        String planet4Name = SSS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), star, planet4Name, "gas_giant", random.nextFloat() * 360f, 250f, 7000f, 700f);
         Misc.initConditionMarket(planet4);
         MarketAPI planet4Market = planet4.getMarket();
@@ -106,7 +107,7 @@ public class System1 {
         system.addEntity(jumpPoint2);
 
         // Create asteroid belt 2
-        String ring2Name = UG_Utils.generateProceduralName("asteroid_belt", star.getName());
+        String ring2Name = SSS_Utils.generateProceduralName("asteroid_belt", star.getName());
         system.addAsteroidBelt(star, 64, 9000f, 256f, 900f, 900f, "asteroid_belt", ring2Name);
         system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 9000f, 900f);
 
@@ -122,8 +123,8 @@ public class System1 {
         editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f, 0.25f);
 
         // Generate custom entities
-        CustomThemeGenerator theme = new CustomThemeGenerator();
-        StarSystemData systemData = CustomThemeGenerator.computeSystemData(system);
+        MiscellaneousThemeGenerator theme = new MiscellaneousThemeGenerator();
+        StarSystemData systemData = BaseThemeGenerator.computeSystemData(system);
         theme.addResearchStations(systemData, 0.25f, 1, 1, theme.createStringPicker(new Object[] {
             "station_research_remnant", Float.valueOf(10f) }));
         theme.addMiningStations(systemData, 0.25f, 1, 2, theme.createStringPicker(new Object[] {
