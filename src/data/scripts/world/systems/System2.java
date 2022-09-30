@@ -43,7 +43,7 @@ public class System2 {
 
         // Create planet 1
         String planet1Name = SSS_Utils.generateProceduralName("planet", star.getName());
-        PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_castiron", random.nextFloat() * 360f, 90f, 2000f, 200f);
+        PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_venuslike", random.nextFloat() * 360f, 90f, 2000f, 200f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
         planet1Market.addCondition("ore_moderate");
@@ -55,8 +55,8 @@ public class System2 {
         float randomAngle1 = random.nextFloat() * 360f;
         SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
         stableLocation.setCircularOrbit(star, randomAngle1, 3000f, 300f);
-        SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation3.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 3000f, 300f);
+        SectorEntityToken commRelay = system.addCustomEntity(null, null, "comm_relay", "neutral");
+        commRelay.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 3000f, 300f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
         jumpPoint1.setCircularOrbit(star, (randomAngle1 - 120f) % 360f, 3000f, 300f);
@@ -70,6 +70,7 @@ public class System2 {
         planet2Market.addCondition("farmland_adequate");
         planet2Market.addCondition("ore_moderate");
         planet2Market.addCondition("organics_common");
+        planet2Market.addCondition("ruins_extensive");
         planet2Market.addCondition("habitable");
         planet2Market.addCondition("mild_climate");
         planet2Market.addCondition("low_gravity");
@@ -102,8 +103,8 @@ public class System2 {
 
         // Create custom entities
         float randomAngle2 = random.nextFloat() * 360f;
-        SectorEntityToken stableLocation2 = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation2.setCircularOrbit(star, randomAngle2, 9000f, 900f);
+        SectorEntityToken sensorArray = system.addCustomEntity(null, null, "sensor_array", "neutral");
+        sensorArray.setCircularOrbit(star, randomAngle2, 9000f, 900f);
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "derelict_cryosleeper", "neutral");
         inactiveGate.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 9000f, 900f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");

@@ -55,7 +55,7 @@ public class System3 {
 
         // Create planet 1
         String planet1Name = SSS_Utils.generateProceduralName("planet", star.getName());
-        PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_castiron", random.nextFloat() * 360f, 90f, 4000f, 400f);
+        PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_bombarded", random.nextFloat() * 360f, 90f, 4000f, 400f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
         planet1Market.addCondition("ore_rich");
@@ -72,9 +72,9 @@ public class System3 {
         planet2Market.addCondition("farmland_rich");
         planet2Market.addCondition("ore_rich");
         planet2Market.addCondition("organics_abundant");
+        planet2Market.addCondition("ruins_vast");
         planet2Market.addCondition("habitable");
         planet2Market.addCondition("mild_climate");
-        planet2Market.addCondition("low_gravity");
 
         // Create planet 3
         String planet3Name = SSS_Utils.generateProceduralName("planet", star.getName());

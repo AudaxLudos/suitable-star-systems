@@ -43,8 +43,8 @@ public class System1 {
 
         // Create custom entities
         float randomAngle1 = random.nextFloat() * 360f;
-        SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
-        stableLocation.setCircularOrbit(star, randomAngle1, 2000f, 200f);
+        SectorEntityToken commRelay = system.addCustomEntity(null, null, "comm_relay", "neutral");
+        commRelay.setCircularOrbit(star, randomAngle1, 2000f, 200f);
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "inactive_gate", "neutral");
         inactiveGate.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 2000f, 200f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
@@ -70,6 +70,7 @@ public class System1 {
         planet2Market.addCondition("farmland_poor");
         planet2Market.addCondition("ore_sparse");
         planet2Market.addCondition("organics_trace");
+        planet2Market.addCondition("ruins_widespread");
         planet2Market.addCondition("habitable");
         planet2Market.addCondition("low_gravity");
         planet2Market.addCondition("hot");
