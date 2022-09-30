@@ -24,7 +24,7 @@ public class SSS_Gen implements SectorGeneratorPlugin {
         Random random = StarSystemGenerator.random;
         Set<Constellation> constellations = new HashSet<Constellation>();
         for (StarSystemAPI system : sector.getStarSystems()) {
-            if (!system.isInConstellation())
+            if (!system.isInConstellation() || !system.isProcgen())
                 continue;
             Constellation c = system.getConstellation();
             if (c != null)

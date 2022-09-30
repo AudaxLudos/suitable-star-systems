@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.JumpPointAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorAPI;
@@ -16,6 +17,7 @@ import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantStationFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.RemnantSystemType;
@@ -55,21 +57,21 @@ public class System1 {
         PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_castiron", random.nextFloat() * 360f, 90f, 3000f, 300f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
-        planet1Market.addCondition("ore_moderate");
-        planet1Market.addCondition("rare_ore_moderate");
+        planet1Market.addCondition("ore_sparse");
+        planet1Market.addCondition("rare_ore_sparse");
         planet1Market.addCondition("no_atmosphere");
-        planet1Market.addCondition("hot");
+        planet1Market.addCondition("very_hot");
 
         // Create planet 2
         String planet2Name = SSS_Utils.generateProceduralName("planet", star.getName());
         PlanetAPI planet2 = system.addPlanet(planet2Name.toLowerCase(), star, planet2Name, "arid", random.nextFloat() * 360f, 130f, 4000f, 400f);
         Misc.initConditionMarket(planet2);
         MarketAPI planet2Market = planet2.getMarket();
-        planet2Market.addCondition("farmland_adequate");
-        planet2Market.addCondition("ore_moderate");
-        planet2Market.addCondition("ruins_widespread");
-        planet2Market.addCondition("organics_common");
+        planet2Market.addCondition("farmland_poor");
+        planet2Market.addCondition("ore_sparse");
+        planet2Market.addCondition("organics_trace");
         planet2Market.addCondition("habitable");
+        planet2Market.addCondition("low_gravity");
         planet2Market.addCondition("hot");
 
         // Create asteroid belt 1
@@ -92,8 +94,10 @@ public class System1 {
         PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), star, planet4Name, "gas_giant", random.nextFloat() * 360f, 250f, 7000f, 700f);
         Misc.initConditionMarket(planet4);
         MarketAPI planet4Market = planet4.getMarket();
-        planet4Market.addCondition("volatiles_diffuse");
+        planet4Market.addCondition("volatiles_trace");
         planet4Market.addCondition("high_gravity");
+        float planet4Radius = planet4.getRadius();
+        SSS_Utils.createMagneticField(planet4, planet4Radius + 300f, (planet4Radius + 300f) / 2f, planet4Radius + 50f, planet4Radius + 300f, 1f);
 
         // Create custom entities
         float randomAngle2 = random.nextFloat() * 360f;
@@ -148,5 +152,10 @@ public class System1 {
         // Add dormant or active remnant fleets
         RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 4, 8, 4, 8, 0.25f);
         system.addScript((EveryFrameScript)remnantFleets);
+        // Add remnant station 1 that spawns remnant fleets
+        float station1Radius = planet2.getRadius() + 150f;
+        CampaignFleetAPI station1 = SSS_Utils.addAIBattlestation(planet2, false, station1Radius, station1Radius / 10f);
+        RemnantStationFleetManager station1Fleets = new RemnantStationFleetManager((SectorEntityToken)station1, 1f, 0, 4, 25f, 4, 8);
+        system.addScript((EveryFrameScript)station1Fleets);
     }
 }

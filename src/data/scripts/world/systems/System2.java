@@ -46,9 +46,8 @@ public class System2 {
         PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_castiron", random.nextFloat() * 360f, 90f, 2000f, 200f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
-        planet1Market.addCondition("ore_rich");
-        planet1Market.addCondition("rare_ore_rich");
-        planet1Market.addCondition("ruins_scattered");
+        planet1Market.addCondition("ore_moderate");
+        planet1Market.addCondition("rare_ore_moderate");
         planet1Market.addCondition("no_atmosphere");
         planet1Market.addCondition("very_hot");
 
@@ -68,12 +67,12 @@ public class System2 {
         PlanetAPI planet2 = system.addPlanet(planet2Name.toLowerCase(), star, planet2Name, "jungle", random.nextFloat() * 360f, 130f, 4000f, 400f);
         Misc.initConditionMarket(planet2);
         MarketAPI planet2Market = planet2.getMarket();
-        planet2Market.addCondition("farmland_rich");
-        planet2Market.addCondition("ore_rich");
-        planet2Market.addCondition("ruins_extensive");
-        planet2Market.addCondition("organics_abundant");
+        planet2Market.addCondition("farmland_adequate");
+        planet2Market.addCondition("ore_moderate");
+        planet2Market.addCondition("organics_common");
         planet2Market.addCondition("habitable");
         planet2Market.addCondition("mild_climate");
+        planet2Market.addCondition("low_gravity");
         planet2Market.addCondition("hot");
 
         // Create asteroid belt 1
@@ -87,18 +86,19 @@ public class System2 {
         Misc.initConditionMarket(planet3);
         MarketAPI planet3Market = planet3.getMarket();
         planet3Market.addCondition("high_gravity");
-        planet3Market.addCondition("volatiles_abundant");
+        planet3Market.addCondition("volatiles_diffuse");
+        float planet3Radius = planet3.getRadius();
+        SSS_Utils.createMagneticField(planet3, planet3Radius + 300f, (planet3Radius + 300f) / 2f, planet3Radius + 50f, planet3Radius + 300f, 1f);
 
         // Create planet 3 moon 1
         String planet4Name = SSS_Utils.generateProceduralName("planet", star.getName());
-        PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), planet3, planet4Name, "toxic", random.nextFloat() * 360f, 90f, 1000f, 100f);
+        PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), planet3, planet4Name, "barren-desert", random.nextFloat() * 360f, 90f, 1000f, 100f);
         Misc.initConditionMarket(planet4);
         MarketAPI planet4Market = planet4.getMarket();
         planet4Market.addCondition("ore_moderate");
         planet4Market.addCondition("rare_ore_moderate");
         planet4Market.addCondition("organics_trace");
-        planet1Market.addCondition("ruins_scattered");
-        planet4Market.addCondition("toxic_atmosphere");
+        planet4Market.addCondition("thin_atmosphere");
 
         // Create custom entities
         float randomAngle2 = random.nextFloat() * 360f;
@@ -110,6 +110,9 @@ public class System2 {
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
         jumpPoint2.setCircularOrbit(star, (randomAngle2 - 120f) % 360f, 9000f, 900f);
         system.addEntity(jumpPoint2);
+
+        // Add ring 2
+        system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.white, 256f, 10000f, 1000f, "ring", null);
 
         // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);
@@ -148,10 +151,15 @@ public class System2 {
         // Add dormant or active remnant fleets
         RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 6, 12, 8, 16, 0.5f);
         system.addScript((EveryFrameScript)remnantFleets);
-        // Add remnant station that spawns remnant fleets
+        // Add remnant station 1 that spawns remnant fleets
         float station1Radius = planet2.getRadius() + 150f;
         CampaignFleetAPI station1 = SSS_Utils.addAIBattlestation(planet2, false, station1Radius, station1Radius / 10f);
-        RemnantStationFleetManager station1Fleets = new RemnantStationFleetManager((SectorEntityToken)station1, 1f, 0, 4, 25f, 8, 16);
+        RemnantStationFleetManager station1Fleets = new RemnantStationFleetManager((SectorEntityToken)station1, 1f, 0, 6, 20f, 8, 16);
         system.addScript((EveryFrameScript)station1Fleets);
+        // Add remnant station 2 that spawns remnant fleets
+        float station2Radius = planet4.getRadius() + 150f;
+        CampaignFleetAPI station2 = SSS_Utils.addAIBattlestation(planet4, false, station2Radius, station2Radius / 10f);
+        RemnantStationFleetManager station2Fleets = new RemnantStationFleetManager((SectorEntityToken)station2, 1f, 0, 6, 20f, 8, 16);
+        system.addScript((EveryFrameScript)station2Fleets);
     }
 }
