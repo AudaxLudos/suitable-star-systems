@@ -55,7 +55,7 @@ public class System3 {
 
         // Create planet 1
         String planet1Name = SSS_Utils.generateProceduralName("planet", star.getName());
-        PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_bombarded", random.nextFloat() * 360f, 90f, 4000f, 400f);
+        PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren-bombarded", random.nextFloat() * 360f, 90f, 4000f, 400f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
         planet1Market.addCondition("ore_rich");
@@ -150,19 +150,14 @@ public class System3 {
         RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 8, 16, 16, 32, 0.75f);
         system.addScript((EveryFrameScript)remnantFleets);
         // Add remnant station 1 that spawns remnant fleets
-        float station1Radius = planet1.getRadius() + 150f;
-        CampaignFleetAPI station1 = SSS_Utils.addAIBattlestation(planet1, false, station1Radius, station1Radius / 10f);
+        float station1Radius = planet2.getRadius() + 150f;
+        CampaignFleetAPI station1 = SSS_Utils.addAIBattlestation(planet2, false, station1Radius, station1Radius / 10f);
         RemnantStationFleetManager station1Fleets = new RemnantStationFleetManager((SectorEntityToken)station1, 1f, 0, 8, 15f, 16, 32);
         system.addScript((EveryFrameScript)station1Fleets);
         // Add remnant station 2 that spawns remnant fleets
-        float station2Radius = planet2.getRadius() + 150f;
-        CampaignFleetAPI station2 = SSS_Utils.addAIBattlestation(planet2, false, station2Radius, station2Radius / 10f);
+        float station2Radius = planet3.getRadius() + 150f;
+        CampaignFleetAPI station2 = SSS_Utils.addAIBattlestation(planet3, false, station2Radius, station2Radius / 10f);
         RemnantStationFleetManager station2Fleets = new RemnantStationFleetManager((SectorEntityToken)station2, 1f, 0, 8, 15f, 16, 32);
         system.addScript((EveryFrameScript)station2Fleets);
-        // Add remnant station 3 that spawns remnant fleets
-        float station3Radius = planet3.getRadius() + 150f;
-        CampaignFleetAPI station3 = SSS_Utils.addAIBattlestation(planet3, false, station3Radius, station3Radius / 10f);
-        RemnantStationFleetManager station3Fleets = new RemnantStationFleetManager((SectorEntityToken)station3, 1f, 0, 8, 15f, 16, 32);
-        system.addScript((EveryFrameScript)station3Fleets);
     }
 }
