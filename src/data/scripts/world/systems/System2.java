@@ -34,12 +34,12 @@ public class System2 {
         StarSystemAPI system = sector.getStarSystem("system2");
 
         // Rename system with procedural name
-        String systemName = SSS_Utils.generateProceduralName("star", null);
+        String systemName = SSS_Utils.generateProceduralName("star", system.getConstellation().getName());
         system.setBaseName(systemName);
         system.setName(systemName);
 
         // Create star for system
-        PlanetAPI star = system.initStar("system2", "star_yellow", 900f, 400f, 10f, 0.5f, 3f);
+        PlanetAPI star = system.initStar(systemName.toLowerCase(), "star_yellow", 900f, 400f, 10f, 0.5f, 3f);
 
         // Create planet 1
         String planet1Name = SSS_Utils.generateProceduralName("planet", star.getName());

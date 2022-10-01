@@ -34,12 +34,12 @@ public class System1 {
         StarSystemAPI system = sector.getStarSystem("system1");
 
         // Rename system with procedural name
-        String systemName = SSS_Utils.generateProceduralName("star", null);
+        String systemName = SSS_Utils.generateProceduralName("star", system.getConstellation().getName());
         system.setBaseName(systemName);
         system.setName(systemName);
 
         // Create star for system
-        PlanetAPI star = system.initStar("system1", "star_orange", 750f, 400f, 10f, 05f, 3f);
+        PlanetAPI star = system.initStar(systemName.toLowerCase(), "star_orange", 750f, 400f, 10f, 05f, 3f);
 
         // Create custom entities
         float randomAngle1 = random.nextFloat() * 360f;
