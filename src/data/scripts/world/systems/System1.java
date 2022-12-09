@@ -100,16 +100,6 @@ public class System1 {
 		planet3Market.addCondition(Conditions.VOLATILES_TRACE);
 		planet3Market.addCondition(Conditions.VERY_COLD);
 
-		// Create planet 3
-		String planet4Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
-		PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), star, planet4Name, "barren-desert", random.nextFloat() * 360f, 90f, 6000f, 600f);
-		Misc.initConditionMarket(planet4);
-		MarketAPI planet4Market = planet4.getMarket();
-		planet4Market.addCondition(Conditions.ORE_SPARSE);
-		planet4Market.addCondition(Conditions.RARE_ORE_SPARSE);
-		planet4Market.addCondition(Conditions.ORGANICS_TRACE);
-		planet4Market.addCondition(Conditions.THIN_ATMOSPHERE);
-
 		// Create planet 4
 		String planet5Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
 		PlanetAPI planet5 = system.addPlanet(planet5Name.toLowerCase(), star, planet5Name, "gas_giant", random.nextFloat() * 360f, 250f, 7000f, 700f);
@@ -119,6 +109,16 @@ public class System1 {
 		planet5Market.addCondition(Conditions.HIGH_GRAVITY);
 		float planet5Radius = planet5.getRadius();
 		SSS_Utils.createMagneticField(planet5, planet5Radius + 300f, (planet5Radius + 300f) / 2f, planet5Radius + 50f, planet5Radius + 300f, 1f);
+
+		// Create planet 3
+		String planet4Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
+		PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), star, planet4Name, "barren-desert", random.nextFloat() * 360f, 90f, 6000f, 600f);
+		Misc.initConditionMarket(planet4);
+		MarketAPI planet4Market = planet4.getMarket();
+		planet4Market.addCondition(Conditions.ORE_SPARSE);
+		planet4Market.addCondition(Conditions.RARE_ORE_SPARSE);
+		planet4Market.addCondition(Conditions.ORGANICS_TRACE);
+		planet4Market.addCondition(Conditions.THIN_ATMOSPHERE);
 
 		// Create custom entities
 		float randomAngle2 = random.nextFloat() * 360f;
