@@ -39,6 +39,15 @@ public class System2 {
         // Get star system
         StarSystemAPI system = sector.getStarSystem("system2");
 
+        // Add system theme / tags
+        system.addTag(Tags.THEME_INTERESTING);
+        system.addTag(Tags.THEME_RUINS);
+        system.addTag(Tags.THEME_RUINS_MAIN);
+        system.addTag(Tags.THEME_UNSAFE);
+        system.addTag(Tags.THEME_REMNANT);
+        system.addTag(Tags.THEME_REMNANT_MAIN);
+        system.addTag(Tags.THEME_REMNANT_SUPPRESSED);
+
         // Rename system with procedural name
         String systemName = SSS_Utils.generateProceduralName(Tags.STAR, system.getConstellation().getName());
         system.setBaseName(systemName);
@@ -109,7 +118,7 @@ public class System2 {
 
         // Create planet 5
         String planet5Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
-        PlanetAPI planet5 = system.addPlanet(planet5Name.toLowerCase(), star, planet5Name, "frozen2", random.nextFloat() * 360f, 130f, 4000f, 400f);
+        PlanetAPI planet5 = system.addPlanet(planet5Name.toLowerCase(), star, planet5Name, "frozen2", random.nextFloat() * 360f, 130f, 9000f, 900f);
         Misc.initConditionMarket(planet5);
         MarketAPI planet5Market = planet5.getMarket();
         planet5Market.addCondition(Conditions.ORE_MODERATE);
@@ -119,17 +128,14 @@ public class System2 {
 
         // Create custom entities
         float randomAngle2 = random.nextFloat() * 360f;
-        SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, "neutral");
-        sensorArray.setCircularOrbit(star, randomAngle2, 9000f, 900f);
-        SectorEntityToken stableLocation = system.addCustomEntity(null, null, Entities.STABLE_LOCATION, "neutral");
-        stableLocation.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 9000f, 900f);
+        SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, Factions.NEUTRAL);
+        sensorArray.setCircularOrbit(star, randomAngle2, 10000f, 1000f);
+        SectorEntityToken stableLocation = system.addCustomEntity(null, null, Entities.STABLE_LOCATION, Factions.NEUTRAL);
+        stableLocation.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 10000f, 1000f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
-        jumpPoint2.setCircularOrbit(star, (randomAngle2 - 120f) % 360f, 9000f, 900f);
+        jumpPoint2.setCircularOrbit(star, (randomAngle2 - 120f) % 360f, 10000f, 1000f);
         system.addEntity(jumpPoint2);
-
-        // Add ring 2
-        system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.white, 256f, 10000f, 1000f, Terrain.RING, null);
 
         // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);

@@ -41,6 +41,8 @@ public class System1 {
 
         // Add system theme / tags
         system.addTag(Tags.THEME_INTERESTING);
+        system.addTag(Tags.THEME_RUINS);
+        system.addTag(Tags.THEME_RUINS_MAIN);
         system.addTag(Tags.THEME_UNSAFE);
         system.addTag(Tags.THEME_REMNANT);
         system.addTag(Tags.THEME_REMNANT_MAIN);
