@@ -12,6 +12,12 @@ import com.fs.starfarer.api.campaign.SectorAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
+import com.fs.starfarer.api.impl.campaign.ids.Entities;
+import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.StarTypes;
+import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.ids.Terrain;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
@@ -34,28 +40,28 @@ public class System2 {
         StarSystemAPI system = sector.getStarSystem("system2");
 
         // Rename system with procedural name
-        String systemName = SSS_Utils.generateProceduralName("star", system.getConstellation().getName());
+        String systemName = SSS_Utils.generateProceduralName(Tags.STAR, system.getConstellation().getName());
         system.setBaseName(systemName);
         system.setName(systemName);
 
         // Create star for system
-        PlanetAPI star = system.initStar(systemName.toLowerCase(), "star_yellow", 900f, 400f, 10f, 0.5f, 3f);
+        PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.YELLOW, 900f, 400f, 10f, 0.5f, 3f);
 
         // Create planet 1
-        String planet1Name = SSS_Utils.generateProceduralName("planet", star.getName());
+        String planet1Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
         PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren_venuslike", random.nextFloat() * 360f, 90f, 2000f, 200f);
         Misc.initConditionMarket(planet1);
         MarketAPI planet1Market = planet1.getMarket();
-        planet1Market.addCondition("ore_moderate");
-        planet1Market.addCondition("rare_ore_moderate");
-        planet1Market.addCondition("no_atmosphere");
-        planet1Market.addCondition("very_hot");
+        planet1Market.addCondition(Conditions.ORE_MODERATE);
+        planet1Market.addCondition(Conditions.RARE_ORE_MODERATE);
+        planet1Market.addCondition(Conditions.NO_ATMOSPHERE);
+        planet1Market.addCondition(Conditions.VERY_HOT);
 
         // Create custom entities
         float randomAngle1 = random.nextFloat() * 360f;
-        SectorEntityToken inactiveGate = system.addCustomEntity(null, null, "inactive_gate", "neutral");
+        SectorEntityToken inactiveGate = system.addCustomEntity(null, null, Entities.INACTIVE_GATE, Factions.NEUTRAL);
         inactiveGate.setCircularOrbit(star, randomAngle1, 3000f, 300f);
-        SectorEntityToken commRelay = system.addCustomEntity(null, null, "comm_relay", "neutral");
+        SectorEntityToken commRelay = system.addCustomEntity(null, null, Entities.COMM_RELAY, Factions.NEUTRAL);
         commRelay.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 3000f, 300f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
@@ -63,49 +69,59 @@ public class System2 {
         system.addEntity(jumpPoint1);
 
         // Create planet 2
-        String planet2Name = SSS_Utils.generateProceduralName("planet", star.getName());
+        String planet2Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
         PlanetAPI planet2 = system.addPlanet(planet2Name.toLowerCase(), star, planet2Name, "jungle", random.nextFloat() * 360f, 130f, 4000f, 400f);
         Misc.initConditionMarket(planet2);
         MarketAPI planet2Market = planet2.getMarket();
-        planet2Market.addCondition("farmland_adequate");
-        planet2Market.addCondition("ore_moderate");
-        planet2Market.addCondition("organics_common");
-        planet2Market.addCondition("ruins_extensive");
-        planet2Market.addCondition("habitable");
-        planet2Market.addCondition("mild_climate");
-        planet2Market.addCondition("low_gravity");
-        planet2Market.addCondition("hot");
+        planet2Market.addCondition(Conditions.FARMLAND_ADEQUATE);
+        planet2Market.addCondition(Conditions.ORE_MODERATE);
+        planet2Market.addCondition(Conditions.ORGANICS_COMMON);
+        planet2Market.addCondition(Conditions.RUINS_EXTENSIVE);
+        planet2Market.addCondition(Conditions.HABITABLE);
+        planet2Market.addCondition(Conditions.MILD_CLIMATE);
+        planet2Market.addCondition(Conditions.LOW_GRAVITY);
+        planet2Market.addCondition(Conditions.HOT);
 
         // Create asteroid belt 1
-        String ring1Name = SSS_Utils.generateProceduralName("asteroid_belt", star.getName());
-        system.addAsteroidBelt(star, 64, 5000f, 256f, 500f, 500f, "asteroid_belt", ring1Name);
+        String ring1Name = SSS_Utils.generateProceduralName(Terrain.ASTEROID_BELT, star.getName());
+        system.addAsteroidBelt(star, 64, 5000f, 256f, 500f, 500f, Terrain.ASTEROID_BELT, ring1Name);
         system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 5000f, 500f);
 
         // Create planet 3
-        String planet3Name = SSS_Utils.generateProceduralName("planet", star.getName());
+        String planet3Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
         PlanetAPI planet3 = system.addPlanet(planet3Name.toLowerCase(), star, planet3Name, "gas_giant", random.nextFloat() * 360f, 250f, 7000f, 700f);
         Misc.initConditionMarket(planet3);
         MarketAPI planet3Market = planet3.getMarket();
-        planet3Market.addCondition("high_gravity");
-        planet3Market.addCondition("volatiles_diffuse");
+        planet3Market.addCondition(Conditions.VOLATILES_DIFFUSE);
+        planet3Market.addCondition(Conditions.HIGH_GRAVITY);
         float planet3Radius = planet3.getRadius();
         SSS_Utils.createMagneticField(planet3, planet3Radius + 300f, (planet3Radius + 300f) / 2f, planet3Radius + 50f, planet3Radius + 300f, 1f);
 
         // Create planet 3 moon 1
-        String planet4Name = SSS_Utils.generateProceduralName("planet", star.getName());
+        String planet4Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
         PlanetAPI planet4 = system.addPlanet(planet4Name.toLowerCase(), planet3, planet4Name, "barren-desert", random.nextFloat() * 360f, 90f, 1000f, 100f);
         Misc.initConditionMarket(planet4);
         MarketAPI planet4Market = planet4.getMarket();
-        planet4Market.addCondition("ore_moderate");
-        planet4Market.addCondition("rare_ore_moderate");
-        planet4Market.addCondition("organics_trace");
-        planet4Market.addCondition("thin_atmosphere");
+        planet4Market.addCondition(Conditions.ORE_MODERATE);
+        planet4Market.addCondition(Conditions.RARE_ORE_MODERATE);
+        planet4Market.addCondition(Conditions.ORGANICS_TRACE);
+        planet4Market.addCondition(Conditions.THIN_ATMOSPHERE);
+
+        // Create planet 5
+        String planet5Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
+        PlanetAPI planet5 = system.addPlanet(planet5Name.toLowerCase(), star, planet5Name, "frozen2", random.nextFloat() * 360f, 130f, 4000f, 400f);
+        Misc.initConditionMarket(planet5);
+        MarketAPI planet5Market = planet5.getMarket();
+        planet5Market.addCondition(Conditions.ORE_MODERATE);
+        planet5Market.addCondition(Conditions.RARE_ORE_MODERATE);
+        planet5Market.addCondition(Conditions.ORGANICS_COMMON);
+        planet5Market.addCondition(Conditions.VERY_COLD);
 
         // Create custom entities
         float randomAngle2 = random.nextFloat() * 360f;
-        SectorEntityToken sensorArray = system.addCustomEntity(null, null, "sensor_array", "neutral");
+        SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, "neutral");
         sensorArray.setCircularOrbit(star, randomAngle2, 9000f, 900f);
-        SectorEntityToken stableLocation = system.addCustomEntity(null, null, "stable_location", "neutral");
+        SectorEntityToken stableLocation = system.addCustomEntity(null, null, Entities.STABLE_LOCATION, "neutral");
         stableLocation.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 9000f, 900f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
@@ -113,7 +129,7 @@ public class System2 {
         system.addEntity(jumpPoint2);
 
         // Add ring 2
-        system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.white, 256f, 10000f, 1000f, "ring", null);
+        system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.white, 256f, 10000f, 1000f, Terrain.RING, null);
 
         // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);
@@ -130,24 +146,24 @@ public class System2 {
         MiscellaneousThemeGenerator theme = new MiscellaneousThemeGenerator();
         StarSystemData systemData = BaseThemeGenerator.computeSystemData(system);
         theme.addResearchStations(systemData, 0.5f, 1, 1, theme.createStringPicker(new Object[] {
-            "station_research_remnant", Float.valueOf(10f) }));
+           Entities.STATION_RESEARCH_REMNANT, Float.valueOf(10f) }));
         theme.addMiningStations(systemData, 0.5f, 1, 2, theme.createStringPicker(new Object[] {
-            "station_mining_remnant", Float.valueOf(10f) }));
+           Entities.STATION_MINING_REMNANT, Float.valueOf(10f) }));
         theme.addShipGraveyard(systemData, 0.5f, 1, 2, theme.createStringPicker(new Object[] {
-            "tritachyon", Float.valueOf(10f),
-            "hegemony", Float.valueOf(7f),
-            "independent", Float.valueOf(3f) }));
+            Factions.TRITACHYON, Float.valueOf(10f),
+            Factions.HEGEMONY, Float.valueOf(7f),
+           Factions.INDEPENDENT, Float.valueOf(3f) }));
         theme.addDerelictShips(systemData, 0.5f, 1, 5, theme.createStringPicker(new Object[] {
-            "tritachyon", Float.valueOf(10f),
-            "hegemony", Float.valueOf(7f),
-            "independent", Float.valueOf(3f) }));
+            Factions.TRITACHYON, Float.valueOf(10f),
+            Factions.HEGEMONY, Float.valueOf(7f),
+            Factions.INDEPENDENT, Float.valueOf(3f) }));
         theme.addCaches(systemData, 0.5f, 1, 2, theme.createStringPicker(new Object[] {
-            "weapons_cache_remnant", Float.valueOf(10f),
-            "weapons_cache_small_remnant", Float.valueOf(10f),
-            "supply_cache", Float.valueOf(10f),
-            "supply_cache_small", Float.valueOf(10f),
-            "equipment_cache", Float.valueOf(10f),
-            "equipment_cache_small", Float.valueOf(10f) }));
+            Entities.WEAPONS_CACHE_REMNANT, Float.valueOf(10f),
+            Entities.WEAPONS_CACHE_SMALL_REMNANT, Float.valueOf(10f),
+            Entities.SUPPLY_CACHE, Float.valueOf(10f),
+            Entities.SUPPLY_CACHE_SMALL, Float.valueOf(10f),
+            Entities.EQUIPMENT_CACHE, Float.valueOf(10f),
+            Entities.EQUIPMENT_CACHE_SMALL, Float.valueOf(10f) }));
         RemnantThemeGenerator.addBeacon(system, RemnantSystemType.SUPPRESSED);
         // Add dormant or active remnant fleets
         RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 6, 12, 6, 12, 0.5f);

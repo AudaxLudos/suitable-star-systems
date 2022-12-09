@@ -56,7 +56,7 @@ public class System1 {
 
         // Create custom entities
         float randomAngle1 = random.nextFloat() * 360f;
-        SectorEntityToken commRelay = system.addCustomEntity(null, null, Tags.COMM_RELAY, Factions.NEUTRAL);
+        SectorEntityToken commRelay = system.addCustomEntity(null, null, Entities.COMM_RELAY, Factions.NEUTRAL);
         commRelay.setCircularOrbit(star, randomAngle1, 2000f, 200f);
         SectorEntityToken derelictCryosleeper = system.addCustomEntity(null, null, Entities.DERELICT_CRYOSLEEPER, Factions.NEUTRAL);
         derelictCryosleeper.setCircularOrbit(star, (randomAngle1 + 120f) % 360f, 2000f, 200f);
@@ -120,9 +120,9 @@ public class System1 {
 
         // Create custom entities
         float randomAngle2 = random.nextFloat() * 360f;
-        SectorEntityToken stableLocation2 = system.addCustomEntity(null, null, Tags.STABLE_LOCATION, Factions.NEUTRAL);
+        SectorEntityToken stableLocation2 = system.addCustomEntity(null, null, Entities.STABLE_LOCATION, Factions.NEUTRAL);
         stableLocation2.setCircularOrbit(star, randomAngle2, 8000f, 800f);
-        SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, Tags.STABLE_LOCATION, Factions.NEUTRAL);
+        SectorEntityToken stableLocation3 = system.addCustomEntity(null, null, Entities.STABLE_LOCATION, Factions.NEUTRAL);
         stableLocation3.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 8000f, 800f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
@@ -153,7 +153,7 @@ public class System1 {
         theme.addMiningStations(systemData, 0.25f, 1, 2, theme.createStringPicker(new Object[] {
             Entities.STATION_MINING_REMNANT, Float.valueOf(10f) }));
         theme.addShipGraveyard(systemData, 0.25f, 1, 1, theme.createStringPicker(new Object[] {
-           Factions.TRITACHYON, Float.valueOf(10f),
+            Factions.TRITACHYON, Float.valueOf(10f),
             Factions.HEGEMONY, Float.valueOf(7f),
             Factions.INDEPENDENT, Float.valueOf(3f) }));
         theme.addDerelictShips(systemData, 0.25f, 1, 3, theme.createStringPicker(new Object[] {
