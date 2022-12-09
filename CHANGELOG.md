@@ -1,4 +1,8 @@
 # CHANGELOG
+###### 1.1.0
+- Add frozen world to system 3
+- Add frozen world to system 2
+- Add frozen world to system 1
 ###### 1.0.0
 - Update generation to be more consistent
 - Add randomize names to systems
