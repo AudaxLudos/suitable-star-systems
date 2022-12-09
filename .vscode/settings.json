@@ -15,6 +15,7 @@
     "java.project.exportJar.targetPath": "SSS.jar",
     "java.format.settings.url": ".vscode/java-formatter.xml",
     "[java]": {
-        "editor.detectIndentation": false
+        "editor.detectIndentation": false,
+        "editor.insertSpaces": false
     },
 }
