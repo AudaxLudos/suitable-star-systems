@@ -28,6 +28,8 @@ hs_err_pid*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/java-formatter.xml
+!.vscode/forum-post.txt
 !.vscode/*.code-snippets
 
 # Local History for Visual Studio Code

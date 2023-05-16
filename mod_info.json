@@ -4,11 +4,11 @@
     "author": "Audax",
     "version": {
         "major": 1,
-        "minor": 1,
+        "minor": 2,
         "patch": 0
     },
     "description": "A mod for starsector that adds star systems to different constellations near the core worlds with varying difficulty that is optimized for colonization.",
-    "gameVersion": "0.95.1a-RC6",
+    "gameVersion": "0.96a",
     "jars": [
         "SSS.jar"
     ],
