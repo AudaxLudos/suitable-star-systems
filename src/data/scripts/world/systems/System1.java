@@ -57,8 +57,7 @@ public class System1 {
 		PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.ORANGE, 750f, 400f, 10f, 05f, 3f);
 
 		// Create asteroid belt 1
-		String ring1Name = SSS_Utils.generateProceduralName(Terrain.ASTEROID_BELT, star.getName());
-		system.addAsteroidBelt(star, 64, 2000f, 256f, 500f, 500f, Terrain.ASTEROID_BELT, ring1Name);
+		system.addAsteroidBelt(star, 64, 2000f, 256f, 500f, 500f, Terrain.ASTEROID_BELT, SSS_Utils.generateProceduralName(Terrain.ASTEROID_BELT, star.getName()));
 		system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 2000f, 200f);
 
 		// Create custom entities
@@ -128,16 +127,15 @@ public class System1 {
 		float randomAngle2 = random.nextFloat() * 360f;
 		SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, Factions.NEUTRAL);
 		sensorArray.setCircularOrbit(star, randomAngle2, 9000f, 900f);
-		SectorEntityToken stableLocation = system.addCustomEntity(null, null, Entities.STABLE_LOCATION, Factions.NEUTRAL);
-		stableLocation.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 9000f, 900f);
+		SectorEntityToken navBuoy = system.addCustomEntity(null, null, Entities.NAV_BUOY, Factions.NEUTRAL);
+		navBuoy.setCircularOrbit(star, (randomAngle2 + 120f) % 360f, 9000f, 900f);
 		JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
 		jumpPoint2.setStandardWormholeToHyperspaceVisual();
 		jumpPoint2.setCircularOrbit(star, (randomAngle2 - 120f) % 360f, 9000f, 900f);
 		system.addEntity(jumpPoint2);
 
 		// Create asteroid belt 1
-		String ring2Name = SSS_Utils.generateProceduralName(Terrain.ASTEROID_BELT, star.getName());
-		system.addAsteroidBelt(star, 64, 10000f, 256f, 500f, 500f, Terrain.ASTEROID_BELT, ring2Name);
+		system.addAsteroidBelt(star, 64, 10000f, 256f, 500f, 500f, Terrain.ASTEROID_BELT, SSS_Utils.generateProceduralName(Terrain.ASTEROID_BELT, star.getName()));
 		system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 10000f, 1000f);
 
 		// Auto generate jump points

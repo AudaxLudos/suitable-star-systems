@@ -11,11 +11,13 @@ import com.fs.starfarer.api.campaign.SectorAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.impl.campaign.CoronalTapParticleScript;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.StarTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.ids.Terrain;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
@@ -26,6 +28,7 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.RemnantSystemType;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
+import com.fs.starfarer.api.impl.campaign.terrain.AsteroidFieldTerrainPlugin.AsteroidFieldParams;
 import com.fs.starfarer.api.util.Misc;
 
 import data.scripts.SSS_Utils;
@@ -45,6 +48,7 @@ public class System3 {
 		system.addTag(Tags.THEME_REMNANT);
 		system.addTag(Tags.THEME_REMNANT_MAIN);
 		system.addTag(Tags.THEME_REMNANT_RESURGENT);
+		system.addTag(Tags.HAS_CORONAL_TAP);
 
 		// Rename system with procedural name
 		String systemName = SSS_Utils.generateProceduralName(Tags.STAR, system.getConstellation().getName());
@@ -57,11 +61,15 @@ public class System3 {
 		// Create custom entities
 		SectorEntityToken coronalTap = system.addCustomEntity(null, null, Entities.CORONAL_TAP, Factions.NEUTRAL);
 		coronalTap.setCircularOrbit(star, random.nextFloat() * 360f, star.getRadius() + 250f, -175f);
-		SSS_Utils.createAccretionDisk((SectorEntityToken) star, star.getRadius() + 500f, 0f);
+		coronalTap.setDiscoverable(true);
+		coronalTap.setSensorProfile(1f);
+		system.addScript(new MiscellaneousThemeGenerator.MakeCoronalTapFaceNearestStar(coronalTap));
+		system.addScript((EveryFrameScript) new CoronalTapParticleScript(coronalTap));
+		SSS_Utils.createAccretionDisk((SectorEntityToken) star, star.getRadius(), 0f);
 
 		// Create planet 1
 		String planet1Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
-		PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren-bombarded", random.nextFloat() * 360f, 90f, 5000f, -500f);
+		PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren-bombarded", random.nextFloat() * 360f, 90f, 7000f, -700f);
 		Misc.initConditionMarket(planet1);
 		MarketAPI planet1Market = planet1.getMarket();
 		planet1Market.addCondition(Conditions.ORE_ULTRARICH);
@@ -71,10 +79,23 @@ public class System3 {
 		planet1Market.addCondition(Conditions.VERY_HOT);
 
 		// Create jumpoint
+		float randomAngle1 = random.nextFloat() * 360f;
 		JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
 		jumpPoint1.setStandardWormholeToHyperspaceVisual();
-		jumpPoint1.setCircularOrbit(star, random.nextFloat() * 360f, 6000f, -600f);
+		jumpPoint1.setCircularOrbit(star, randomAngle1, 8000f, -800f);
 		system.addEntity(jumpPoint1);
+
+		// Add asteroid field 1
+		SectorEntityToken asteroidField1 = system.addTerrain(Terrain.ASTEROID_FIELD,
+				new AsteroidFieldParams(
+						300f, // min radius
+						500f, // max radius
+						16, // min asteroid count
+						24, // max asteroid count
+						4f, // min asteroid radius
+						16f, // max asteroid radius
+						SSS_Utils.generateProceduralName(Terrain.ASTEROID_FIELD, planet1Name)));
+		asteroidField1.setCircularOrbit(star, randomAngle1 + 180f, 8000f, -800f);
 
 		// Auto generate jump points
 		system.autogenerateHyperspaceJumpPoints(true, false);

@@ -90,6 +90,8 @@ public class System2 {
 		// Create custom entities
 		SectorEntityToken cryoSleeper = system.addCustomEntity(null, null, Entities.DERELICT_CRYOSLEEPER, Factions.NEUTRAL);
 		cryoSleeper.setCircularOrbit(star, random.nextFloat() * 360f, 5000f, 500f);
+		cryoSleeper.setDiscoverable(true);
+		cryoSleeper.setSensorProfile(1f);
 
 		// Create jumpoint
 		float randomAngle2 = random.nextFloat() * 360f;
