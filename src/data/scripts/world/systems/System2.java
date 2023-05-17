@@ -1,5 +1,6 @@
 package data.scripts.world.systems;
 
+import java.awt.Color;
 import java.util.Random;
 
 import com.fs.starfarer.api.EveryFrameScript;
@@ -16,6 +17,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.StarTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.ids.Terrain;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
@@ -26,6 +28,8 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.RemnantSystemType;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
+import com.fs.starfarer.api.impl.campaign.terrain.AsteroidFieldTerrainPlugin.AsteroidFieldParams;
+import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain.RingParams;
 import com.fs.starfarer.api.util.Misc;
 
 import data.scripts.SSS_Utils;
@@ -53,11 +57,11 @@ public class System2 {
 
 		// Create star for system
 		PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.RED_SUPERGIANT, 1800f, 850f, 5f, 0.5f, 2f);
-		SSS_Utils.createAccretionDisk((SectorEntityToken) star, star.getRadius() + 500f, 0f);
 
 		// Create planet 1
+		float randomAngle1 = random.nextFloat() * 360f;
 		String planet1Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
-		PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren-bombarded", random.nextFloat() * 360f, 90f, 6000f, -600f);
+		PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren-bombarded", randomAngle1, 90f, 3000f, 300f);
 		Misc.initConditionMarket(planet1);
 		MarketAPI planet1Market = planet1.getMarket();
 		planet1Market.addCondition(Conditions.ORE_ULTRARICH);
@@ -66,15 +70,45 @@ public class System2 {
 		planet1Market.addCondition(Conditions.NO_ATMOSPHERE);
 		planet1Market.addCondition(Conditions.VERY_HOT);
 
+		// Add asteroid field 1
+		SectorEntityToken asteroidField1 = system.addTerrain(Terrain.ASTEROID_FIELD,
+				new AsteroidFieldParams(
+						300f, // min radius
+						500f, // max radius
+						16, // min asteroid count
+						24, // max asteroid count
+						4f, // min asteroid radius
+						16f, // max asteroid radius
+						SSS_Utils.generateProceduralName(Terrain.ASTEROID_FIELD, planet1Name)));
+		asteroidField1.setCircularOrbit(star, randomAngle1 + 180f, 3000f, 300f);
+
+		// Create ring 1
+		system.addRingBand(star, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f, 4000f, 400f);
+		SectorEntityToken ring1 = system.addTerrain(Terrain.RING, new RingParams(256f, 4000f, null, SSS_Utils.generateProceduralName(Terrain.RING, star.getName())));
+		ring1.setCircularOrbit(star, 0, 0, 400f);
+
 		// Create custom entities
 		SectorEntityToken cryoSleeper = system.addCustomEntity(null, null, Entities.DERELICT_CRYOSLEEPER, Factions.NEUTRAL);
-		cryoSleeper.setCircularOrbit(planet1, random.nextFloat() * 360f, planet1.getRadius() + 1000f, -100f);
+		cryoSleeper.setCircularOrbit(star, random.nextFloat() * 360f, 5000f, 500f);
 
 		// Create jumpoint
+		float randomAngle2 = random.nextFloat() * 360f;
 		JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
 		jumpPoint1.setStandardWormholeToHyperspaceVisual();
-		jumpPoint1.setCircularOrbit(star, random.nextFloat() * 360f, 8000f, -800f);
+		jumpPoint1.setCircularOrbit(star, randomAngle2, 6000f, 600f);
 		system.addEntity(jumpPoint1);
+
+		// Add asteroid field 2
+		SectorEntityToken asteroidField2 = system.addTerrain(Terrain.ASTEROID_FIELD,
+				new AsteroidFieldParams(
+						300f, // min radius
+						500f, // max radius
+						16, // min asteroid count
+						24, // max asteroid count
+						4f, // min asteroid radius
+						16f, // max asteroid radius
+						SSS_Utils.generateProceduralName(Terrain.ASTEROID_FIELD, systemName)));
+		asteroidField2.setCircularOrbit(star, randomAngle2 + 180f, 6000f, 600f);
 
 		// Auto generate jump points
 		system.autogenerateHyperspaceJumpPoints(true, false);

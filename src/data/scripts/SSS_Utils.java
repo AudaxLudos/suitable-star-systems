@@ -54,7 +54,7 @@ public class SSS_Utils {
 	}
 
 	public static void createAccretionDisk(SectorEntityToken focus, float radius, float minSpiralRadius) {
-		float orbitRadius = radius * (2f + 1f * random.nextFloat());
+		float orbitRadius = radius * 3f;
 		float bandWidth = 256f;
 		for (float i = 0f; i < 12f; i++) {
 			float middleRadius = orbitRadius - i * bandWidth * 0.25f - i * bandWidth * 0.1f;
