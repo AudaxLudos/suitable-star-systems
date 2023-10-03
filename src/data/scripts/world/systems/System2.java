@@ -20,7 +20,6 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
-import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantStationFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
@@ -32,10 +31,10 @@ import data.scripts.SSS_Utils;
 
 public class System2 {
 	public void generate(SectorAPI sector) {
-		// Get star system
+		// star system
 		StarSystemAPI system = sector.getStarSystem("system2");
 
-		// Add system theme / tags
+		// system themes / tags
 		system.addTag(Tags.THEME_INTERESTING);
 		system.addTag(Tags.THEME_RUINS);
 		system.addTag(Tags.THEME_RUINS_MAIN);
@@ -50,7 +49,7 @@ public class System2 {
 		system.setBaseName(systemName);
 		system.setName(systemName);
 
-		// Create star for system
+		// star for system
 		PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.RED_SUPERGIANT, 1800f, 850f, 5f, 0.5f, 2f);
 
 		// custom entities
@@ -64,18 +63,18 @@ public class System2 {
 
 		// planet 1
 		PlanetAPI planet1 = SSS_Utils.createPlanet(system, star,
-				"barren-desert",
+				"frozen3",
 				130f,
 				4500f,
 				450f,
 				new ArrayList<>(Arrays.asList(
-						Conditions.ORE_MODERATE,
-						Conditions.RARE_ORE_MODERATE,
-						Conditions.ORGANICS_COMMON,
-						Conditions.THIN_ATMOSPHERE)));
+						Conditions.RARE_ORE_ULTRARICH,
+						Conditions.VOLATILES_PLENTIFUL,
+						Conditions.RUINS_VAST,
+						Conditions.VERY_COLD)));
 		// planet 2 moon of planet 1
 		SSS_Utils.createPlanet(system, planet1,
-				"barren_castiron",
+				"barren",
 				60f,
 				planet1.getRadius() + 500f,
 				(planet1.getRadius() + 500f) / 10f,
@@ -94,7 +93,7 @@ public class System2 {
 				new ArrayList<>(Arrays.asList(
 						Conditions.FARMLAND_BOUNTIFUL,
 						Conditions.ORGANICS_PLENTIFUL,
-						Conditions.ORE_RICH,
+						Conditions.ORE_ULTRARICH,
 						Conditions.RUINS_VAST,
 						Conditions.HABITABLE,
 						Conditions.MILD_CLIMATE)));
@@ -138,8 +137,8 @@ public class System2 {
 				10000f,
 				1000f,
 				new ArrayList<>(Arrays.asList(
-						Conditions.ORE_MODERATE,
-						Conditions.RARE_ORE_MODERATE,
+						Conditions.ORE_ULTRARICH,
+						Conditions.VOLATILES_PLENTIFUL,
 						Conditions.ORGANICS_COMMON,
 						Conditions.VERY_COLD)));
 		// asteroid field 2
@@ -176,7 +175,7 @@ public class System2 {
 		editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f);
 		editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f, 0.25f);
 
-		// Generate custom entities
+		// custom entities
 		MiscellaneousThemeGenerator theme = new MiscellaneousThemeGenerator();
 		StarSystemData systemData = BaseThemeGenerator.computeSystemData(system);
 		theme.addResearchStations(systemData, 1f, 1, 1, theme.createStringPicker(new Object[] {
@@ -194,9 +193,6 @@ public class System2 {
 		theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(new Object[] {
 				Entities.EQUIPMENT_CACHE, Float.valueOf(10f) }));
 		RemnantThemeGenerator.addBeacon(system, RemnantSystemType.RESURGENT);
-		// Add dormant or active remnant fleets
-		RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 6, 12, 6, 12, 0.5f);
-		system.addScript((EveryFrameScript) remnantFleets);
 		// Add remnant station 1 that spawns remnant fleets
 		float station1Radius = planet3.getRadius() + 150f;
 		CampaignFleetAPI station1 = SSS_Utils.addAIBattlestation(planet3, station1Radius, station1Radius / 10f);

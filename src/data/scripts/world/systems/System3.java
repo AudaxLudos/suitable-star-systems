@@ -1,6 +1,8 @@
 package data.scripts.world.systems;
 
-import java.util.Random;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
@@ -10,37 +12,30 @@ import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
-import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.CoronalTapParticleScript;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.StarTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
-import com.fs.starfarer.api.impl.campaign.ids.Terrain;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
-import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
-import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantStationFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator.RemnantSystemType;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
-import com.fs.starfarer.api.impl.campaign.terrain.AsteroidFieldTerrainPlugin.AsteroidFieldParams;
 import com.fs.starfarer.api.util.Misc;
 
 import data.scripts.SSS_Utils;
 
 public class System3 {
 	public void generate(SectorAPI sector) {
-		// Get character seed
-		Random random = StarSystemGenerator.random;
-		// Get star system
+		// star system
 		StarSystemAPI system = sector.getStarSystem("system3");
 
-		// Add system theme / tags
+		// system themes / tags
 		system.addTag(Tags.THEME_INTERESTING);
 		system.addTag(Tags.THEME_RUINS);
 		system.addTag(Tags.THEME_RUINS_MAIN);
@@ -55,47 +50,96 @@ public class System3 {
 		system.setBaseName(systemName);
 		system.setName(systemName);
 
-		// Create star for system
+		// star for system
 		PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.BLUE_SUPERGIANT, 1500f, 850f, 17f, 0.5f, 6f);
 
-		// Create custom entities
+		// custom entities
 		SectorEntityToken coronalTap = system.addCustomEntity(null, null, Entities.CORONAL_TAP, Factions.NEUTRAL);
-		coronalTap.setCircularOrbit(star, random.nextFloat() * 360f, star.getRadius() + 250f, -175f);
-		coronalTap.setDiscoverable(true);
-		coronalTap.setSensorProfile(1f);
+		coronalTap.setCircularOrbit(star, SSS_Utils.getRandomAngle(), star.getRadius() + 250f, -175f);
 		system.addScript(new MiscellaneousThemeGenerator.MakeCoronalTapFaceNearestStar(coronalTap));
 		system.addScript((EveryFrameScript) new CoronalTapParticleScript(coronalTap));
 		SSS_Utils.createAccretionDisk((SectorEntityToken) star, star.getRadius(), 0f);
 
-		// Create planet 1
-		String planet1Name = SSS_Utils.generateProceduralName(Tags.PLANET, star.getName());
-		PlanetAPI planet1 = system.addPlanet(planet1Name.toLowerCase(), star, planet1Name, "barren-bombarded", random.nextFloat() * 360f, 90f, 7000f, -700f);
-		Misc.initConditionMarket(planet1);
-		MarketAPI planet1Market = planet1.getMarket();
-		planet1Market.addCondition(Conditions.ORE_ULTRARICH);
-		planet1Market.addCondition(Conditions.RARE_ORE_ULTRARICH);
-		planet1Market.addCondition(Conditions.RUINS_VAST);
-		planet1Market.addCondition(Conditions.NO_ATMOSPHERE);
-		planet1Market.addCondition(Conditions.VERY_HOT);
-
-		// Create jumpoint
-		float randomAngle1 = random.nextFloat() * 360f;
-		JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
+		// planet 1 moon of planet 1
+		PlanetAPI planet1 = SSS_Utils.createPlanet(system, star,
+				"terran",
+				130f,
+				5000f,
+				500f,
+				new ArrayList<>(Arrays.asList(
+						Conditions.FARMLAND_BOUNTIFUL,
+						Conditions.ORGANICS_PLENTIFUL,
+						Conditions.ORE_ULTRARICH,
+						Conditions.RUINS_VAST,
+						Conditions.HABITABLE,
+						Conditions.MILD_CLIMATE)));
+		// custom entities
+		float planet1OrbitAngle = planet1.getCircularOrbitAngle();
+		SectorEntityToken commRelay = system.addCustomEntity(null, null, Entities.COMM_RELAY, Factions.NEUTRAL);
+		commRelay.setCircularOrbit(star, (planet1OrbitAngle + 120f) % 360f, 5000f, 500f);
+		JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
 		jumpPoint1.setStandardWormholeToHyperspaceVisual();
-		jumpPoint1.setCircularOrbit(star, randomAngle1, 8000f, -800f);
+		jumpPoint1.setCircularOrbit(star, (planet1OrbitAngle + 240f) % 360f, 5000f, 500f);
 		system.addEntity(jumpPoint1);
 
-		// Add asteroid field 1
-		SectorEntityToken asteroidField1 = system.addTerrain(Terrain.ASTEROID_FIELD,
-				new AsteroidFieldParams(
-						300f, // min radius
-						500f, // max radius
-						16, // min asteroid count
-						24, // max asteroid count
-						4f, // min asteroid radius
-						16f, // max asteroid radius
-						SSS_Utils.generateProceduralName(Terrain.ASTEROID_FIELD, planet1Name)));
-		asteroidField1.setCircularOrbit(star, randomAngle1 + 180f, 8000f, -800f);
+		// planet 1
+		PlanetAPI planet2 = SSS_Utils.createPlanet(system, star,
+				"gas_giant",
+				250f,
+				11000f,
+				1100f,
+				new ArrayList<>(Arrays.asList(
+						Conditions.VOLATILES_PLENTIFUL,
+						Conditions.HIGH_GRAVITY)));
+		float planet2Radius = planet2.getRadius() + 300f;
+		SSS_Utils.createMagneticField(planet2, planet2Radius, (planet2Radius) / 2f, planet2.getRadius() + 50f, planet2Radius, 1f);
+		// planet 3 moon of planet 2
+		SSS_Utils.createPlanet(system, planet2,
+				"frozen2",
+				60f,
+				planet2.getRadius() + 500f,
+				(planet2.getRadius() + 500f) / 10f,
+				new ArrayList<>(Arrays.asList(
+						Conditions.ORE_ULTRARICH,
+						Conditions.RARE_ORE_ULTRARICH,
+						Conditions.RUINS_VAST,
+						Conditions.VERY_COLD)));
+		// planet 4 moon of planet 2
+		PlanetAPI planet4 = SSS_Utils.createPlanet(system, planet2,
+				"barren_venuslike",
+				130f,
+				2500f,
+				250f,
+				new ArrayList<>(Arrays.asList(
+						Conditions.ORE_ULTRARICH,
+						Conditions.RARE_ORE_ULTRARICH,
+						Conditions.NO_ATMOSPHERE,
+						Conditions.VERY_HOT)));
+		// planet 4 moon of planet 3
+		SSS_Utils.createPlanet(system, planet4,
+				"toxic",
+				60f,
+				planet4.getRadius() + 500f,
+				(planet4.getRadius() + 500f) / 10f,
+				new ArrayList<>(Arrays.asList(
+						Conditions.ORE_ULTRARICH,
+						Conditions.RARE_ORE_ULTRARICH,
+						Conditions.ORGANICS_COMMON,
+						Conditions.TOXIC_ATMOSPHERE)));
+
+		// asteroid belt 1 for planet 2
+		SSS_Utils.createAsteroidBelt(system, 64, planet2, 3500f, 350f, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f);
+
+		// custom entities for planet 2
+		float randomAngle2 = SSS_Utils.getRandomAngle();
+		SectorEntityToken navBuoy = system.addCustomEntity(null, null, Entities.NAV_BUOY, Factions.NEUTRAL);
+		navBuoy.setCircularOrbit(planet2, randomAngle2, 4000f, 400f);
+		SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, Factions.NEUTRAL);
+		sensorArray.setCircularOrbit(planet2, (randomAngle2 + 120f) % 360f, 4000f, 400f);
+		JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
+		jumpPoint2.setStandardWormholeToHyperspaceVisual();
+		jumpPoint2.setCircularOrbit(planet2, (randomAngle2 + 240f) % 360f, 4000f, 400f);
+		system.addEntity(jumpPoint2);
 
 		// Auto generate jump points
 		system.autogenerateHyperspaceJumpPoints(true, false);
@@ -108,32 +152,24 @@ public class System3 {
 		editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f);
 		editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f, 0.25f);
 
-		// Generate custom entities
+		// custom entities
 		MiscellaneousThemeGenerator theme = new MiscellaneousThemeGenerator();
 		StarSystemData systemData = BaseThemeGenerator.computeSystemData(system);
-		theme.addResearchStations(systemData, 0.75f, 1, 1, theme.createStringPicker(new Object[] {
+		theme.addResearchStations(systemData, 1f, 1, 1, theme.createStringPicker(new Object[] {
 				Entities.STATION_RESEARCH_REMNANT, Float.valueOf(10f) }));
-		theme.addMiningStations(systemData, 0.75f, 1, 1, theme.createStringPicker(new Object[] {
+		theme.addMiningStations(systemData, 1f, 1, 1, theme.createStringPicker(new Object[] {
 				Entities.STATION_MINING_REMNANT, Float.valueOf(10f) }));
-		theme.addShipGraveyard(systemData, 0.75f, 1, 3, theme.createStringPicker(new Object[] {
+		theme.addShipGraveyard(systemData, 1f, 2, 2, theme.createStringPicker(new Object[] {
 				Factions.TRITACHYON, Float.valueOf(10f),
 				Factions.HEGEMONY, Float.valueOf(7f),
 				Factions.INDEPENDENT, Float.valueOf(3f) }));
-		theme.addDerelictShips(systemData, 0.75f, 1, 7, theme.createStringPicker(new Object[] {
+		theme.addDerelictShips(systemData, 1f, 5, 5, theme.createStringPicker(new Object[] {
 				Factions.TRITACHYON, Float.valueOf(10f),
 				Factions.HEGEMONY, Float.valueOf(7f),
 				Factions.INDEPENDENT, Float.valueOf(3f) }));
-		theme.addCaches(systemData, 0.75f, 1, 3, theme.createStringPicker(new Object[] {
-				Entities.WEAPONS_CACHE_REMNANT, Float.valueOf(10f),
-				Entities.WEAPONS_CACHE_SMALL_REMNANT, Float.valueOf(10f),
-				Entities.SUPPLY_CACHE, Float.valueOf(10f),
-				Entities.SUPPLY_CACHE_SMALL, Float.valueOf(10f),
-				Entities.EQUIPMENT_CACHE, Float.valueOf(10f),
-				Entities.EQUIPMENT_CACHE_SMALL, Float.valueOf(10f) }));
+		theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(new Object[] {
+				Entities.EQUIPMENT_CACHE, Float.valueOf(10f) }));
 		RemnantThemeGenerator.addBeacon(system, RemnantSystemType.RESURGENT);
-		// Add dormant or active remnant fleets
-		RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 8, 16, 8, 16, 0.75f);
-		system.addScript((EveryFrameScript) remnantFleets);
 		// Add remnant station 1 that spawns remnant fleets
 		float station1Radius = planet1.getRadius() + 150f;
 		CampaignFleetAPI station1 = SSS_Utils.addAIBattlestation(planet1, station1Radius, station1Radius / 10f);

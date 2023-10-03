@@ -20,7 +20,6 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
-import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantStationFleetManager;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.StarSystemData;
@@ -32,10 +31,10 @@ import data.scripts.SSS_Utils;
 
 public class System1 {
 	public void generate(SectorAPI sector) {
-		// Get star system
+		// star system
 		StarSystemAPI system = sector.getStarSystem("system1");
 
-		// Add system theme / tags
+		// system themes / tags
 		system.addTag(Tags.THEME_INTERESTING);
 		system.addTag(Tags.THEME_RUINS);
 		system.addTag(Tags.THEME_RUINS_MAIN);
@@ -49,10 +48,10 @@ public class System1 {
 		system.setBaseName(systemName);
 		system.setName(systemName);
 
-		// Create star for system
+		// star for system
 		PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.ORANGE, 750f, 400f, 10f, 05f, 3f);
 
-		// Create custom entities
+		// custom entities
 		float randomAngle1 = SSS_Utils.getRandomAngle();
 		SectorEntityToken inactiveGate = system.addCustomEntity(null, null, Entities.INACTIVE_GATE, Factions.NEUTRAL);
 		inactiveGate.setCircularOrbit(star, randomAngle1, 2000f, 200f);
@@ -83,7 +82,7 @@ public class System1 {
 				new ArrayList<>(Arrays.asList(
 						Conditions.FARMLAND_BOUNTIFUL,
 						Conditions.ORGANICS_PLENTIFUL,
-						Conditions.ORE_RICH,
+						Conditions.ORE_ULTRARICH,
 						Conditions.RUINS_VAST,
 						Conditions.HABITABLE,
 						Conditions.MILD_CLIMATE)));
@@ -94,8 +93,8 @@ public class System1 {
 				planet2.getRadius() + 500f,
 				(planet2.getRadius() + 500f) / 10f,
 				new ArrayList<>(Arrays.asList(
-						Conditions.ORE_MODERATE,
-						Conditions.RARE_ORE_MODERATE,
+						Conditions.ORE_ULTRARICH,
+						Conditions.RARE_ORE_ULTRARICH,
 						Conditions.ORGANICS_COMMON,
 						Conditions.THIN_ATMOSPHERE)));
 		// asteroid field 1
@@ -122,14 +121,14 @@ public class System1 {
 		SSS_Utils.createMagneticField(planet4, planet4Radius, (planet4Radius) / 2f, planet4.getRadius() + 50f, planet4Radius, 1f);
 		// planet 5 moon of planet 4
 		SSS_Utils.createPlanet(system, planet4,
-				"frozen2",
+				"frozen",
 				60f,
 				planet4.getRadius() + 500f,
 				(planet4.getRadius() + 500f) / 10f,
 				new ArrayList<>(Arrays.asList(
-						Conditions.ORE_MODERATE,
-						Conditions.RARE_ORE_MODERATE,
-						Conditions.ORGANICS_COMMON,
+						Conditions.ORE_ULTRARICH,
+						Conditions.RARE_ORE_ULTRARICH,
+						Conditions.RUINS_VAST,
 						Conditions.VERY_COLD)));
 		// asteroid field 2
 		SSS_Utils.createAsteroidField(system, star, (planet4.getCircularOrbitAngle() + 180f) % 360f,
@@ -184,9 +183,6 @@ public class System1 {
 		theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(new Object[] {
 				Entities.EQUIPMENT_CACHE, Float.valueOf(10f) }));
 		RemnantThemeGenerator.addBeacon(system, RemnantSystemType.RESURGENT);
-		// Add dormant or active remnant fleets
-		RemnantSeededFleetManager remnantFleets = new RemnantSeededFleetManager(system, 6, 12, 6, 12, 0.5f);
-		system.addScript((EveryFrameScript) remnantFleets);
 		// Add remnant station 1 that spawns remnant fleets
 		float station1Radius = planet2.getRadius() + 150f;
 		CampaignFleetAPI station1 = SSS_Utils.addAIBattlestation(planet2, station1Radius, station1Radius / 10f);
