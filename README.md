@@ -1,2 +1,2 @@
 # SUITABLE STAR SYSTEMS
-A mod for starsector that adds star systems to different constellations near the core worlds with varying difficulty that is optimized for colonization.
+A mod for starsector that adds star systems to different constellations near the core worlds, star systems are overpowered and is meant to speed up colony phase or midgame/endgame.

@@ -1,0 +1,10 @@
+{
+    "masterVersionFile": "https://raw.githubusercontent.com/AudaxLudos/suitable-star-systems/main/SSS.version",
+    "modName": "Suitable Star Systems",
+    "modThreadId": 25418,
+    "modVersion": {
+        "major": 1,
+        "minor": 3,
+        "patch": 0
+    }
+}
