@@ -9,12 +9,17 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin;
 import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.CampaignTerrainAPI;
+import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.RingBandAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
+import com.fs.starfarer.api.campaign.StarSystemAPI;
+import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.fleet.FleetMemberType;
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3;
+import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.ids.Terrain;
 import com.fs.starfarer.api.impl.campaign.procgen.MagFieldGenPlugin;
 import com.fs.starfarer.api.impl.campaign.procgen.ProcgenUsedNames;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
@@ -22,7 +27,9 @@ import com.fs.starfarer.api.impl.campaign.procgen.AccretionDiskGenPlugin.TexAndI
 import com.fs.starfarer.api.impl.campaign.procgen.ProcgenUsedNames.NamePick;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantOfficerGeneratorPlugin;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
+import com.fs.starfarer.api.impl.campaign.terrain.AsteroidFieldTerrainPlugin.AsteroidFieldParams;
 import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain;
+import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain.RingParams;
 import com.fs.starfarer.api.impl.campaign.terrain.MagneticFieldTerrainPlugin;
 import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
@@ -31,10 +38,53 @@ import com.fs.starfarer.api.util.WeightedRandomPicker;
 public class SSS_Utils {
 	public static Random random = StarSystemGenerator.random;
 
+	public static float getRandomAngle() {
+		return random.nextFloat() * 360f;
+	}
+
 	public static String generateProceduralName(String tag, String parent) {
 		NamePick namePick = ProcgenUsedNames.pickName(tag, parent, null);
 		String name = namePick.nameWithRomanSuffixIfAny;
 		return name;
+	}
+
+	public static PlanetAPI createPlanet(StarSystemAPI system, SectorEntityToken parentOrbit, String planetType, float planetRadius, float orbitDistance, float orbitDays,
+			ArrayList<String> marketConditions) {
+		String planetName = generateProceduralName(Tags.PLANET, null);
+		PlanetAPI planet = system.addPlanet(planetName.toLowerCase(), parentOrbit, planetName, planetType, getRandomAngle(), planetRadius, orbitDistance, orbitDays);
+		Misc.initConditionMarket(planet);
+		MarketAPI market = planet.getMarket();
+		for (String condition : marketConditions)
+			market.addCondition(condition);
+
+		return planet;
+	}
+
+	public static void createAsteroidField(StarSystemAPI system, SectorEntityToken orbitFocus, float orbitAngle, float orbitDistance, float orbitDays, float minRadius, float maxRadius,
+			int minAsteroids, int maxAsteroids, float minAsteroidRadius, float maxAsteroidRadius) {
+		SectorEntityToken asteroidField1 = system.addTerrain(Terrain.ASTEROID_FIELD,
+				new AsteroidFieldParams(
+						minRadius, // min radius
+						maxRadius, // max radius
+						minAsteroids, // min asteroid count
+						maxAsteroids, // max asteroid count
+						minAsteroidRadius, // min asteroid radius
+						maxAsteroidRadius, // max asteroid radius
+						generateProceduralName(Terrain.ASTEROID_FIELD, null)));
+		asteroidField1.setCircularOrbit(orbitFocus, orbitAngle, orbitDistance, orbitDays);
+	}
+
+	public static void createAsteroidBelt(StarSystemAPI system, int numAsteroids, SectorEntityToken orbitFocus, float orbitDistance,
+			float orbitDays, String category, String key, float bandWidthInTexture, int bandIndex, Color color, float bandWidthInEngine) {
+		system.addAsteroidBelt(orbitFocus, numAsteroids, orbitDistance, bandWidthInEngine, orbitDays, orbitDays, Terrain.ASTEROID_BELT, generateProceduralName(Terrain.ASTEROID_BELT, null));
+		system.addRingBand(orbitFocus, category, key, bandWidthInTexture, bandIndex, color, bandWidthInEngine, orbitDistance, orbitDays);
+	}
+
+	public static void createRingBelt(StarSystemAPI system, SectorEntityToken orbitFocus, float orbitDistance, float orbitDays, String category, String key, float bandWidthInTexture, int bandIndex,
+			Color color, float bandWidthInEngine) {
+		system.addRingBand(orbitFocus, category, key, bandWidthInTexture, bandIndex, color, bandWidthInEngine, orbitDistance, orbitDays);
+		SectorEntityToken ring = system.addTerrain(Terrain.RING, new RingParams(256f, orbitDistance, null, generateProceduralName(Terrain.RING, null)));
+		ring.setCircularOrbit(orbitFocus, 0, 0, orbitDays);
 	}
 
 	public static void createMagneticField(SectorEntityToken focus, float bandWidthInEngine, float middleRadius, float innerRadius, float outerRadius, float auroraFreqency) {
@@ -98,16 +148,10 @@ public class SSS_Utils {
 		return result;
 	}
 
-	public static CampaignFleetAPI addAIBattlestation(SectorEntityToken focus, Boolean isOmega, float orbitRadius, float orbitDays) {
-		String factionId = isOmega ? "omega" : "remnant";
-		String coreId = isOmega ? "omega_core" : "alpha_core";
-		CampaignFleetAPI fleet = FleetFactoryV3.createEmptyFleet(factionId, "battlestation", null);
+	public static CampaignFleetAPI addAIBattlestation(SectorEntityToken focus, float orbitRadius, float orbitDays) {
+		CampaignFleetAPI fleet = FleetFactoryV3.createEmptyFleet("remnant", "battlestation", null);
 		FleetMemberAPI member = Global.getFactory().createFleetMember(FleetMemberType.SHIP, "remnant_station2_Standard");
 		fleet.getFleetData().addFleetMember(member);
-		if (isOmega) {
-			fleet.setName("Unidentified Station");
-			fleet.setNoFactionInName(true);
-		}
 		fleet.getMemoryWithoutUpdate().set("$cfai_makeAggressive", Boolean.valueOf(true));
 		fleet.getMemoryWithoutUpdate().set("$cfai_noJump", Boolean.valueOf(true));
 		fleet.getMemoryWithoutUpdate().set("$cfai_makeAllowDisengage", Boolean.valueOf(true));
@@ -120,9 +164,9 @@ public class SSS_Utils {
 		fleet.getAbility("transponder").activate();
 		fleet.getDetectedRangeMod().modifyFlat("gen", 1000f);
 		fleet.setAI(null);
-		fleet.setCircularOrbitWithSpin(focus, random.nextFloat() * 360f, orbitRadius, orbitDays, 5f, 5f);
-		AICoreOfficerPlugin plugin = Misc.getAICoreOfficerPlugin(coreId);
-		PersonAPI commander = plugin.createPerson(coreId, factionId, random);
+		fleet.setCircularOrbitWithSpin(focus, getRandomAngle(), orbitRadius, orbitDays, 5f, 5f);
+		AICoreOfficerPlugin plugin = Misc.getAICoreOfficerPlugin("alpha_core");
+		PersonAPI commander = plugin.createPerson("alpha_core", "remnant", random);
 		fleet.setCommander(commander);
 		fleet.getFlagship().setCaptain(commander);
 		RemnantOfficerGeneratorPlugin.integrateAndAdaptCoreForAIFleet(fleet.getFlagship());
