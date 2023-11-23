@@ -1,4 +1,5 @@
 # CHANGELOG
+###### 2.0.0
 ###### 1.3.0
 - Add version files
 - Update SSS_Utils.java

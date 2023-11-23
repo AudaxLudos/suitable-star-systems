@@ -1,16 +1,12 @@
 {
-    "id": "sss",
+    "id": "suitablestarsystems",
     "name": "Suitable Star Systems",
     "author": "Audax",
-    "version": {
-        "major": 1,
-        "minor": 3,
-        "patch": 0
-    },
+    "version": "2.0.0",
     "description": "A mod for starsector that adds star systems to different constellations near the core worlds, star systems are overpowered and is meant to speed up colony phase or midgame/endgame.",
     "gameVersion": "0.96a",
     "jars": [
-        "SSS.jar"
+        "SuitableStarSystems.jar"
     ],
-    "modPlugin": "data.scripts.SSS_ModPlugin"
+    "modPlugin": "suitablestarsystems.ModPlugin"
 }

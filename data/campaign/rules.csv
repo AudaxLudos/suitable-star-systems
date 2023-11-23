@@ -1,0 +1,7 @@
+id,trigger,conditions,script,text,options,notes
+"#RULESET_NAME Suitable star systems",,,,,,
+sss_RemnantPlanetOverride,OpenInteractionDialog,"$id == planet_sss_remnant score:100","PrintDescription 3
+ShowDefaultVisual","Your $shipOrFleet approaches $entityName.","100:defaultLeave:Leave",
+sss_OmegaPlanetOverride,OpenInteractionDialog,"$id == planet_sss_omega score:100","PrintDescription 3
+ShowDefaultVisual","Your $shipOrFleet approaches $entityName.","100:defaultLeave:Leave",
+
