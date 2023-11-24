@@ -1,9 +1,7 @@
 package suitablestarsystems.world.systems;
 
-import com.fs.starfarer.api.campaign.PlanetAPI;
-import com.fs.starfarer.api.campaign.SectorAPI;
-import com.fs.starfarer.api.campaign.SectorEntityToken;
-import com.fs.starfarer.api.campaign.StarSystemAPI;
+import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.impl.campaign.ids.*;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
@@ -20,10 +18,10 @@ import java.util.Arrays;
 
 public class System3 {
     public void generate(SectorAPI sector) {
-        // star system
+        // Add star system
         StarSystemAPI system = sector.getStarSystem("system_SSS_3");
 
-        // system themes / tags
+        // Add system themes / tags
         system.addTag(Tags.THEME_INTERESTING);
         system.addTag(Tags.THEME_UNSAFE);
 
@@ -32,11 +30,11 @@ public class System3 {
         system.setBaseName(systemName);
         system.setName(systemName);
 
-        // star for system
+        // Add star
         PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.BLACK_HOLE, 150f, 1000f, -10f, 0f, 25f);
         Utils.addBlackHoleVisuals(system, star);
 
-        // planet 1
+        // Add planet 1
         PlanetAPI planet1 = Utils.createPlanet(system, "planet_sss_omega", star,
                 "frozen",
                 130f,
@@ -48,7 +46,13 @@ public class System3 {
                         Conditions.NO_ATMOSPHERE,
                         Conditions.IRRADIATED,
                         Conditions.RUINS_VAST));
+        // Add custom entities
+        JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
+        jumpPoint1.setStandardWormholeToHyperspaceVisual();
+        jumpPoint1.setCircularOrbit(star, planet1.getCircularOrbitAngle() + 180f, 2000f, 200f);
+        system.addEntity(jumpPoint1);
 
+        // Add custom entities
         float randomAngle1 = Utils.getRandomAngle();
         SectorEntityToken commRelay = system.addCustomEntity(null, null, Entities.COMM_RELAY, Factions.NEUTRAL);
         commRelay.setCircularOrbit(star, randomAngle1, 3000f, 300f);
@@ -56,6 +60,12 @@ public class System3 {
         navBuoy.setCircularOrbit(star, randomAngle1 + 120f, 3000f, 300f);
         SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, Factions.NEUTRAL);
         sensorArray.setCircularOrbit(star, randomAngle1 + 240f, 3000f, 300f);
+
+        // Add custom entities
+        JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
+        jumpPoint2.setStandardWormholeToHyperspaceVisual();
+        jumpPoint2.setCircularOrbit(star, Utils.getRandomAngle(), 4000f, 400f);
+        system.addEntity(jumpPoint2);
 
         // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);
@@ -68,7 +78,7 @@ public class System3 {
         editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f);
         editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f, 0.25f);
 
-        // custom entities
+        // Add procedural entities
         MiscellaneousThemeGenerator theme = new MiscellaneousThemeGenerator();
         BaseThemeGenerator.StarSystemData systemData = BaseThemeGenerator.computeSystemData(system);
         WeightedRandomPicker<String> factions = SalvageSpecialAssigner.getNearbyFactions(Utils.random, system.getCenter(), 15f, 5f, 5f);
@@ -77,8 +87,8 @@ public class System3 {
         theme.addShipGraveyard(systemData, 1f, 2, 2, factions);
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
-        RemnantThemeGenerator.addBeacon(system, RemnantThemeGenerator.RemnantSystemType.RESURGENT);
         // Add omega fleet spawner
+        // if planet is remove, the game crashes
         OmegaFleetSpawnerManager omegaFleetManager = new OmegaFleetSpawnerManager(planet1, 1f, 0, 8, 15f);
         system.addScript(omegaFleetManager);
     }
