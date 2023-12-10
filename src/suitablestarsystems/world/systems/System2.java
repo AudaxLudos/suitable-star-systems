@@ -46,10 +46,6 @@ public class System2 {
                         Conditions.NO_ATMOSPHERE,
                         Conditions.IRRADIATED,
                         Conditions.RUINS_VAST));
-        planet1.getSpec().setShieldTexture(Global.getSettings().getSpriteName("industry", "shield_texture"));
-        planet1.getSpec().setShieldThickness(0.1f);
-        planet1.getSpec().setShieldColor(Misc.getDesignTypeColor("Remnant"));
-        planet1.applySpecChanges();
         // Add custom entities
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();

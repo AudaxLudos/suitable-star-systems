@@ -1,0 +1,16 @@
+{
+    "bombard_omega_planet": [
+        {
+            "file": "sounds/suitablestarsystems/bombard_omega_planet.ogg",
+            "pitch": 1,
+            "volume": 1
+        }
+    ],
+    "crack_omega_planet": [
+        {
+            "file": "sounds/sfx_impacts/explosion_01.ogg",
+            "pitch": 1,
+            "volume": 1
+        }
+    ]
+}
