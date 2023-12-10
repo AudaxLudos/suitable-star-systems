@@ -1,15 +1,37 @@
-# CHANGELOG
-###### 2.0.0
+###### 2.1.0
+- Add RemnantFleetSpawnerManager.java
+- Update rules.csv hidden quest dialogue
+- Add settings.json
+- Update systems 2 and 3 planets to have a planetary shield
+- Update ModPlugin.java
+- Update OmegaFleetSpawnerManager effect for spawning fleets
+- Update change IDE to intellij
+- Update remove SSS prefix to file names
+- Update file name SSS_Gen to WorldGenerator
+- Update file name SSS_ModPlugin to ModPlugin
+- Update file name SSS_Utils to Utils
+- Update system1 to a binary star system
+- Update system2 to a remnant system
+- Update system3 to a omega system
+- Add CREDITS.txt
+- Add rules.csv
+- Add OmegaFleetSpawnerManager.java
+- Change CHANGELOG and LICENSE files to txt
+- Update README.md
+- Add version files
+
 ###### 1.3.0
 - Add version files
 - Update SSS_Utils.java
 - Update system 3
 - Update system 2
 - Update system 1
+
 ###### 1.1.0
 - Add frozen world to system 3
 - Add frozen world to system 2
 - Add frozen world to system 1
+
 ###### 1.0.0
 - Update generation to be more consistent
 - Add randomize names to systems
