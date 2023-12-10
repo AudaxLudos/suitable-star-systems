@@ -1,2 +1,3 @@
+Wispborne: for the starsector intellij mod template and the github action script.
 starsector community: for many resources in regard to modding and spriting.
 Alex and Co: for making a great game and community.

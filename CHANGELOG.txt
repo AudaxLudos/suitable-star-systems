@@ -1,4 +1,13 @@
-###### 2.1.0
+### 2.2.0
+- Add GitHub action script for automating releases
+- Add a planet to system 1
+- Update interactions to omega and remnant systems in rules.csv
+- Add settings.json
+- Add sounds.json
+- Add planetary shield texture for omega planet
+- Update systems 2 and 3
+
+### 2.1.0
 - Add RemnantFleetSpawnerManager.java
 - Update rules.csv hidden quest dialogue
 - Add settings.json
@@ -20,19 +29,19 @@
 - Update README.md
 - Add version files
 
-###### 1.3.0
+### 1.3.0
 - Add version files
 - Update SSS_Utils.java
 - Update system 3
 - Update system 2
 - Update system 1
 
-###### 1.1.0
+### 1.1.0
 - Add frozen world to system 3
 - Add frozen world to system 2
 - Add frozen world to system 1
 
-###### 1.0.0
+### 1.0.0
 - Update generation to be more consistent
 - Add randomize names to systems
 - Update System 1,2,3
