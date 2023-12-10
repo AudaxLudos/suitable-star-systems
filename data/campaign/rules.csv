@@ -1,7 +1,120 @@
 id,trigger,conditions,script,text,options,notes
 "#RULESET_NAME Suitable star systems",,,,,,
-sss_RemnantPlanetOverride,OpenInteractionDialog,"$id == planet_sss_remnant score:100","PrintDescription 3
-ShowDefaultVisual","Your $shipOrFleet approaches $entityName.","100:defaultLeave:Leave",
-sss_OmegaPlanetOverride,OpenInteractionDialog,"$id == planet_sss_omega score:100","PrintDescription 3
-ShowDefaultVisual","Your $shipOrFleet approaches $entityName.","100:defaultLeave:Leave",
+,,,,,,
+# Planet interactions,,,,,,
+,,,,,,
+# Remnant planet,,,,,,
+sss_remnantPlanetHostilesText,OpenInteractionDialog,"$id == planet_sss_remnant score:1000
+IsSeenByAnyFleet","ShowDefaultVisual","Your $shipOrFleet was recently detected - or is currently being tracked by - a nearby fleet, scanning the planet is currently impossible.","100:defaultLeave:Leave",
+sss_remnantPlanet,OpenInteractionDialog,"$id == planet_sss_remnant score:100
+!$planetExplored","PrintDescription 3
+ShowDefaultVisual","You approach the celestial body, you notice an energy field surrounding it.
+
+According to a preliminary scan, the energy field is similar to our own shields, but denser and fluctuates at different frequencies. Deep scans cannot penetrate the dense energy field, and searching for patterns in its fluctuations has proven futile.
+
+But as you observe the planet, you notice [REDACTED] ships exiting the energy field without issues.","0:sss_remnantPlanetExplore1:Send a shuttle and see if it can go through the energy field.
+100:defaultLeave:Leave",
+sss_remnantPlanetExplore1,DialogOptionSelected,"$option == sss_remnantPlanetExplore1","$planetExplored = true","As the shuttle approaches the planet, your ship's alarms begin to sound, and your officer warns you that a massive amount of energy is building up across the energy field. You try to contact the shuttle, but the increasing energy scrambles your message; you wait for a response but only get static.","0:sss_remnantPlanetExplore2:Continue",
+sss_remnantPlanetExplore2,DialogOptionSelected,"$option == sss_remnantPlanetExplore2",,"You command an officer to obtain a visual of the shuttle, and when it appears, you discover it has completely lost control, with its lights off and its engines disabled. All you could do was watch in horror as the shuttle's momentum approaches the energy field.","0:sss_remnantPlanetExplore3:Continue",
+sss_remnantPlanetExplore3,DialogOptionSelected,"$option == sss_remnantPlanetExplore3",,"As the shuttle enters the planet's orbit, a torrent of energy bursts out of the energy field, striking the shuttle. You try to convince your officers to look for survivors, but they can only watch as debris spread across space.","100:defaultLeave:Leave",
+sss_remnantPlanetExplored,OpenInteractionDialog,"$id == planet_sss_remnant score:100
+$planetExplored","PrintDescription 3
+ShowDefaultVisual","As you approach the shielded planet, you see countless [REDACTED] ships pass through the energy field without issues.
+
+You could only speculate as to what kind of secrets the planet's surface holds and how [REDACTED] ships are built in such a short period of time.","100:defaultLeave:Leave",
+"#END Remnant planet",,,,,,
+,,,,,,
+# Omega planet,,,,,,
+sss_omegaPlanetQuestOverride,OpenInteractionDialog,"$global.sss_omegaPlanetQuestOverride
+$id == planet_sss_omega score:100","PrintDescription 3
+ShowDefaultVisual","You visit a shielded planet in the system.
+
+You are unable to fully survey the planet due to the barrier and according to our preliminary scans, bombarding the planet is also ineffective due to the barrier being thick and dense.
+
+You can only wonder what sort of technology is being guarded by these [REDACTED] vessels.
+","100:defaultLeave:Leave",
+sss_omegaPlanetVisited,OpenInteractionDialog,"!$global.sss_omegaPlanetQuestOverride
+$id == planet_sss_omega score:100
+!$sss_omegaPlanetScanned","PrintDescription 3
+ShowDefaultVisual","You approach the only planet within the system.
+
+As you enter the planet's gravity well you notice a barrier covering its entire surface.","0:sss_omegaPlanetScan1:Scan the planet
+100:defaultLeave:Leave",
+sss_omegaPlanetScan1,DialogOptionSelected,"$option == sss_omegaPlanetScan1","$sss_omegaPlanetScanned = true","You try to scan the planet, but because of the barrier your scans can only obtain preliminary data.
+
+According to the data, the barrier is similar to a ship's shield but denser, thicker and fluctuates at different frequencies.","0:sss_omegaPlanetScan2:Try to bypass the barrier",
+sss_omegaPlanetScan2,DialogOptionSelected,"$option == sss_omegaPlanetScan2",,"Using the fluctuating frequencies, you look for a way to bypass the barrier.
+
+After a while, you find out that the barrier's frequencies are changing too quickly and randomly, making it impossible to bypass it.","0:sss_omegaPlanetScan3:Continue",
+sss_omegaPlanetScan3,DialogOptionSelected,"$option == sss_omegaPlanetScan3","FireBest sss_omegaPlanetBombardCheck","In your attempt to get through the barrier, you discover that any force trying to pass through the barrier will focus the barrier's energy towards the force's path. 
+
+Weakening the area around the barrier while strengthening the point where a force could pass through.","0:sss_omegaPlanetBombard1:Bombard the planet
+100:defaultLeave:Leave",
+sss_omegaPlanetScanned,OpenInteractionDialog,"$id == planet_sss_omega score:100
+$sss_omegaPlanetScanned
+!$sss_omegaPlanetBombarded","PrintDescription 3
+ShowDefaultVisual
+FireBest sss_omegaPlanetBombardCheck","You revisit the shielded planet in the system.
+
+Based on your findings, you discover that any force trying to pass through the barrier will focus the barrier's energy towards the force's path.
+
+Weakening the area around the barrier while strengthening the point where a force could pass through.
+
+
+","0:sss_omegaPlanetBombard1:Bombard the planet
+100:defaultLeave:Leave",
+sss_omegaPlanetBombardCheck,sss_omegaPlanetBombardCheck,"$player.fuel < 1000","SetEnabled sss_omegaPlanetBombard1 false
+SetTooltip sss_omegaPlanetBombard1  ""You need 1000 fuel to begin bombardment.""
+SetTooltipHighlights sss_omegaPlanetCrack1 ""1000""",,,
+sss_omegaPlanetBombard1,DialogOptionSelected,"$option == sss_omegaPlanetBombard1","$sss_omegaPlanetBombarded = true
+AddRemoveAnyItem RESOURCES fuel -1000","After some deliberation, you order your fleet to bombard the planet.
+
+As the bombardment continues, you notice that areas of the barrier have weakened, allowing you to peek into the planet but not fully scan it.","0:sss_omegaPlanetBombard2:Focus fire on the weakened areas",
+sss_omegaPlanetBombard2,DialogOptionSelected,"$option == sss_omegaPlanetBombard2","SetStoryOption sss_omegaPlanetCrack1 2 general ui_char_spent_story_point ""test""
+FireBest sss_omegaPlanetCrackHasPK
+FireBest sss_omegaPlanetCrackHas3AP
+FireBest sss_omegaPlanetCrackHasFuel","No matter how widely you spread or focus your bombardment, the barrier can just redirect its energy to withstand the damage it is taking.
+
+We might be able to break through the barrier if we have a devastating weapon to penetrate it in one hit while it's weak.","0:sss_omegaPlanetCrack1:Use the planet killer
+100:defaultLeave:Leave",
+sss_omegaPlanetBombarded,OpenInteractionDialog,"$id == planet_sss_omega score:100
+$sss_omegaPlanetScanned
+$sss_omegaPlanetBombarded
+!$global.sss_omegaPlanetCracked","PrintDescription 3
+ShowDefaultVisual
+SetStoryOption sss_omegaPlanetCrack1 2 general ui_char_spent_story_point ""test""
+FireBest sss_omegaPlanetCrackHasPK
+FireBest sss_omegaPlanetCrackHas3AP
+FireBest sss_omegaPlanetCrackHasFuel","You return to the only planet in the system.
+
+Based on your previous actions, you need a devastating weapon that can disable the barrier in one hit while it is weakened by bombardments.","0:sss_omegaPlanetCrack1:Use the planet killer
+100:defaultLeave:Leave",
+sss_omegaPlanetCrackHasPK,sss_omegaPlanetCrackHasPK,"!PlayerHasCargo planetkiller","RemoveOption sss_omegaPlanetCrack1",,,
+sss_omegaPlanetCrackHas3AP,sss_omegaPlanetCrackHas3AP,"!PlayerHasCargo alpha_core 3","SetEnabled sss_omegaPlanetCrack1 false
+SetTooltip sss_omegaPlanetCrack1  ""You need 3 alpha cores to decrypt the authorization codes.""
+SetTooltipHighlights sss_omegaPlanetCrack1 ""3""",,,
+sss_omegaPlanetCrackHasFuel,sss_omegaPlanetCrackHasFuel,"$player.fuel < 1000","SetEnabled sss_omegaPlanetCrack1 false
+SetTooltip sss_omegaPlanetCrack1  ""You need 1000 fuel to begin bombardment.""
+SetTooltipHighlights sss_omegaPlanetCrack1 ""1000""",,,
+sss_omegaPlanetCrack1,DialogOptionSelected,"$option == sss_omegaPlanetCrack1","$global.sss_omegaPlanetCracked = true
+AddRemoveAnyItem RESOURCES fuel -1000
+AddRemoveAnyItem RESOURCES alpha_core -3
+AddRemoveAnyItem SPECIAL planetkiller -1","By using the 3 alpha cores, you were able to decrypt the arming codes and arm the planet killer.
+
+You then begin the bombardment of the planet, once the barrier has weakened you launch the planet killer towards it.","0:sss_omegaPlanetCrack2:Continue",
+sss_omegaPlanetCrack2,DialogOptionSelected,"$option == sss_omegaPlanetCrack2",,"As soon as the planet killer hits, a bright flash of light blinds you and your fleet. As the light subsides you notice the barrier surrounding the planet has extremely weakened.
+
+But before you could do anything, a large energy burst is fired within the planet. The barrier on the planet suddenly and quickly recovers.","0:sss_omegaPlanetCrack3:Continue",
+sss_omegaPlanetCrack3,DialogOptionSelected,"$option == sss_omegaPlanetCrack3",,"You are then alerted by your officers that unknown vessels have started to enter the system and is headed straight for the planet.","100:defaultLeave:Leave",
+sss_omegaPlanetCracked,OpenInteractionDialog,"$id == planet_sss_omega score:100
+$sss_omegaPlanetScanned
+$sss_omegaPlanetBombarded
+$global.sss_omegaPlanetCracked","PrintDescription 3
+ShowDefaultVisual","You come close to the only planet within the system.
+
+Because of your previous actions, the barrier appears to have grown exponentially stronger. Any force applied to the barrier is ineffective.
+
+You're unsure where these [REDACTED] vessels are coming from but staying near the planet is ill-advised.","100:defaultLeave:Leave",
+"#END Omega planet",,,,,,
+"#END Planet interactions",,,,,,
 

@@ -14,6 +14,7 @@ import com.fs.starfarer.api.util.WeightedRandomPicker;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.OmegaFleetSpawnerManager;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class System3 {
@@ -46,6 +47,10 @@ public class System3 {
                         Conditions.NO_ATMOSPHERE,
                         Conditions.IRRADIATED,
                         Conditions.RUINS_VAST));
+        planet1.getSpec().setShieldTexture(Global.getSettings().getSpriteName("industry", "shield_texture"));
+        planet1.getSpec().setShieldThickness(0.1f);
+        planet1.getSpec().setShieldColor(new Color(200,160,240,255));
+        planet1.applySpecChanges();
         // Add custom entities
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();

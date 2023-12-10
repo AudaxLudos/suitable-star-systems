@@ -9,6 +9,8 @@ import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 import suitablestarsystems.Utils;
+import suitablestarsystems.world.OmegaFleetSpawnerManager;
+import suitablestarsystems.world.RemnantFleetSpawnerManager;
 
 import java.util.Arrays;
 
@@ -44,6 +46,10 @@ public class System2 {
                         Conditions.NO_ATMOSPHERE,
                         Conditions.IRRADIATED,
                         Conditions.RUINS_VAST));
+        planet1.getSpec().setShieldTexture(Global.getSettings().getSpriteName("industry", "shield_texture"));
+        planet1.getSpec().setShieldThickness(0.1f);
+        planet1.getSpec().setShieldColor(Misc.getDesignTypeColor("Remnant"));
+        planet1.applySpecChanges();
         // Add custom entities
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
@@ -88,7 +94,7 @@ public class System2 {
         // Add remnant fleet spawner
         // if planet is remove, the game crashes
         RemnantThemeGenerator.addBeacon(system, RemnantThemeGenerator.RemnantSystemType.RESURGENT);
-        RemnantStationFleetManager remnantFleetManager = new RemnantStationFleetManager(planet1, 1f, 0, 8, 15f, 16, 32);
+        RemnantFleetSpawnerManager remnantFleetManager = new RemnantFleetSpawnerManager(planet1, 1f, 0, 8, 15f, 16, 32);
         system.addScript(remnantFleetManager);
     }
 }
