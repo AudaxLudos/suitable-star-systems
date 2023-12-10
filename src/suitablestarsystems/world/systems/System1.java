@@ -75,27 +75,39 @@ public class System1 {
         system.addEntity(jumpPoint1);
 
         // Add planet 1
-        Utils.createPlanet(system, systemCenter,
+        PlanetAPI planet1 = Utils.createPlanet(system, systemCenter,
                 "barren_castiron",
-                90f,
-                centerRadius + 2000f,
-                200f,
+                130f,
+                centerRadius + 2500f,
+                250f,
                 Arrays.asList(
                         Conditions.ORE_ULTRARICH,
                         Conditions.RARE_ORE_ULTRARICH,
                         Conditions.NO_ATMOSPHERE,
                         Conditions.VERY_HOT));
+        // Add planet 3 moon of planet 2
+        Utils.createPlanet(system, planet1,
+                "lava_minor",
+                60f,
+                planet1.getRadius() + 500f,
+                (planet1.getRadius() + 500f) / 10f,
+                Arrays.asList(
+                        Conditions.ORE_ULTRARICH,
+                        Conditions.RARE_ORE_ULTRARICH,
+                        Conditions.RUINS_VAST,
+                        Conditions.TECTONIC_ACTIVITY,
+                        Conditions.HOT));
 
         // Add planet 2
         PlanetAPI planet2 = Utils.createPlanet(system, systemCenter,
                 "terran",
                 130f,
-                centerRadius + 3500f,
-                350f,
+                centerRadius + 4500f,
+                450f,
                 Arrays.asList(
                         Conditions.FARMLAND_BOUNTIFUL,
                         Conditions.ORGANICS_PLENTIFUL,
-                        Conditions.ORE_MODERATE,
+                        Conditions.ORE_ULTRARICH,
                         Conditions.RUINS_VAST,
                         Conditions.HABITABLE,
                         Conditions.MILD_CLIMATE));
@@ -108,12 +120,12 @@ public class System1 {
                 Arrays.asList(
                         Conditions.ORE_ULTRARICH,
                         Conditions.RARE_ORE_ULTRARICH,
-                        Conditions.ORGANICS_COMMON,
+                        Conditions.ORGANICS_PLENTIFUL,
                         Conditions.THIN_ATMOSPHERE));
         // Add asteroid field 1
         Utils.createAsteroidField(system, systemCenter, planet2.getCircularOrbitAngle() + 180f,
-                centerRadius + 3500f,
-                350f,
+                centerRadius + 4500f,
+                450f,
                 300f,
                 500f,
                 16,
@@ -123,13 +135,16 @@ public class System1 {
 
         // Add planet 4
         PlanetAPI planet4 = Utils.createPlanet(system, systemCenter,
-                "gas_giant",
-                250f,
-                centerRadius + 6000f,
-                600f,
+                "cryovolcanic",
+                130f,
+                centerRadius + 6500f,
+                650f,
                 Arrays.asList(
                         Conditions.VOLATILES_PLENTIFUL,
-                        Conditions.HIGH_GRAVITY));
+                        Conditions.RARE_ORE_ULTRARICH,
+                        Conditions.ORE_ULTRARICH,
+                        Conditions.VERY_COLD,
+                        Conditions.TECTONIC_ACTIVITY));
         float planet4Radius = planet4.getRadius() + 300f;
         Utils.createMagneticField(planet4, planet4Radius, (planet4Radius) / 2f, planet4.getRadius() + 50f, planet4Radius, 1f);
         // Add planet 5 moon of planet 4
@@ -140,36 +155,36 @@ public class System1 {
                 (planet4.getRadius() + 500f) / 10f,
                 Arrays.asList(
                         Conditions.VOLATILES_PLENTIFUL,
-                        Conditions.RARE_ORE_ULTRARICH,
+                        Conditions.ORE_ULTRARICH,
                         Conditions.RUINS_VAST,
                         Conditions.VERY_COLD));
         // Add asteroid field 2
         Utils.createAsteroidField(system, systemCenter, planet4.getCircularOrbitAngle() + 180f,
-                centerRadius + 6000f,
-                600f,
+                centerRadius + 6500f,
+                650f,
                 300f,
                 500f,
                 16,
                 24,
                 4f,
                 16f);
-
-        // Add custom entities
-        float randomAngle2 = Utils.getRandomAngle();
         SectorEntityToken cryoSleeper = system.addCustomEntity(null, null, Entities.DERELICT_CRYOSLEEPER, Factions.NEUTRAL);
         cryoSleeper.setSensorProfile(1f);
         cryoSleeper.setDiscoverable(true);
-        cryoSleeper.setCircularOrbit(systemCenter, randomAngle2, centerRadius + 8000f, 800f);
+        cryoSleeper.setCircularOrbit(systemCenter, planet4.getCircularOrbitAngle() + 180f, centerRadius + 6500f, 650f);
+
+        // Add custom entities
+        float randomAngle2 = Utils.getRandomAngle();
         SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, Factions.NEUTRAL);
-        sensorArray.setCircularOrbit(systemCenter, randomAngle2 + 90f, centerRadius + 8000f, 800f);
+        sensorArray.setCircularOrbit(systemCenter, randomAngle2, centerRadius + 8000f, 800f);
         SectorEntityToken navBuoy = system.addCustomEntity(null, null, Entities.NAV_BUOY, Factions.NEUTRAL);
-        navBuoy.setCircularOrbit(systemCenter, randomAngle2 + 180f, centerRadius + 8000f, 800f);
+        navBuoy.setCircularOrbit(systemCenter, randomAngle2 + 120f, centerRadius + 8000f, 800f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
-        jumpPoint2.setCircularOrbit(systemCenter, randomAngle2 + 270f, centerRadius + 8000f, 800f);
+        jumpPoint2.setCircularOrbit(systemCenter, randomAngle2 + 240f, centerRadius + 8000f, 800f);
         system.addEntity(jumpPoint2);
 
-        // asteroid belt 1
+        // Add asteroid belt 1
         Utils.createAsteroidBelt(system, 64, systemCenter, centerRadius + 9000f, 900f, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f);
 
         // Auto generate jump points

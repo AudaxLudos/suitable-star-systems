@@ -43,9 +43,9 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
     @Override
     protected CampaignFleetAPI spawnFleet() {
         if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetQuestOverride"))
-                if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetCracked")) return null;
+            if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetCracked")) return null;
         if (this.source == null) return null;
-        
+
         Random random = Utils.random;
 
         CampaignFleetAPI fleet = FleetFactoryV3.createEmptyFleet("omega", "patrolLarge", this.source.getMarket());
@@ -136,7 +136,7 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
         fleet.getMemoryWithoutUpdate().set(MemFlags.SALVAGE_SEED, random.nextLong());
     }
 
-    public float getRandomNumberInRange (float min, float max) {
+    public float getRandomNumberInRange(float min, float max) {
         return (float) (Math.random() * (max - min) + min);
     }
 }

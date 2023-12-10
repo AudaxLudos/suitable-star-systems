@@ -6,7 +6,6 @@ import com.fs.starfarer.api.impl.campaign.ids.*;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
-import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
@@ -93,7 +92,7 @@ public class System3 {
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
         // Add omega fleet spawner
-        // if planet is remove, the game crashes
+        // if planet is removed, the game might crash (not tested)
         OmegaFleetSpawnerManager omegaFleetManager = new OmegaFleetSpawnerManager(planet1, 1f, 0, 8, 15f);
         system.addScript(omegaFleetManager);
     }

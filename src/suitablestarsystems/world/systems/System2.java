@@ -4,12 +4,14 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.impl.campaign.ids.*;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
-import com.fs.starfarer.api.impl.campaign.procgen.themes.*;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
+import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 import suitablestarsystems.Utils;
-import suitablestarsystems.world.OmegaFleetSpawnerManager;
 import suitablestarsystems.world.RemnantFleetSpawnerManager;
 
 import java.util.Arrays;
@@ -88,7 +90,7 @@ public class System2 {
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
         // Add remnant fleet spawner
-        // if planet is remove, the game crashes
+        // if planet is removed, the game might crash (not tested)
         RemnantThemeGenerator.addBeacon(system, RemnantThemeGenerator.RemnantSystemType.RESURGENT);
         RemnantFleetSpawnerManager remnantFleetManager = new RemnantFleetSpawnerManager(planet1, 1f, 0, 8, 15f, 16, 32);
         system.addScript(remnantFleetManager);
