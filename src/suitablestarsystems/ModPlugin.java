@@ -16,12 +16,7 @@ public class ModPlugin extends BaseModPlugin {
 
     @Override
     public void onGameLoad(boolean newGame) {
-        try {
-            JSONObject settings = Global.getSettings().loadJSON("settings.json");
-            Global.getSector().getMemoryWithoutUpdate().set("$sss_omegaPlanetQuestOverride", settings.getBoolean("omegaPlanetQuestOverride"));
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
+        Global.getSector().getMemoryWithoutUpdate().set("$sss_omegaPlanetQuestOverride", Global.getSettings().getBoolean("omegaPlanetQuestOverride"));
     }
 
     @Override

@@ -1,4 +1,5 @@
 {
+    "omegaPlanetQuestOverride": false,
     "graphics": {
         "suitablestarsystems": {
             "planetary_shield_purple_strong": "graphics/planets/planetary_shield_purple_strong.png"
