@@ -50,6 +50,7 @@ public class System1 {
         system.setType(StarSystemGenerator.StarSystemType.BINARY_CLOSE);
         system.setStar(primaryStar);
         system.setSecondary(secondaryStar);
+        // Rename system with procedural name
         system.setBaseName(primaryStarName);
         system.setName(primaryStarName);
 
