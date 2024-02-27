@@ -1,3 +1,7 @@
+### 2.2.5
+- Release 2.2.5
+- Add intel for entering unique systems
+
 ### 2.2.3
 - Release 2.2.3
 - Update mod required game version to 0.97a
