@@ -1,3 +1,7 @@
+### 2.3.1
+- Release 2.3.1
+- Update jar file
+
 ### 2.3.0
 - Release 2.3.0
 - Update mod version to latest version
