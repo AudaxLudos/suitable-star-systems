@@ -26,10 +26,6 @@ public class System1 {
         system.addTag(Tags.THEME_INTERESTING);
         system.addTag(Tags.THEME_RUINS);
         system.addTag(Tags.THEME_RUINS_MAIN);
-        system.addTag(Tags.THEME_UNSAFE);
-        system.addTag(Tags.THEME_REMNANT);
-        system.addTag(Tags.THEME_REMNANT_MAIN);
-        system.addTag(Tags.THEME_REMNANT_RESURGENT);
         system.addTag(Tags.THEME_DERELICT_CRYOSLEEPER);
         system.addTag(Tags.HAS_CORONAL_TAP);
 
