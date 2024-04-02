@@ -57,16 +57,12 @@ public class System1 {
         // Add custom entities
         SectorEntityToken coronalTap = system.addCustomEntity(null, null, Entities.CORONAL_TAP, Factions.NEUTRAL);
         coronalTap.setCircularOrbit(primaryStar, primaryStar.getCircularOrbitAngle() + 180f, primaryStar.getRadius() + 250f, primaryStar.getCircularOrbitPeriod());
-        coronalTap.setSensorProfile(1f);
-        coronalTap.setDiscoverable(true);
         system.addScript(new MiscellaneousThemeGenerator.MakeCoronalTapFaceNearestStar(coronalTap));
         system.addScript(new CoronalTapParticleScript(coronalTap));
 
         // Add custom entities
         float randomAngle1 = Utils.getRandomAngle();
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, Entities.INACTIVE_GATE, Factions.NEUTRAL);
-        inactiveGate.setSensorProfile(1f);
-        inactiveGate.setDiscoverable(true);
         inactiveGate.setCircularOrbit(systemCenter, randomAngle1, centerRadius + 1000f, 100f);
         SectorEntityToken commRelay = system.addCustomEntity(null, null, Entities.COMM_RELAY, Factions.NEUTRAL);
         commRelay.setCircularOrbit(systemCenter, randomAngle1 + 120f, centerRadius + 1000f, 100f);
@@ -170,8 +166,6 @@ public class System1 {
                 4f,
                 16f);
         SectorEntityToken cryoSleeper = system.addCustomEntity(null, null, Entities.DERELICT_CRYOSLEEPER, Factions.NEUTRAL);
-        cryoSleeper.setSensorProfile(1f);
-        cryoSleeper.setDiscoverable(true);
         cryoSleeper.setCircularOrbit(systemCenter, planet4.getCircularOrbitAngle() + 180f, centerRadius + 6500f, 650f);
 
         // Add custom entities
@@ -208,11 +202,5 @@ public class System1 {
         theme.addShipGraveyard(systemData, 1f, 2, 2, factions);
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
-        // Add remnant station 1 that spawns remnant fleets
-        RemnantThemeGenerator.addBeacon(system, RemnantThemeGenerator.RemnantSystemType.RESURGENT);
-        float station1Radius = planet2.getRadius() + 150f;
-        CampaignFleetAPI station1 = Utils.addAIBattlestation(planet2, station1Radius, station1Radius / 10f);
-        RemnantStationFleetManager station1Fleets = new RemnantStationFleetManager(station1, 1f, 0, 8, 15f, 16, 32);
-        system.addScript(station1Fleets);
     }
 }
