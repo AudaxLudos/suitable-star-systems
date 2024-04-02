@@ -1,3 +1,8 @@
+### 2.2.8
+- Release 2.2.8
+- Update system1 to be easier to identify and colonize
+- Update GitHub action script
+
 ### 2.2.5
 - Release 2.2.5
 - Add intel for entering unique systems
