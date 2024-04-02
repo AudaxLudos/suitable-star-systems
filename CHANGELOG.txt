@@ -1,3 +1,11 @@
+### 2.3.0
+- Release 2.3.0
+- Update mod version to latest version
+
+### 2.2.9
+- Release 2.2.9
+- Update system 1 tags
+
 ### 2.2.8
 - Release 2.2.8
 - Update system1 to be easier to identify and colonize
