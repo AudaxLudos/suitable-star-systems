@@ -1,3 +1,7 @@
+### 2.3.2
+- Release 2.3.2
+- Fix bug where remnant and omega planets can become targets for random quests
+
 ### 2.3.1
 - Release 2.3.1
 - Update jar file
