@@ -50,6 +50,7 @@ public class System3 {
         planet1.getSpec().setShieldThickness(0.1f);
         planet1.getSpec().setShieldColor(Color.GRAY);
         planet1.applySpecChanges();
+        planet1.addTag(Tags.NOT_RANDOM_MISSION_TARGET);
         // Add custom entities
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();

@@ -20,37 +20,17 @@ import java.util.Random;
 
 public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
 
-    public class RemnantSystemEPGenerator implements EncounterPointProvider {
-        public List<EncounterPoint> generateEncounterPoints(LocationAPI where) {
-            if (!where.isHyperspace()) return null;
-            if (totalLost > 0 && source != null) {
-                String id = "ep_" + source.getId();
-                EncounterPoint ep = new EncounterPoint(id, where, source.getLocationInHyperspace(), EncounterManager.EP_TYPE_OUTSIDE_SYSTEM);
-                ep.custom = this;
-                List<EncounterPoint> result = new ArrayList<>();
-                result.add(ep);
-                return result; //source.getContainingLocation().getName()
-            }
-            return null;
-        }
-    }
-
     protected int minPts;
     protected int maxPts;
     protected int totalLost;
     protected transient RemnantSystemEPGenerator epGen;
+    protected transient boolean addedListener = false;
 
     public RemnantFleetSpawnerManager(SectorEntityToken source, float thresholdLY, int minFleets, int maxFleets, float respawnDelay, int minPts, int maxPts) {
         super(source, thresholdLY, minFleets, maxFleets, respawnDelay);
         this.minPts = minPts;
         this.maxPts = maxPts;
     }
-
-    protected Object readResolve() {
-        return this;
-    }
-
-    protected transient boolean addedListener = false;
 
     @Override
     public void advance(float amount) {
@@ -112,6 +92,21 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
             String sid = fleet.getMemoryWithoutUpdate().getString("$sourceId");
             if (sid != null && source != null && sid.equals(source.getId()))
                 totalLost++;
+        }
+    }
+
+    public class RemnantSystemEPGenerator implements EncounterPointProvider {
+        public List<EncounterPoint> generateEncounterPoints(LocationAPI where) {
+            if (!where.isHyperspace()) return null;
+            if (totalLost > 0 && source != null) {
+                String id = "ep_" + source.getId();
+                EncounterPoint ep = new EncounterPoint(id, where, source.getLocationInHyperspace(), EncounterManager.EP_TYPE_OUTSIDE_SYSTEM);
+                ep.custom = this;
+                List<EncounterPoint> result = new ArrayList<>();
+                result.add(ep);
+                return result; //source.getContainingLocation().getName()
+            }
+            return null;
         }
     }
 }

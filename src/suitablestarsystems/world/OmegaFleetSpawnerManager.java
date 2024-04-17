@@ -22,20 +22,6 @@ import java.util.Random;
 public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
     protected int totalLost = 0;
 
-    public static class OmegaFleetInteractionConfigGen implements FleetInteractionDialogPluginImpl.FIDConfigGen {
-        public FleetInteractionDialogPluginImpl.FIDConfig createConfig() {
-            FleetInteractionDialogPluginImpl.FIDConfig config = new FleetInteractionDialogPluginImpl.FIDConfig();
-            config.showTransponderStatus = false;
-            config.delegate = new FleetInteractionDialogPluginImpl.BaseFIDDelegate() {
-                public void battleContextCreated(InteractionDialogAPI dialog, BattleCreationContext bcc) {
-                    bcc.aiRetreatAllowed = false;
-                    bcc.enemyDeployAll = true;
-                }
-            };
-            return config;
-        }
-    }
-
     public OmegaFleetSpawnerManager(SectorEntityToken source, float thresholdLY, int minFleets, int maxFleets, float respawnDelay) {
         super(source, thresholdLY, minFleets, maxFleets, respawnDelay);
     }
@@ -138,5 +124,19 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
 
     public float getRandomNumberInRange(float min, float max) {
         return (float) (Math.random() * (max - min) + min);
+    }
+
+    public static class OmegaFleetInteractionConfigGen implements FleetInteractionDialogPluginImpl.FIDConfigGen {
+        public FleetInteractionDialogPluginImpl.FIDConfig createConfig() {
+            FleetInteractionDialogPluginImpl.FIDConfig config = new FleetInteractionDialogPluginImpl.FIDConfig();
+            config.showTransponderStatus = false;
+            config.delegate = new FleetInteractionDialogPluginImpl.BaseFIDDelegate() {
+                public void battleContextCreated(InteractionDialogAPI dialog, BattleCreationContext bcc) {
+                    bcc.aiRetreatAllowed = false;
+                    bcc.enemyDeployAll = true;
+                }
+            };
+            return config;
+        }
     }
 }

@@ -48,6 +48,7 @@ public class System2 {
                         Conditions.NO_ATMOSPHERE,
                         Conditions.IRRADIATED,
                         Conditions.RUINS_VAST));
+        planet1.addTag(Tags.NOT_RANDOM_MISSION_TARGET);
         // Add custom entities
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
