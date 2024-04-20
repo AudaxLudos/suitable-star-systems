@@ -31,6 +31,9 @@ public class System1 {
         system.addTag(Tags.THEME_DERELICT_CRYOSLEEPER);
         system.addTag(Tags.HAS_CORONAL_TAP);
 
+        // Add custom memory data for other mods
+        system.getMemoryWithoutUpdate().set("$nex_do_not_colonize", true);
+
         system.initNonStarCenter();
         SectorEntityToken systemCenter = system.getCenter();
 

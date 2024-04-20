@@ -28,6 +28,9 @@ public class System2 {
         system.addTag(Tags.THEME_REMNANT_MAIN);
         system.addTag(Tags.THEME_REMNANT_RESURGENT);
 
+        // Add custom memory data for other mods
+        system.getMemoryWithoutUpdate().set("$nex_do_not_colonize", true);
+
         // Rename system with procedural name
         String systemName = Utils.generateProceduralName(Tags.STAR, system.getConstellation().getName());
         system.setBaseName(systemName);
