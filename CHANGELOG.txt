@@ -1,3 +1,7 @@
+### 2.3.3
+- Release 2.3.3
+- Update systems to not be marked for colonization by factions in Nexerelin
+
 ### 2.3.2
 - Release 2.3.2
 - Fix bug where remnant and omega planets can become targets for random quests
