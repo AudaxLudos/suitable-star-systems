@@ -1,3 +1,7 @@
+### 2.3.4
+- Release 2.3.4
+- Update directDownloadURL link in version file
+
 ### 2.3.3
 - Release 2.3.3
 - Update systems to not be marked for colonization by factions in Nexerelin
