@@ -8,14 +8,14 @@ echo "Location of folder to zip:" "$(realpath $folderToZip)"
 
 cd $folderToZip || return
 
-# Get the mod version number and mod name from mod_info.json
+# Get the mod version and mod name from mod_info.json
 json=$(cat mod_info.json)
 modVersion=$(echo "$json" | jq -r '.version')
-outputFolderName=$(echo "$json" | jq -r '.name')
+modName=$(echo "$json" | jq -r '.name')
 
-# Rename the text before modVersion
-noSpaceName=$(echo "$outputFolderName" | sed 's/ //g')
-zipName="$noSpaceName-$modVersion.zip"
+# Set zip name and folder name
+outputFolderName="$modName $modVersion"
+zipName="$(echo "$modName" | sed 's/ //g').zip"
 
 # Recreate the temp folder if it happens to be present.
 rm -rf "./$outputFolderName"

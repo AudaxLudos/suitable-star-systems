@@ -1,3 +1,7 @@
+### 2.3.4a
+- Release 2.3.4a
+- Update GitHub action script
+
 ### 2.3.4
 - Release 2.3.4
 - Update directDownloadURL link in version file

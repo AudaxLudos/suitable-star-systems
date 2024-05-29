@@ -4,9 +4,9 @@
     "modVersion": {
         "major": 2,
         "minor": 3,
-        "patch": 4
+        "patch": 4a
     },
     "modThreadId": 25418,
-    "directDownloadURL": "https://github.com/AudaxLudos/suitable-star-systems/releases/latest/download/SuitableStarSystems-2.3.4.zip",
+    "directDownloadURL": "https://github.com/AudaxLudos/suitable-star-systems/releases/latest/download/SuitableStarSystems.zip",
     "changelogURL": "https://raw.githubusercontent.com/AudaxLudos/suitable-star-systems/main/CHANGELOG.txt"
 }
