@@ -34,23 +34,23 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
 
     @Override
     public void advance(float amount) {
-        if (!addedListener) {
-            epGen = new RemnantSystemEPGenerator();
-            Global.getSector().getListenerManager().addListener(epGen, true);
-            addedListener = true;
+        if (!this.addedListener) {
+            this.epGen = new RemnantSystemEPGenerator();
+            Global.getSector().getListenerManager().addListener(this.epGen, true);
+            this.addedListener = true;
         }
         super.advance(amount);
     }
 
     @Override
     protected CampaignFleetAPI spawnFleet() {
-        if (source == null) return null;
+        if (this.source == null) return null;
 
         Random random = Utils.random;
 
-        int combatPoints = minPts + random.nextInt(maxPts - minPts + 1);
-        int bonus = totalLost * 4;
-        if (bonus > maxPts) bonus = maxPts;
+        int combatPoints = this.minPts + random.nextInt(this.maxPts - this.minPts + 1);
+        int bonus = this.totalLost * 4;
+        if (bonus > this.maxPts) bonus = this.maxPts;
         combatPoints += bonus;
         String type = FleetTypes.PATROL_SMALL;
         if (combatPoints > 8) type = FleetTypes.PATROL_MEDIUM;
@@ -58,7 +58,7 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
         combatPoints *= 8;
 
         FleetParamsV3 params = new FleetParamsV3(
-                source.getLocationInHyperspace(),
+                this.source.getLocationInHyperspace(),
                 Factions.REMNANTS,
                 1f,
                 type,
@@ -75,12 +75,12 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
         CampaignFleetAPI fleet = FleetFactoryV3.createFleet(params);
         if (fleet == null) return null;
 
-        source.getContainingLocation().addEntity(fleet);
+        this.source.getContainingLocation().addEntity(fleet);
         RemnantSeededFleetManager.initRemnantFleetProperties(random, fleet, false);
-        fleet.setLocation(source.getLocation().x, source.getLocation().y);
+        fleet.setLocation(this.source.getLocation().x, this.source.getLocation().y);
         fleet.setFacing(random.nextFloat() * 360f);
-        fleet.addScript(new RemnantAssignmentAI(fleet, (StarSystemAPI) source.getContainingLocation(), source));
-        fleet.getMemoryWithoutUpdate().set("$sourceId", source.getId());
+        fleet.addScript(new RemnantAssignmentAI(fleet, (StarSystemAPI) this.source.getContainingLocation(), this.source));
+        fleet.getMemoryWithoutUpdate().set("$sourceId", this.source.getId());
 
         return fleet;
     }
@@ -90,17 +90,18 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
         super.reportFleetDespawnedToListener(fleet, reason, param);
         if (reason == CampaignEventListener.FleetDespawnReason.DESTROYED_BY_BATTLE) {
             String sid = fleet.getMemoryWithoutUpdate().getString("$sourceId");
-            if (sid != null && source != null && sid.equals(source.getId()))
-                totalLost++;
+            if (sid != null && this.source != null && sid.equals(this.source.getId())) {
+                this.totalLost++;
+            }
         }
     }
 
     public class RemnantSystemEPGenerator implements EncounterPointProvider {
         public List<EncounterPoint> generateEncounterPoints(LocationAPI where) {
             if (!where.isHyperspace()) return null;
-            if (totalLost > 0 && source != null) {
-                String id = "ep_" + source.getId();
-                EncounterPoint ep = new EncounterPoint(id, where, source.getLocationInHyperspace(), EncounterManager.EP_TYPE_OUTSIDE_SYSTEM);
+            if (RemnantFleetSpawnerManager.this.totalLost > 0 && RemnantFleetSpawnerManager.this.source != null) {
+                String id = "ep_" + RemnantFleetSpawnerManager.this.source.getId();
+                EncounterPoint ep = new EncounterPoint(id, where, RemnantFleetSpawnerManager.this.source.getLocationInHyperspace(), EncounterManager.EP_TYPE_OUTSIDE_SYSTEM);
                 ep.custom = this;
                 List<EncounterPoint> result = new ArrayList<>();
                 result.add(ep);

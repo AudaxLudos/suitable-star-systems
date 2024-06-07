@@ -28,8 +28,9 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
 
     @Override
     protected CampaignFleetAPI spawnFleet() {
-        if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetQuestOverride"))
+        if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetQuestOverride")) {
             if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetCracked")) return null;
+        }
         if (this.source == null) return null;
 
         Random random = Utils.random;
@@ -45,8 +46,9 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
         int numOfShips = 2;
         numOfShips += this.totalLost;
         if (numOfShips > 4) numOfShips = 4;
-        for (int i = 0; i <= numOfShips - 1; i++)
+        for (int i = 0; i <= numOfShips - 1; i++) {
             fleet.getFleetData().addFleetMember(variants.pick());
+        }
 
         initOmegaFleetProperties(random, fleet);
         OmegaOfficerGeneratorPlugin plugin = new OmegaOfficerGeneratorPlugin();
@@ -68,12 +70,12 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
         fleet.setNoFactionInName(true);
         fleet.setFacing(Utils.getRandomAngle());
         // Spawn the fleet in the system
-        source.getContainingLocation().addEntity(fleet);
+        this.source.getContainingLocation().addEntity(fleet);
         fleet.updateFleetView(); // so that ship views exist and can do the jump-in warping animation
-        source.getContainingLocation().removeEntity(fleet);
+        this.source.getContainingLocation().removeEntity(fleet);
         Global.getSector().getHyperspace().addEntity(fleet);
         fleet.setLocation(1000000000, 0);
-        SectorEntityToken token = this.source.getContainingLocation().createToken(Misc.getPointAtRadius(source.getLocation(), getRandomNumberInRange(1000f, 1500f)));
+        SectorEntityToken token = this.source.getContainingLocation().createToken(Misc.getPointAtRadius(this.source.getLocation(), getRandomNumberInRange(1000f, 1500f)));
         Global.getSector().doHyperspaceTransition(fleet, null, new JumpPointAPI.JumpDestination(token, null));
         fleet.addScript(new RemnantAssignmentAI(fleet, (StarSystemAPI) this.source.getContainingLocation(), this.source));
         fleet.getMemoryWithoutUpdate().set("$sourceId", this.source.getId());
@@ -86,15 +88,17 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
         super.reportFleetDespawnedToListener(fleet, reason, param);
         if (reason == CampaignEventListener.FleetDespawnReason.DESTROYED_BY_BATTLE) {
             String sid = fleet.getMemoryWithoutUpdate().getString("$sourceId");
-            if (sid != null && source != null && sid.equals(source.getId()))
-                totalLost++;
+            if (sid != null && this.source != null && sid.equals(this.source.getId())) {
+                this.totalLost++;
+            }
         }
     }
 
     public void integrateAndAdaptCoreForOmegaFleet(FleetMemberAPI member) {
         PersonAPI person = member.getCaptain();
-        if (!person.isAICore())
+        if (!person.isAICore()) {
             return;
+        }
         person.getStats().setLevel(person.getStats().getLevel() + 1);
         person.getStats().setSkipRefresh(true);
         person.getStats().setSkillLevel(Skills.ORDNANCE_EXPERTISE, 2f);
@@ -107,8 +111,9 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
     }
 
     public void initOmegaFleetProperties(Random random, CampaignFleetAPI fleet) {
-        if (random == null)
+        if (random == null) {
             random = new Random();
+        }
         fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_NO_JUMP, true);
         fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_MAKE_HOSTILE, true);
         fleet.getMemoryWithoutUpdate().set(MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE, true);

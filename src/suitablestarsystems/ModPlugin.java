@@ -28,11 +28,13 @@ public class ModPlugin extends BaseModPlugin {
         for (StarSystemAPI system : Global.getSector().getStarSystems()) {
             if (system.isProcgen()) continue;
             if (system.getStar() == null) continue;
-            if (!Objects.equals(system.getStar().getTypeId(), StarTypes.BLACK_HOLE) || !Objects.equals(system.getStar().getTypeId(), StarTypes.WHITE_DWARF))
+            if (!Objects.equals(system.getStar().getTypeId(), StarTypes.BLACK_HOLE) || !Objects.equals(system.getStar().getTypeId(), StarTypes.WHITE_DWARF)) {
                 continue;
+            }
             for (PlanetAPI planet : system.getPlanets()) {
-                if (!Objects.equals(planet.getId(), "planet_sss_remnant") || !Objects.equals(planet.getId(), "planet_sss_omega"))
+                if (!Objects.equals(planet.getId(), "planet_sss_remnant") || !Objects.equals(planet.getId(), "planet_sss_omega")) {
                     continue;
+                }
                 if (planet.hasTag(Tags.NOT_RANDOM_MISSION_TARGET)) continue;
                 planet.addTag(Tags.NOT_RANDOM_MISSION_TARGET);
             }

@@ -22,11 +22,13 @@ public class WorldGenerator implements SectorGeneratorPlugin {
         random.setSeed(1);
         Set<Constellation> constellations = new HashSet<Constellation>();
         for (StarSystemAPI system : sector.getStarSystems()) {
-            if (!system.isInConstellation() || !system.isProcgen())
+            if (!system.isInConstellation() || !system.isProcgen()) {
                 continue;
+            }
             Constellation c = system.getConstellation();
-            if (c != null)
+            if (c != null) {
                 constellations.add(c);
+            }
         }
 
         // Put system 1 in a random constellation
@@ -78,8 +80,9 @@ public class WorldGenerator implements SectorGeneratorPlugin {
                     break;
                 }
             }
-            if (!isIntersect)
+            if (!isIntersect) {
                 result = new Vector2f(x0, y0);
+            }
         }
         return result;
     }

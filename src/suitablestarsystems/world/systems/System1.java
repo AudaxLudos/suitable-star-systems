@@ -46,7 +46,7 @@ public class System1 {
         PlanetAPI secondaryStar = system.addPlanet(secondaryStarName.toLowerCase(), null, secondaryStarName, StarTypes.ORANGE, 0f, 750f, 10000f, 1000f);
         system.addCorona(secondaryStar, 400f, 10f, 1f, 3f);
 
-        centerRadius = Utils.updateBinaryStarsOrbit(primaryStar, secondaryStar, system);
+        this.centerRadius = Utils.updateBinaryStarsOrbit(primaryStar, secondaryStar, system);
 
         system.setType(StarSystemGenerator.StarSystemType.BINARY_CLOSE);
         system.setStar(primaryStar);
@@ -64,19 +64,19 @@ public class System1 {
         // Add custom entities
         float randomAngle1 = Utils.getRandomAngle();
         SectorEntityToken inactiveGate = system.addCustomEntity(null, null, Entities.INACTIVE_GATE, Factions.NEUTRAL);
-        inactiveGate.setCircularOrbit(systemCenter, randomAngle1, centerRadius + 1000f, 100f);
+        inactiveGate.setCircularOrbit(systemCenter, randomAngle1, this.centerRadius + 1000f, 100f);
         SectorEntityToken commRelay = system.addCustomEntity(null, null, Entities.COMM_RELAY, Factions.NEUTRAL);
-        commRelay.setCircularOrbit(systemCenter, randomAngle1 + 120f, centerRadius + 1000f, 100f);
+        commRelay.setCircularOrbit(systemCenter, randomAngle1 + 120f, this.centerRadius + 1000f, 100f);
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
-        jumpPoint1.setCircularOrbit(systemCenter, randomAngle1 + 240f, centerRadius + 1000f, 100f);
+        jumpPoint1.setCircularOrbit(systemCenter, randomAngle1 + 240f, this.centerRadius + 1000f, 100f);
         system.addEntity(jumpPoint1);
 
         // Add planet 1
         PlanetAPI planet1 = Utils.createPlanet(system, systemCenter,
                 "barren_castiron",
                 130f,
-                centerRadius + 2500f,
+                this.centerRadius + 2500f,
                 250f,
                 Arrays.asList(
                         Conditions.ORE_ULTRARICH,
@@ -100,7 +100,7 @@ public class System1 {
         PlanetAPI planet2 = Utils.createPlanet(system, systemCenter,
                 "terran",
                 130f,
-                centerRadius + 4500f,
+                this.centerRadius + 4500f,
                 450f,
                 Arrays.asList(
                         Conditions.FARMLAND_BOUNTIFUL,
@@ -122,7 +122,7 @@ public class System1 {
                         Conditions.THIN_ATMOSPHERE));
         // Add asteroid field 1
         Utils.createAsteroidField(system, systemCenter, planet2.getCircularOrbitAngle() + 180f,
-                centerRadius + 4500f,
+                this.centerRadius + 4500f,
                 450f,
                 300f,
                 500f,
@@ -135,7 +135,7 @@ public class System1 {
         PlanetAPI planet4 = Utils.createPlanet(system, systemCenter,
                 "cryovolcanic",
                 130f,
-                centerRadius + 6500f,
+                this.centerRadius + 6500f,
                 650f,
                 Arrays.asList(
                         Conditions.VOLATILES_PLENTIFUL,
@@ -158,7 +158,7 @@ public class System1 {
                         Conditions.VERY_COLD));
         // Add asteroid field 2
         Utils.createAsteroidField(system, systemCenter, planet4.getCircularOrbitAngle() + 180f,
-                centerRadius + 6500f,
+                this.centerRadius + 6500f,
                 650f,
                 300f,
                 500f,
@@ -167,21 +167,21 @@ public class System1 {
                 4f,
                 16f);
         SectorEntityToken cryoSleeper = system.addCustomEntity(null, null, Entities.DERELICT_CRYOSLEEPER, Factions.NEUTRAL);
-        cryoSleeper.setCircularOrbit(systemCenter, planet4.getCircularOrbitAngle() + 180f, centerRadius + 6500f, 650f);
+        cryoSleeper.setCircularOrbit(systemCenter, planet4.getCircularOrbitAngle() + 180f, this.centerRadius + 6500f, 650f);
 
         // Add custom entities
         float randomAngle2 = Utils.getRandomAngle();
         SectorEntityToken sensorArray = system.addCustomEntity(null, null, Entities.SENSOR_ARRAY, Factions.NEUTRAL);
-        sensorArray.setCircularOrbit(systemCenter, randomAngle2, centerRadius + 8000f, 800f);
+        sensorArray.setCircularOrbit(systemCenter, randomAngle2, this.centerRadius + 8000f, 800f);
         SectorEntityToken navBuoy = system.addCustomEntity(null, null, Entities.NAV_BUOY, Factions.NEUTRAL);
-        navBuoy.setCircularOrbit(systemCenter, randomAngle2 + 120f, centerRadius + 8000f, 800f);
+        navBuoy.setCircularOrbit(systemCenter, randomAngle2 + 120f, this.centerRadius + 8000f, 800f);
         JumpPointAPI jumpPoint2 = Global.getFactory().createJumpPoint(null, "Fringe Jump-point");
         jumpPoint2.setStandardWormholeToHyperspaceVisual();
-        jumpPoint2.setCircularOrbit(systemCenter, randomAngle2 + 240f, centerRadius + 8000f, 800f);
+        jumpPoint2.setCircularOrbit(systemCenter, randomAngle2 + 240f, this.centerRadius + 8000f, 800f);
         system.addEntity(jumpPoint2);
 
         // Add asteroid belt 1
-        Utils.createAsteroidBelt(system, 64, systemCenter, centerRadius + 9000f, 900f, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f);
+        Utils.createAsteroidBelt(system, 64, systemCenter, this.centerRadius + 9000f, 900f, "misc", "rings_dust0", 256f, 3, Color.WHITE, 256f);
 
         // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);

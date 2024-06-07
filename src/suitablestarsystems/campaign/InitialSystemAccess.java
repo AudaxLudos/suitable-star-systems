@@ -22,10 +22,12 @@ public class InitialSystemAccess implements EveryFrameScript {
 
     @Override
     public void advance(float amount) {
-        if (Global.getSector().getPlayerFleet() == null)
+        if (Global.getSector().getPlayerFleet() == null) {
             return;
-        if (Global.getSector().getPlayerFleet().getStarSystem() == null)
+        }
+        if (Global.getSector().getPlayerFleet().getStarSystem() == null) {
             return;
+        }
 
         boolean visitedOmegaSystem = Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetFound");
         boolean visitedRemnantSystem = Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_remnantPlanetFound");

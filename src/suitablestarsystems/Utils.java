@@ -49,8 +49,9 @@ public class Utils {
         PlanetAPI planet = system.addPlanet(planetName.toLowerCase(), parentOrbit, planetName, planetType, getRandomAngle(), planetRadius, orbitDistance, orbitDays);
         Misc.initConditionMarket(planet);
         MarketAPI market = planet.getMarket();
-        for (String condition : marketConditions)
+        for (String condition : marketConditions) {
             market.addCondition(condition);
+        }
 
         return planet;
     }
@@ -61,8 +62,9 @@ public class Utils {
         PlanetAPI planet = system.addPlanet(planetId, parentOrbit, planetName, planetType, getRandomAngle(), planetRadius, orbitDistance, orbitDays);
         Misc.initConditionMarket(planet);
         MarketAPI market = planet.getMarket();
-        for (String condition : marketConditions)
+        for (String condition : marketConditions) {
             market.addCondition(condition);
+        }
 
         return planet;
     }
@@ -129,8 +131,9 @@ public class Utils {
         SectorEntityToken ring = focus.getStarSystem().addTerrain("ring",
                 new BaseRingTerrain.RingParams(orbitRadius, orbitRadius / 2f, focus, null));
         ring.addTag("accretion_disk");
-        if (((CampaignTerrainAPI) ring).getPlugin() instanceof RingSystemTerrainPlugin)
+        if (((CampaignTerrainAPI) ring).getPlugin() instanceof RingSystemTerrainPlugin) {
             ((RingSystemTerrainPlugin) ((CampaignTerrainAPI) ring).getPlugin()).setNameForTooltip("Accretion Disk");
+        }
         ring.setCircularOrbit(focus, 0f, 0f, -100f);
     }
 
@@ -186,10 +189,12 @@ public class Utils {
 
         float r1 = primaryStar.getRadius();
         float r2 = secondaryStar.getRadius();
-        if (primaryStar.getSpec().getPlanetType().equals("black_hole"))
+        if (primaryStar.getSpec().getPlanetType().equals("black_hole")) {
             r1 *= 5f;
-        if (secondaryStar.getSpec().getPlanetType().equals("black_hole"))
+        }
+        if (secondaryStar.getSpec().getPlanetType().equals("black_hole")) {
             r2 *= 5f;
+        }
 
         float totalRadius = r1 + r2;
         dist += totalRadius;
