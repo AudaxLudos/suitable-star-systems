@@ -24,6 +24,7 @@ public class System3 {
         // Add system themes / tags
         system.addTag(Tags.THEME_INTERESTING);
         system.addTag(Tags.THEME_UNSAFE);
+        system.addTag("sss_system_3");
 
         // Add custom memory data for other mods
         system.getMemoryWithoutUpdate().set("$nex_do_not_colonize", true);

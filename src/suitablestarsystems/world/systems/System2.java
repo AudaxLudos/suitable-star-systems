@@ -28,6 +28,7 @@ public class System2 {
         system.addTag(Tags.THEME_REMNANT);
         system.addTag(Tags.THEME_REMNANT_MAIN);
         system.addTag(Tags.THEME_REMNANT_RESURGENT);
+        system.addTag("sss_system_2");
 
         // Add custom memory data for other mods
         system.getMemoryWithoutUpdate().set("$nex_do_not_colonize", true);

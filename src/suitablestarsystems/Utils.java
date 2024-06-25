@@ -79,7 +79,6 @@ public class Utils {
         return createPlanet(system, "", parentOrbit, planetType, planetAngle, planetRadius, orbitDistance, orbitDays, marketConditions);
     }
 
-
     public static void createAsteroidField(StarSystemAPI system, SectorEntityToken orbitFocus, float orbitAngle, float orbitDistance, float orbitDays, float minRadius, float maxRadius,
                                            int minAsteroids, int maxAsteroids, float minAsteroidRadius, float maxAsteroidRadius) {
         SectorEntityToken asteroidField1 = system.addTerrain(Terrain.ASTEROID_FIELD,
@@ -267,5 +266,14 @@ public class Utils {
 
             system.setLightColor(new Color(125, 90, 125, 255));
         }
+    }
+
+    public static StarSystemAPI getStarSystemWithTag(String tag) {
+        for (StarSystemAPI s : Global.getSector().getStarSystems()) {
+            if (s.hasTag(tag)) {
+                return s;
+            }
+        }
+        return null;
     }
 }
