@@ -1,3 +1,16 @@
+### 2.4.0
+- Release 2.4.0
+- Refactor system1,2,3 spawning implementation
+- Add custom tag for systems 1,2,3
+- Remove magnetic field for ALABASTER planet
+- Update intel icons for REDACTED and ALABASTER planet
+- Update intel descriptions for REDACTED and ALABASTER planet
+- Add planetary shield to system2 planet1
+- Add system nebula for system2 and system3
+- Update System3 add magnetic field to planet1
+- Update System2 add magnetic field to planet1
+- Update System1 remove orange star
+
 ### 2.3.4a
 - Release 2.3.4a
 - Update GitHub action script
