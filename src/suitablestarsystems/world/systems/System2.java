@@ -4,16 +4,19 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.impl.campaign.ids.*;
 import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
+import com.fs.starfarer.api.impl.campaign.procgen.StarAge;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
+import com.fs.starfarer.api.impl.campaign.terrain.BaseTiledTerrain;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.RemnantFleetSpawnerManager;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class System2 {
@@ -36,6 +39,10 @@ public class System2 {
         system.setBaseName(systemName);
         system.setName(systemName);
 
+        // Add system nebula
+        Misc.addNebulaFromPNG("data/campaign/terrain/system2_nebula.png", 0, 0,
+                system, "terrain", "nebula_blue", 4, 4, StarAge.OLD);
+
         // Add star
         PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.WHITE_DWARF, 400f, 300f, 5f, 1f, 2f);
 
@@ -51,9 +58,12 @@ public class System2 {
                         Conditions.NO_ATMOSPHERE,
                         Conditions.IRRADIATED,
                         Conditions.RUINS_VAST));
+        planet1.getSpec().setShieldTexture(Global.getSettings().getSpriteName("suitablestarsystems", "planetary_shield_cyan_strong"));
+        planet1.getSpec().setShieldThickness(0.1f);
+        planet1.applySpecChanges();
         planet1.addTag(Tags.NOT_RANDOM_MISSION_TARGET);
         float planet1Radius = planet1.getRadius() + 300f;
-        Utils.createMagneticField(planet1, planet1Radius, (planet1Radius) / 2f, planet1.getRadius() + 50f, planet1Radius, 1f);
+        Utils.createMagneticField(planet1, planet1Radius, (planet1Radius) / 2f, planet1.getRadius() + 50f, planet1Radius, 6f);
         // Add custom entities
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();
