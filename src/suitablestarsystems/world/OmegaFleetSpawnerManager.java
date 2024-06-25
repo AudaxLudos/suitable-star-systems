@@ -71,7 +71,7 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
         fleet.setFacing(Utils.getRandomAngle());
         // Spawn the fleet in the system
         this.source.getContainingLocation().addEntity(fleet);
-        fleet.updateFleetView(); // so that ship views exist and can do the jump-in warping animation
+        fleet.updateFleetView(); // So that ship views exist and can do the jump-in warping animation
         this.source.getContainingLocation().removeEntity(fleet);
         Global.getSector().getHyperspace().addEntity(fleet);
         fleet.setLocation(1000000000, 0);

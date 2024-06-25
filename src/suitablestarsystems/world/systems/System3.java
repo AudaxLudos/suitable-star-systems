@@ -54,6 +54,8 @@ public class System3 {
         planet1.getSpec().setShieldColor(Color.GRAY);
         planet1.applySpecChanges();
         planet1.addTag(Tags.NOT_RANDOM_MISSION_TARGET);
+        float planet1Radius = planet1.getRadius() + 300f;
+        Utils.createMagneticField(planet1, planet1Radius, (planet1Radius) / 2f, planet1.getRadius() + 50f, planet1Radius, 1f);
         // Add custom entities
         JumpPointAPI jumpPoint1 = Global.getFactory().createJumpPoint(null, "Inner System Jump-point");
         jumpPoint1.setStandardWormholeToHyperspaceVisual();

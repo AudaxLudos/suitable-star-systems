@@ -43,10 +43,18 @@ public class Utils {
         return namePick.nameWithRomanSuffixIfAny;
     }
 
-    public static PlanetAPI createPlanet(StarSystemAPI system, SectorEntityToken parentOrbit, String planetType, float planetRadius, float orbitDistance, float orbitDays,
+    public static PlanetAPI createPlanet(StarSystemAPI system, String planetId, SectorEntityToken parentOrbit, String planetType, Float planetAngle, float planetRadius, float orbitDistance, float orbitDays,
                                          List<String> marketConditions) {
         String planetName = generateProceduralName(Tags.PLANET, null);
-        PlanetAPI planet = system.addPlanet(planetName.toLowerCase(), parentOrbit, planetName, planetType, getRandomAngle(), planetRadius, orbitDistance, orbitDays);
+        String id = planetId;
+        if (id.isEmpty()) {
+            id = planetName.toLowerCase();
+        }
+        float angle = getRandomAngle();
+        if (planetAngle != null) {
+            angle = planetAngle;
+        }
+        PlanetAPI planet = system.addPlanet(id, parentOrbit, planetName, planetType, angle, planetRadius, orbitDistance, orbitDays);
         Misc.initConditionMarket(planet);
         MarketAPI market = planet.getMarket();
         for (String condition : marketConditions) {
@@ -56,17 +64,19 @@ public class Utils {
         return planet;
     }
 
+    public static PlanetAPI createPlanet(StarSystemAPI system, SectorEntityToken parentOrbit, String planetType, float planetRadius, float orbitDistance, float orbitDays,
+                                         List<String> marketConditions) {
+        return createPlanet(system, "", parentOrbit, planetType, null, planetRadius, orbitDistance, orbitDays, marketConditions);
+    }
+
     public static PlanetAPI createPlanet(StarSystemAPI system, String planetId, SectorEntityToken parentOrbit, String planetType, float planetRadius, float orbitDistance, float orbitDays,
                                          List<String> marketConditions) {
-        String planetName = generateProceduralName(Tags.PLANET, null);
-        PlanetAPI planet = system.addPlanet(planetId, parentOrbit, planetName, planetType, getRandomAngle(), planetRadius, orbitDistance, orbitDays);
-        Misc.initConditionMarket(planet);
-        MarketAPI market = planet.getMarket();
-        for (String condition : marketConditions) {
-            market.addCondition(condition);
-        }
+        return createPlanet(system, planetId, parentOrbit, planetType, null, planetRadius, orbitDistance, orbitDays, marketConditions);
+    }
 
-        return planet;
+    public static PlanetAPI createPlanet(StarSystemAPI system, SectorEntityToken parentOrbit, String planetType, float planetAngle, float planetRadius, float orbitDistance, float orbitDays,
+                                         List<String> marketConditions) {
+        return createPlanet(system, "", parentOrbit, planetType, planetAngle, planetRadius, orbitDistance, orbitDays, marketConditions);
     }
 
 
