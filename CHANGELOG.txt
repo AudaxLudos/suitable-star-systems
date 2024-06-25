@@ -1,3 +1,7 @@
+### 2.4.0a
+- Release 2.4.0a
+- Update cryovolcanic world to gas giant
+
 ### 2.4.0
 - Release 2.4.0
 - Refactor system1,2,3 spawning implementation
