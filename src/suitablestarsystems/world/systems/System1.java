@@ -37,7 +37,7 @@ public class System1 {
         PlanetAPI star = system.initStar(systemName.toLowerCase().replace(" ", ""), StarTypes.BLUE_SUPERGIANT, 1200f, 500f, 17f, 3f, 6f);
 
         // Set distance and orbit time for 1st zone
-        float distanceFromStar = star.getRadius() + 250f;
+        float distanceFromStar = star.getRadius() + 150f + 100f;
         float orbitDays = distanceFromStar * 0.10f;
 
         // Add custom entities
@@ -47,7 +47,7 @@ public class System1 {
         system.addScript(new CoronalTapParticleScript(coronalTap));
 
         // Set distance and orbit time for 2nd zone
-        distanceFromStar = Misc.getDistance(star, coronalTap) + 1000f;
+        distanceFromStar = Misc.getDistance(star, coronalTap) + 120f + 1000f;
         orbitDays = distanceFromStar * 0.10f;
 
         // Add custom entities
@@ -62,7 +62,7 @@ public class System1 {
         system.addEntity(jumpPoint1);
 
         // Set distance and orbit time for 3rd zone
-        distanceFromStar = Misc.getDistance(star, inactiveGate) + 1000f;
+        distanceFromStar = Misc.getDistance(star, inactiveGate) + 60f + 130f + 1000f;
         orbitDays = distanceFromStar * 0.10f;
 
         // Add planet 1
@@ -84,7 +84,7 @@ public class System1 {
                         Conditions.HOT));
 
         // Set distance and orbit time for 4th zone
-        distanceFromStar = Misc.getDistance(star, planet1) + Misc.getDistance(planet1, planet1Moon) + 1000f;
+        distanceFromStar = Misc.getDistance(star, planet1) + Misc.getDistance(planet1, planet1Moon) + 130f + 1000f;
         orbitDays = distanceFromStar * 0.10f;
 
         // Add planet 2
@@ -111,20 +111,19 @@ public class System1 {
                 16f);
 
         // Set distance and orbit time for 5th zone
-        distanceFromStar = Misc.getDistance(star, planet2) + Misc.getDistance(planet2, planet2Moon) + 1000f;
+        distanceFromStar = Misc.getDistance(star, planet2) + Misc.getDistance(planet2, planet2Moon) + 250f + 1000f;
         orbitDays = distanceFromStar * 0.10f;
 
         // Add planet 3
-        PlanetAPI planet3 = Utils.createPlanet(system, star, "cryovolcanic",
-                130f, distanceFromStar, orbitDays,
+        PlanetAPI planet3 = Utils.createPlanet(system, star, Planets.GAS_GIANT,
+                250f, distanceFromStar, orbitDays,
                 Arrays.asList(
                         Conditions.VOLATILES_PLENTIFUL,
-                        Conditions.RARE_ORE_ULTRARICH,
-                        Conditions.ORE_ULTRARICH,
-                        Conditions.VERY_COLD,
-                        Conditions.TECTONIC_ACTIVITY));
+                        Conditions.HIGH_GRAVITY));
+        float planet3Radius = planet3.getRadius() + 300f;
+        Utils.createMagneticField(planet3, planet3Radius, (planet3Radius) / 2f, planet3.getRadius() + 50f, planet3Radius, 1f);
         // Add planet 3 moon 1
-        PlanetAPI planet3Moon = Utils.createPlanet(system, planet3, "frozen",
+        Utils.createPlanet(system, planet3, "frozen",
                 60f, planet3.getRadius() + 500f, orbitDays,
                 Arrays.asList(
                         Conditions.VOLATILES_PLENTIFUL,
@@ -139,7 +138,7 @@ public class System1 {
         cryoSleeper.setCircularOrbit(star, planet3.getCircularOrbitAngle() + 180f, distanceFromStar, orbitDays);
 
         // Set distance and orbit time for 6th zone
-        distanceFromStar = Misc.getDistance(star, planet3) + Misc.getDistance(planet3, planet3Moon) + 1000f;
+        distanceFromStar = Misc.getDistance(star, planet3) + 130f + 60f + 75f + 1000f;
         orbitDays = distanceFromStar * 0.10f;
 
         // Add custom entities
@@ -153,7 +152,7 @@ public class System1 {
         jumpPoint2.setCircularOrbit(star, randomAngle2 + 240f, distanceFromStar, orbitDays);
         system.addEntity(jumpPoint2);
 
-        distanceFromStar = Misc.getDistance(star, sensorArray) + 1000f;
+        distanceFromStar = Misc.getDistance(star, sensorArray) + 256f + 1000f;
         orbitDays = distanceFromStar * 0.10f;
 
         // Add asteroid belt 1
