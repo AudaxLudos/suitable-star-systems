@@ -4,13 +4,13 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.impl.campaign.CoronalTapParticleScript;
 import com.fs.starfarer.api.impl.campaign.ids.*;
-import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
+import com.fs.starfarer.api.impl.campaign.procgen.Constellation;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
-import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
+import org.lwjgl.util.vector.Vector2f;
 import suitablestarsystems.Utils;
 
 import java.awt.*;
@@ -18,8 +18,10 @@ import java.util.Arrays;
 
 public class System1 {
     public void generate(SectorAPI sector) {
-        // Get star system
-        StarSystemAPI system = sector.getStarSystem("system_SSS_1");
+
+        Constellation constellation = Utils.getNearestConstellation(new Vector2f(-6000, -6000));
+        String systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
+        StarSystemAPI system = sector.createStarSystem(systemName);
 
         // Add system themes / tags
         system.addTag(Tags.THEME_INTERESTING);
@@ -32,12 +34,7 @@ public class System1 {
         // Add custom memory data for other mods
         system.getMemoryWithoutUpdate().set("$nex_do_not_colonize", true);
 
-        // Rename system with procedural name
-        String systemName = Utils.generateProceduralName(Tags.STAR, system.getConstellation().getName());
-        system.setBaseName(systemName);
-        system.setName(systemName);
-
-        PlanetAPI star = system.initStar(systemName.toLowerCase(), StarTypes.BLUE_SUPERGIANT, 1200f, 500f, 17f, 3f, 6f);
+        PlanetAPI star = system.initStar(systemName.toLowerCase().replace(" ", ""), StarTypes.BLUE_SUPERGIANT, 1200f, 500f, 17f, 3f, 6f);
 
         // Set distance and orbit time for 1st zone
         float distanceFromStar = star.getRadius() + 250f;
@@ -165,14 +162,6 @@ public class System1 {
         // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);
 
-        // Clear nebula in hyperspace
-        HyperspaceTerrainPlugin plugin = (HyperspaceTerrainPlugin) Misc.getHyperspaceTerrain().getPlugin();
-        NebulaEditor editor = new NebulaEditor(plugin);
-        float minRadius = plugin.getTileSize() * 2f;
-        float hyperspaceRadius = system.getMaxRadiusInHyperspace();
-        editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, hyperspaceRadius + minRadius, 0f, 360f);
-        editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, hyperspaceRadius + minRadius, 0f, 360f, 0.25f);
-
         // Add procedural entities
         MiscellaneousThemeGenerator theme = new MiscellaneousThemeGenerator();
         BaseThemeGenerator.StarSystemData systemData = BaseThemeGenerator.computeSystemData(system);
@@ -182,5 +171,10 @@ public class System1 {
         theme.addShipGraveyard(systemData, 1f, 2, 2, factions);
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
+
+        constellation.getSystems().add(system);
+        system.setConstellation(constellation);
+        system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
+        Utils.clearHyperspaceNebulaAroundSystem(system);
     }
 }

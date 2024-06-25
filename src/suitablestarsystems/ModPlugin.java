@@ -7,11 +7,18 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.impl.campaign.ids.StarTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import suitablestarsystems.campaign.InitialSystemAccess;
-import suitablestarsystems.world.WorldGenerator;
+import suitablestarsystems.world.systems.System1;
+import suitablestarsystems.world.systems.System2;
+import suitablestarsystems.world.systems.System3;
 
 import java.util.Objects;
 
 public class ModPlugin extends BaseModPlugin {
+    @Override
+    public void onApplicationLoad() throws Exception {
+        Utils.random.setSeed(1);
+    }
+
     @Override
     public void onNewGame() {
         Global.getSector().getMemoryWithoutUpdate().set("$sss_omegaPlanetCracked", false);
@@ -42,7 +49,9 @@ public class ModPlugin extends BaseModPlugin {
     }
 
     @Override
-    public void onNewGameAfterEconomyLoad() {
-        new WorldGenerator().generate(Global.getSector());
+    public void onNewGameAfterProcGen() {
+        new System1().generate(Global.getSector());
+        new System2().generate(Global.getSector());
+        new System3().generate(Global.getSector());
     }
 }

@@ -15,16 +15,14 @@ import com.fs.starfarer.api.impl.campaign.procgen.ProcgenUsedNames.NamePick;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantOfficerGeneratorPlugin;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.terrain.AsteroidFieldTerrainPlugin.AsteroidFieldParams;
-import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain;
+import com.fs.starfarer.api.impl.campaign.terrain.*;
 import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain.RingParams;
-import com.fs.starfarer.api.impl.campaign.terrain.MagneticFieldTerrainPlugin;
-import com.fs.starfarer.api.impl.campaign.terrain.RingSystemTerrainPlugin;
-import com.fs.starfarer.api.impl.campaign.terrain.StarCoronaTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -229,6 +227,19 @@ public class Utils {
         return new Vector2f(centroidX / systems.size(), centroidY / systems.size());
     }
 
+    public static Constellation getNearestConstellation(Vector2f origin) {
+        float minDist = Float.MAX_VALUE;
+        Constellation closest = null;
+        for (Constellation constellation : getAllConstellations()) {
+            float dist = Misc.getDistance(origin, constellation.getLocation());
+            if (dist < minDist) {
+                minDist = dist;
+                closest = constellation;
+            }
+        }
+        return closest;
+    }
+
     public static Constellation getNearestConstellation(Vector2f origin, Set<Constellation> constellations) {
         float minDist = Float.MAX_VALUE;
         Constellation closest = null;
@@ -240,6 +251,20 @@ public class Utils {
             }
         }
         return closest;
+    }
+
+    public static Set<Constellation> getAllConstellations() {
+        Set<Constellation> constellations = new HashSet<>();
+        for (StarSystemAPI system : Global.getSector().getStarSystems()) {
+            if (!system.isInConstellation() || !system.isProcgen()) {
+                continue;
+            }
+            Constellation c = system.getConstellation();
+            if (c != null) {
+                constellations.add(c);
+            }
+        }
+        return constellations;
     }
 
     public static void addBlackHoleVisuals(StarSystemAPI system, PlanetAPI star) {
@@ -275,5 +300,40 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static void clearHyperspaceNebulaAroundSystem(StarSystemAPI system) {
+        // Clear nebula in hyperspace
+        HyperspaceTerrainPlugin plugin = (HyperspaceTerrainPlugin) Misc.getHyperspaceTerrain().getPlugin();
+        NebulaEditor editor = new NebulaEditor(plugin);
+        float minRadius = plugin.getTileSize() * 2f;
+        float hyperspaceRadius = system.getMaxRadiusInHyperspace();
+        editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, hyperspaceRadius + minRadius, 0f, 360f);
+        editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, hyperspaceRadius + minRadius, 0f, 360f, 0.25f);
+    }
+
+    public static Vector2f findLocationInConstellation(Constellation constellation, Random random) {
+        Vector2f result = null;
+        Vector2f centroid = Utils.getCentroid(constellation.getSystems());
+        while (result == null) {
+            float x0 = centroid.x + random.nextFloat() * 4000f;
+            float y0 = centroid.y + random.nextFloat() * 4000f;
+            float r0 = 1200f;
+            boolean isIntersect = false;
+            for (StarSystemAPI system : constellation.getSystems()) {
+                float x1 = system.getHyperspaceAnchor().getLocationInHyperspace().getX();
+                float y1 = system.getHyperspaceAnchor().getLocationInHyperspace().getY();
+                float r1 = system.getMaxRadiusInHyperspace();
+                float distanceSq = (x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1);
+                if (distanceSq < (r0 + r1) * (r0 + r1)) {
+                    isIntersect = true;
+                    break;
+                }
+            }
+            if (!isIntersect) {
+                result = new Vector2f(x0, y0);
+            }
+        }
+        return result;
     }
 }

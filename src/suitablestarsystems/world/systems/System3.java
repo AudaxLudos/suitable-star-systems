@@ -3,36 +3,37 @@ package suitablestarsystems.world.systems;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.impl.campaign.ids.*;
-import com.fs.starfarer.api.impl.campaign.procgen.NebulaEditor;
+import com.fs.starfarer.api.impl.campaign.procgen.Constellation;
 import com.fs.starfarer.api.impl.campaign.procgen.StarAge;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
-import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.OmegaFleetSpawnerManager;
 
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Set;
 
 public class System3 {
     public void generate(SectorAPI sector) {
-        // Add star system
-        StarSystemAPI system = sector.getStarSystem("system_SSS_3");
+        Set<Constellation> constellations = Utils.getAllConstellations();
+        Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
+        Constellation constellation2 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_2")).getConstellation();
+        constellations.remove(constellation1);
+        constellations.remove(constellation2);
+        Constellation constellation = Utils.getNearestConstellation(constellation2.getLocation(), constellations);
+        String systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
+        StarSystemAPI system = sector.createStarSystem(systemName);
 
-        // Add system themes / tags
         system.addTag(Tags.THEME_INTERESTING);
         system.addTag(Tags.THEME_UNSAFE);
         system.addTag("sss_system_3");
 
         // Add custom memory data for other mods
         system.getMemoryWithoutUpdate().set("$nex_do_not_colonize", true);
-
-        // Rename system with procedural name
-        String systemName = Utils.generateProceduralName(Tags.STAR, system.getConstellation().getName());
-        system.setBaseName(systemName);
-        system.setName(systemName);
 
         // Add system nebula
         Misc.addNebulaFromPNG("data/campaign/terrain/system3_nebula.png", 0, 0,
@@ -79,16 +80,7 @@ public class System3 {
         jumpPoint2.setCircularOrbit(star, Utils.getRandomAngle(), 4000f, 400f);
         system.addEntity(jumpPoint2);
 
-        // Auto generate jump points
         system.autogenerateHyperspaceJumpPoints(true, false);
-
-        // Clear nebula in hyperspace
-        HyperspaceTerrainPlugin plugin = (HyperspaceTerrainPlugin) Misc.getHyperspaceTerrain().getPlugin();
-        NebulaEditor editor = new NebulaEditor(plugin);
-        float minRadius = plugin.getTileSize() * 2f;
-        float radius = system.getMaxRadiusInHyperspace();
-        editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f);
-        editor.clearArc(system.getLocation().x, system.getLocation().y, 0f, radius + minRadius, 0f, 360f, 0.25f);
 
         // Add procedural entities
         MiscellaneousThemeGenerator theme = new MiscellaneousThemeGenerator();
@@ -99,9 +91,11 @@ public class System3 {
         theme.addShipGraveyard(systemData, 1f, 2, 2, factions);
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
-        // Add omega fleet spawner
-        // if planet is removed, the game might crash (not tested)
-        OmegaFleetSpawnerManager omegaFleetManager = new OmegaFleetSpawnerManager(planet1, 1f, 0, 8, 15f);
-        system.addScript(omegaFleetManager);
+        system.addScript(new OmegaFleetSpawnerManager(planet1, 1f, 0, 8, 15f));
+
+        constellation.getSystems().add(system);
+        system.setConstellation(constellation);
+        system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
+        Utils.clearHyperspaceNebulaAroundSystem(system);
     }
 }
