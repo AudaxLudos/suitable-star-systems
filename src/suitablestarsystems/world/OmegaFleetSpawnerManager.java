@@ -8,6 +8,7 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl;
 import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3;
 import com.fs.starfarer.api.impl.campaign.fleets.SourceBasedFleetManager;
+import com.fs.starfarer.api.impl.campaign.ids.Abilities;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
@@ -79,6 +80,7 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
         Global.getSector().doHyperspaceTransition(fleet, null, new JumpPointAPI.JumpDestination(token, null));
         fleet.addScript(new RemnantAssignmentAI(fleet, (StarSystemAPI) this.source.getContainingLocation(), this.source));
         fleet.getMemoryWithoutUpdate().set("$sourceId", this.source.getId());
+        fleet.getAbility(Abilities.EMERGENCY_BURN).activate();
 
         return fleet;
     }
