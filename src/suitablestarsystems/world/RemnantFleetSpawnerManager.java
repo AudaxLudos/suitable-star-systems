@@ -44,17 +44,25 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
 
     @Override
     protected CampaignFleetAPI spawnFleet() {
-        if (this.source == null) return null;
+        if (this.source == null) {
+            return null;
+        }
 
         Random random = Utils.random;
 
         int combatPoints = this.minPts + random.nextInt(this.maxPts - this.minPts + 1);
         int bonus = this.totalLost * 4;
-        if (bonus > this.maxPts) bonus = this.maxPts;
+        if (bonus > this.maxPts) {
+            bonus = this.maxPts;
+        }
         combatPoints += bonus;
         String type = FleetTypes.PATROL_SMALL;
-        if (combatPoints > 8) type = FleetTypes.PATROL_MEDIUM;
-        if (combatPoints > 16) type = FleetTypes.PATROL_LARGE;
+        if (combatPoints > 8) {
+            type = FleetTypes.PATROL_MEDIUM;
+        }
+        if (combatPoints > 16) {
+            type = FleetTypes.PATROL_LARGE;
+        }
         combatPoints *= 8;
 
         FleetParamsV3 params = new FleetParamsV3(
@@ -73,7 +81,9 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
         params.random = random;
 
         CampaignFleetAPI fleet = FleetFactoryV3.createFleet(params);
-        if (fleet == null) return null;
+        if (fleet == null) {
+            return null;
+        }
 
         this.source.getContainingLocation().addEntity(fleet);
         RemnantSeededFleetManager.initRemnantFleetProperties(random, fleet, false);
@@ -98,14 +108,16 @@ public class RemnantFleetSpawnerManager extends SourceBasedFleetManager {
 
     public class RemnantSystemEPGenerator implements EncounterPointProvider {
         public List<EncounterPoint> generateEncounterPoints(LocationAPI where) {
-            if (!where.isHyperspace()) return null;
+            if (!where.isHyperspace()) {
+                return null;
+            }
             if (RemnantFleetSpawnerManager.this.totalLost > 0 && RemnantFleetSpawnerManager.this.source != null) {
                 String id = "ep_" + RemnantFleetSpawnerManager.this.source.getId();
                 EncounterPoint ep = new EncounterPoint(id, where, RemnantFleetSpawnerManager.this.source.getLocationInHyperspace(), EncounterManager.EP_TYPE_OUTSIDE_SYSTEM);
                 ep.custom = this;
                 List<EncounterPoint> result = new ArrayList<>();
                 result.add(ep);
-                return result; //source.getContainingLocation().getName()
+                return result; // source.getContainingLocation().getName()
             }
             return null;
         }

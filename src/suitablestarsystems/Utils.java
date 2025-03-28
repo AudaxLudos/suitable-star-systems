@@ -268,7 +268,9 @@ public class Utils {
     }
 
     public static void addBlackHoleVisuals(StarSystemAPI system, PlanetAPI star) {
-        if (star == null) return;
+        if (star == null) {
+            return;
+        }
 
         if (star.getSpec().getPlanetType().equals("black_hole")) {
             StarCoronaTerrainPlugin coronaPlugin = Misc.getCoronaFor(star);
@@ -278,7 +280,9 @@ public class Utils {
 
             StarGenDataSpec starData = (StarGenDataSpec) Global.getSettings().getSpec(StarGenDataSpec.class, star.getSpec().getPlanetType(), false);
             float corona = star.getRadius() * (starData.getCoronaMult() + starData.getCoronaVar() * (random.nextFloat() - 0.5f));
-            if (corona < starData.getCoronaMin()) corona = starData.getCoronaMin();
+            if (corona < starData.getCoronaMin()) {
+                corona = starData.getCoronaMin();
+            }
 
             SectorEntityToken eventHorizon = system.addTerrain(Terrain.EVENT_HORIZON,
                     new StarCoronaTerrainPlugin.CoronaParams(star.getRadius() + corona, (star.getRadius() + corona) / 2f,

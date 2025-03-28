@@ -33,8 +33,12 @@ public class ModPlugin extends BaseModPlugin {
 
         // mark remnant and omega system spawned by this mod as not random mission target for existing saves
         for (StarSystemAPI system : Global.getSector().getStarSystems()) {
-            if (system.isProcgen()) continue;
-            if (system.getStar() == null) continue;
+            if (system.isProcgen()) {
+                continue;
+            }
+            if (system.getStar() == null) {
+                continue;
+            }
             if (!Objects.equals(system.getStar().getTypeId(), StarTypes.BLACK_HOLE) || !Objects.equals(system.getStar().getTypeId(), StarTypes.WHITE_DWARF)) {
                 continue;
             }
@@ -42,7 +46,9 @@ public class ModPlugin extends BaseModPlugin {
                 if (!Objects.equals(planet.getId(), "planet_sss_remnant") || !Objects.equals(planet.getId(), "planet_sss_omega")) {
                     continue;
                 }
-                if (planet.hasTag(Tags.NOT_RANDOM_MISSION_TARGET)) continue;
+                if (planet.hasTag(Tags.NOT_RANDOM_MISSION_TARGET)) {
+                    continue;
+                }
                 planet.addTag(Tags.NOT_RANDOM_MISSION_TARGET);
             }
         }

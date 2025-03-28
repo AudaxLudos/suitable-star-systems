@@ -30,9 +30,13 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
     @Override
     protected CampaignFleetAPI spawnFleet() {
         if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetQuestOverride")) {
-            if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetCracked")) return null;
+            if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$sss_omegaPlanetCracked")) {
+                return null;
+            }
         }
-        if (this.source == null) return null;
+        if (this.source == null) {
+            return null;
+        }
 
         Random random = Utils.random;
 
@@ -46,7 +50,9 @@ public class OmegaFleetSpawnerManager extends SourceBasedFleetManager {
 
         int numOfShips = 2;
         numOfShips += this.totalLost;
-        if (numOfShips > 4) numOfShips = 4;
+        if (numOfShips > 4) {
+            numOfShips = 4;
+        }
         for (int i = 0; i <= numOfShips - 1; i++) {
             fleet.getFleetData().addFleetMember(variants.pick());
         }
