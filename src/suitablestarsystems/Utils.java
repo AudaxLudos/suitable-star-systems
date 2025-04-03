@@ -38,6 +38,7 @@ public class Utils {
     public static boolean CAN_OVERRIDE_MAIN_SYSTEM_LOC = false;
     public static float MAIN_SYSTEM_X_OVERRIDE = 0f;
     public static float MAIN_SYSTEM_Y_OVERRIDE = 0f;
+    public static boolean OMEGA_PLANET_QUEST_OVERRIDE = false;
 
     public static float getRandomAngle() {
         return random.nextFloat() * 360f;
@@ -379,5 +380,6 @@ public class Utils {
         CAN_OVERRIDE_MAIN_SYSTEM_LOC = getSettingsBoolean("sss_canOverrideMainSystemLoc");
         MAIN_SYSTEM_X_OVERRIDE = getSettingsFloat("sss_mainSystemXOverride");
         MAIN_SYSTEM_Y_OVERRIDE = getSettingsFloat("sss_mainSystemYOverride");
+        OMEGA_PLANET_QUEST_OVERRIDE = getSettingsBoolean("sss_omegaPlanetQuestOverride");
     }
 }

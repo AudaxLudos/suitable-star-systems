@@ -7,3 +7,7 @@ Set this to true and modify the x and y overrides below to change the spawn loca
 sss_mainSystemXOverride,Colonizable System X Override,Double,-6000.0,,Default Value: -6000.0,-500000,500000,
 sss_mainSystemYOverride,Colonizable System Y Override,Double,-6000.0,,Default Value: -6000.0,-500000,500000,
 ,,,,,,,,
+sss_omegaSystemSettingsHeader,SUPER ALABASTER System Settings,Header,SUPER ALABASTER System Settings,,,,,
+sss_omegaPlanetQuestOverride,SUPER ALABASTER Planet Quest Override,Boolean,false,,"Default Value: false
+
+Set this to true if you want to skip doing the SUPER ALABASTER planet interactions",,,

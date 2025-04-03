@@ -36,7 +36,7 @@ public class ModPlugin extends BaseModPlugin {
 
     @Override
     public void onGameLoad(boolean newGame) {
-        Global.getSector().getMemoryWithoutUpdate().set("$sss_omegaPlanetQuestOverride", Global.getSettings().getBoolean("omegaPlanetQuestOverride"));
+        Global.getSector().getMemoryWithoutUpdate().set("$sss_omegaPlanetQuestOverride", Utils.OMEGA_PLANET_QUEST_OVERRIDE);
         Global.getSector().addTransientScript(new InitialSystemAccess());
 
         // mark remnant and omega system spawned by this mod as not random mission target for existing saves
