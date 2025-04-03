@@ -1,4 +1,7 @@
 {
+    "mainSystemLocOverride": false,
+    "mainSystemXOverride": 0,
+    "mainSystemYOverride": 0,
     "omegaPlanetQuestOverride": false,
     "graphics": {
         "suitablestarsystems": {

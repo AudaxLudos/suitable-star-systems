@@ -18,7 +18,6 @@ import java.util.Arrays;
 
 public class System1 {
     public void generate(SectorAPI sector) {
-
         Constellation constellation = Utils.getNearestConstellation(new Vector2f(-6000, -6000));
         String systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
         StarSystemAPI system = sector.createStarSystem(systemName);
@@ -171,9 +170,17 @@ public class System1 {
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
 
-        constellation.getSystems().add(system);
-        system.setConstellation(constellation);
-        system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
+        boolean mainSystemLocOverride = Global.getSettings().getBoolean("mainSystemLocOverride");
+        if (!mainSystemLocOverride) {
+            constellation.getSystems().add(system);
+            system.setConstellation(constellation);
+            system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
+        } else {
+            Vector2f systemLocation = new Vector2f(
+                    Global.getSettings().getFloat("mainSystemXOverride"),
+                    Global.getSettings().getFloat("mainSystemYOverride"));
+            system.getLocation().set(systemLocation);
+        }
         Utils.clearHyperspaceNebulaAroundSystem(system);
     }
 }

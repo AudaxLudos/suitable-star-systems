@@ -11,6 +11,7 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
+import org.lwjgl.util.vector.Vector2f;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.RemnantFleetSpawnerManager;
 
@@ -20,12 +21,21 @@ import java.util.Set;
 
 public class System2 {
     public void generate(SectorAPI sector) {
+        boolean mainSystemLocOverride = Global.getSettings().getBoolean("mainSystemLocOverride");
         Set<Constellation> constellations = Utils.getAllConstellations();
-        Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
-        constellations.remove(constellation1);
-        Constellation constellation = Utils.getNearestConstellation(constellation1.getLocation(), constellations);
-        String systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
-        StarSystemAPI system = sector.createStarSystem(systemName);
+        Constellation constellation;
+        StarSystemAPI system;
+        String systemName;
+        if (!mainSystemLocOverride) {
+            Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
+            constellations.remove(constellation1);
+            constellation = Utils.getNearestConstellation(constellation1.getLocation(), constellations);
+        } else {
+            Vector2f system1Loc = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getHyperspaceAnchor().getLocationInHyperspace();
+            constellation = Utils.getNearestConstellation(system1Loc, constellations);
+        }
+        systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
+        system = sector.createStarSystem(systemName);
 
         system.addTag(Tags.THEME_INTERESTING);
         system.addTag(Tags.THEME_UNSAFE);
