@@ -170,8 +170,7 @@ public class System1 {
         theme.addDerelictShips(systemData, 1f, 4, 4, factions);
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
 
-        boolean mainSystemLocOverride = Global.getSettings().getBoolean("mainSystemLocOverride");
-        if (!mainSystemLocOverride) {
+        if (!Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC) {
             constellation.getSystems().add(system);
             system.setConstellation(constellation);
             system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));

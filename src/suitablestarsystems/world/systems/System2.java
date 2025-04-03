@@ -21,14 +21,12 @@ import java.util.Set;
 
 public class System2 {
     public void generate(SectorAPI sector) {
-        boolean mainSystemLocOverride = Global.getSettings().getBoolean("mainSystemLocOverride");
-        boolean mainSystemCanSpawn = Global.getSettings().getBoolean("mainSystemCanSpawn");
         Set<Constellation> constellations = Utils.getAllConstellations();
         Constellation constellation;
         StarSystemAPI system;
         String systemName;
-        if (mainSystemCanSpawn) {
-            if (!mainSystemLocOverride) {
+        if (Utils.CAN_SPAWN_MAIN_SYSTEM) {
+            if (!Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC) {
                 Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
                 constellations.remove(constellation1);
                 constellation = Utils.getNearestConstellation(constellation1.getLocation(), constellations);

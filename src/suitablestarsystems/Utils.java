@@ -31,6 +31,10 @@ public class Utils {
     public static final float STARTING_RADIUS_STAR_BASE = 750f;
     //    public static final float STARTING_RADIUS_STAR_RANGE = 500f;
     public static Random random = StarSystemGenerator.random;
+    public static boolean CAN_SPAWN_MAIN_SYSTEM = true;
+    public static boolean CAN_OVERRIDE_MAIN_SYSTEM_LOC = false;
+    public static float MAIN_SYSTEM_X_OVERRIDE = 0f;
+    public static float MAIN_SYSTEM_Y_OVERRIDE = 0f;
 
     public static float getRandomAngle() {
         return random.nextFloat() * 360f;
@@ -339,5 +343,9 @@ public class Utils {
             }
         }
         return result;
+    }
+
+    public static boolean isLunaLibEnabled() {
+        return Global.getSettings().getModManager().isModEnabled("lunalib");
     }
 }

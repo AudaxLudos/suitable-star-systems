@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="starsector.api" level="project" />
+    <orderEntry type="library" name="lunalib.api" level="project" />
   </component>
 </module>

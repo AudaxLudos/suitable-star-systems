@@ -6,6 +6,7 @@ import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.impl.campaign.ids.StarTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import lunalib.lunaSettings.LunaSettings;
 import suitablestarsystems.campaign.InitialSystemAccess;
 import suitablestarsystems.world.systems.System1;
 import suitablestarsystems.world.systems.System2;
@@ -15,8 +16,19 @@ import java.util.Objects;
 
 public class ModPlugin extends BaseModPlugin {
     @Override
-    public void onApplicationLoad() throws Exception {
+    public void onApplicationLoad() {
         Utils.random.setSeed(1);
+
+        if (Utils.isLunaLibEnabled()) {
+            SSSLunaSettingsListener listener = new SSSLunaSettingsListener();
+            listener.settingsChanged("suitablestarsystems");
+            LunaSettings.addSettingsListener(listener);
+        } else {
+            Utils.CAN_SPAWN_MAIN_SYSTEM = Global.getSettings().getBoolean("mainSystemCanSpawn");
+            Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC = Global.getSettings().getBoolean("mainSystemLocOverride");
+            Utils.MAIN_SYSTEM_X_OVERRIDE = Global.getSettings().getFloat("mainSystemCanSpawn");
+            Utils.MAIN_SYSTEM_Y_OVERRIDE = Global.getSettings().getFloat("mainSystemCanSpawn");
+        }
     }
 
     @Override
@@ -56,8 +68,7 @@ public class ModPlugin extends BaseModPlugin {
 
     @Override
     public void onNewGameAfterProcGen() {
-        boolean mainSystemCanSpawn = Global.getSettings().getBoolean("mainSystemCanSpawn");
-        if (mainSystemCanSpawn) {
+        if (Utils.CAN_SPAWN_MAIN_SYSTEM) {
             new System1().generate(Global.getSector());
         }
 
