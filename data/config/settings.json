@@ -1,8 +1,8 @@
 {
     "sss_canSpawnMainSystem": true,
     "sss_canOverrideMainSystemLoc": false,
-    "sss_mainSystemXOverride": 0,
-    "sss_mainSystemYOverride": 0,
+    "sss_mainSystemXOverride": -6000,
+    "sss_mainSystemYOverride": -6000,
     "sss_omegaPlanetQuestOverride": false,
     "graphics": {
         "suitablestarsystems": {
