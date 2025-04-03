@@ -56,7 +56,11 @@ public class ModPlugin extends BaseModPlugin {
 
     @Override
     public void onNewGameAfterProcGen() {
-        new System1().generate(Global.getSector());
+        boolean mainSystemCanSpawn = Global.getSettings().getBoolean("mainSystemCanSpawn");
+        if (mainSystemCanSpawn) {
+            new System1().generate(Global.getSector());
+        }
+
         new System2().generate(Global.getSector());
         new System3().generate(Global.getSector());
     }

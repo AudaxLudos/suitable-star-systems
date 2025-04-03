@@ -1,4 +1,5 @@
 {
+    "mainSystemCanSpawn": false,
     "mainSystemLocOverride": false,
     "mainSystemXOverride": 0,
     "mainSystemYOverride": 0,

@@ -22,17 +22,22 @@ import java.util.Set;
 public class System2 {
     public void generate(SectorAPI sector) {
         boolean mainSystemLocOverride = Global.getSettings().getBoolean("mainSystemLocOverride");
+        boolean mainSystemCanSpawn = Global.getSettings().getBoolean("mainSystemCanSpawn");
         Set<Constellation> constellations = Utils.getAllConstellations();
         Constellation constellation;
         StarSystemAPI system;
         String systemName;
-        if (!mainSystemLocOverride) {
-            Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
-            constellations.remove(constellation1);
-            constellation = Utils.getNearestConstellation(constellation1.getLocation(), constellations);
+        if (mainSystemCanSpawn) {
+            if (!mainSystemLocOverride) {
+                Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
+                constellations.remove(constellation1);
+                constellation = Utils.getNearestConstellation(constellation1.getLocation(), constellations);
+            } else {
+                Vector2f system1Loc = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getHyperspaceAnchor().getLocationInHyperspace();
+                constellation = Utils.getNearestConstellation(system1Loc, constellations);
+            }
         } else {
-            Vector2f system1Loc = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getHyperspaceAnchor().getLocationInHyperspace();
-            constellation = Utils.getNearestConstellation(system1Loc, constellations);
+            constellation = Utils.getNearestConstellation(new Vector2f(-6000, -6000));
         }
         systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
         system = sector.createStarSystem(systemName);

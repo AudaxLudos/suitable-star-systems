@@ -20,12 +20,12 @@ import java.util.Set;
 public class System3 {
     public void generate(SectorAPI sector) {
         boolean mainSystemLocOverride = Global.getSettings().getBoolean("mainSystemLocOverride");
+        boolean mainSystemCanSpawn = Global.getSettings().getBoolean("mainSystemCanSpawn");
         Set<Constellation> constellations = Utils.getAllConstellations();
         Constellation constellation;
         StarSystemAPI system;
         String systemName;
-
-        if (!mainSystemLocOverride) {
+        if (!mainSystemLocOverride && mainSystemCanSpawn) {
             Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
             Constellation constellation2 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_2")).getConstellation();
             constellations.remove(constellation1);
