@@ -19,8 +19,6 @@ import com.fs.starfarer.api.impl.campaign.terrain.*;
 import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain.RingParams;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
-import lunalib.backend.ui.settings.LunaSettingsConfigLoader;
-import lunalib.backend.ui.settings.LunaSettingsData;
 import lunalib.lunaSettings.LunaSettings;
 import org.lwjgl.util.vector.Vector2f;
 
