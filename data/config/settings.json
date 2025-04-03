@@ -7,9 +7,7 @@
     "graphics": {
         "suitablestarsystems": {
             "planetary_shield_purple_strong": "graphics/planets/planetary_shield_purple_strong.png",
-            "planetary_shield_cyan_strong": "graphics/planets/planetary_shield_cyan_strong.png"
-        },
-        "intel": {
+            "planetary_shield_cyan_strong": "graphics/planets/planetary_shield_cyan_strong.png",
             "cyan_planet": "graphics/icons/intel/cyan_planet.png",
             "purple_planet": "graphics/icons/intel/purple_planet.png"
         }
