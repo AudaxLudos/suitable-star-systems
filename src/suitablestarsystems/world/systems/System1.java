@@ -175,9 +175,7 @@ public class System1 {
             system.setConstellation(constellation);
             system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
         } else {
-            Vector2f systemLocation = new Vector2f(
-                    Global.getSettings().getFloat("mainSystemXOverride"),
-                    Global.getSettings().getFloat("mainSystemYOverride"));
+            Vector2f systemLocation = new Vector2f(Utils.MAIN_SYSTEM_X_OVERRIDE, Utils.MAIN_SYSTEM_Y_OVERRIDE);
             system.getLocation().set(systemLocation);
         }
         Utils.clearHyperspaceNebulaAroundSystem(system);

@@ -20,14 +20,10 @@ public class ModPlugin extends BaseModPlugin {
         Utils.random.setSeed(1);
 
         if (Utils.isLunaLibEnabled()) {
-            SSSLunaSettingsListener listener = new SSSLunaSettingsListener();
-            listener.settingsChanged("suitablestarsystems");
-            LunaSettings.addSettingsListener(listener);
+            Utils.loadSettings();
+            LunaSettings.addSettingsListener(new SSSLunaSettingsListener());
         } else {
-            Utils.CAN_SPAWN_MAIN_SYSTEM = Global.getSettings().getBoolean("mainSystemCanSpawn");
-            Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC = Global.getSettings().getBoolean("mainSystemLocOverride");
-            Utils.MAIN_SYSTEM_X_OVERRIDE = Global.getSettings().getFloat("mainSystemCanSpawn");
-            Utils.MAIN_SYSTEM_Y_OVERRIDE = Global.getSettings().getFloat("mainSystemCanSpawn");
+            Utils.loadSettings();
         }
     }
 

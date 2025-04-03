@@ -19,6 +19,9 @@ import com.fs.starfarer.api.impl.campaign.terrain.*;
 import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain.RingParams;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
+import lunalib.backend.ui.settings.LunaSettingsConfigLoader;
+import lunalib.backend.ui.settings.LunaSettingsData;
+import lunalib.lunaSettings.LunaSettings;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
@@ -347,5 +350,34 @@ public class Utils {
 
     public static boolean isLunaLibEnabled() {
         return Global.getSettings().getModManager().isModEnabled("lunalib");
+    }
+
+    protected static boolean getSettingsBoolean(String fieldId) {
+        if (isLunaLibEnabled()) {
+            Boolean val = LunaSettings.getBoolean("suitablestarsystems", fieldId);
+            if (val == null) {
+                return Global.getSettings().getBoolean(fieldId);
+            }
+            return val;
+        }
+        return Global.getSettings().getBoolean(fieldId);
+    }
+
+    protected static float getSettingsFloat(String fieldId) {
+        if (isLunaLibEnabled()) {
+            Float val = LunaSettings.getFloat("suitablestarsystems", fieldId);
+            if (val == null) {
+                return Global.getSettings().getFloat(fieldId);
+            }
+            return val;
+        }
+        return Global.getSettings().getFloat(fieldId);
+    }
+
+    public static void loadSettings() {
+        CAN_SPAWN_MAIN_SYSTEM = getSettingsBoolean("sss_canSpawnMainSystem");
+        CAN_OVERRIDE_MAIN_SYSTEM_LOC = getSettingsBoolean("sss_canOverrideMainSystemLoc");
+        MAIN_SYSTEM_X_OVERRIDE = getSettingsFloat("sss_mainSystemXOverride");
+        MAIN_SYSTEM_Y_OVERRIDE = getSettingsFloat("sss_mainSystemYOverride");
     }
 }

@@ -1,10 +1,9 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
-sss_note_header,Note,Header,Notes,,,,,
-sss_note,Note,Text,,,,,,
-,,,,,,,,
-sss_colonizable_system_settings_header,Colonizable System Settings,Header,Colonizable System Settings,,,,,
-sss_can_spawn_colonizable_system,Can Spawn Colonizable System,Boolean,true,,,,,
-sss_can_override_colonizable_system_location,Can Override Colonizable System Location,Boolean,false,,,,,
-sss_colonizable_system_x_override,Colonizable System X Override,Double,0.0,,,,,
-sss_colonizable_system_y_override,Colonizable System Y Override,Double,0.0,,,,,
+sss_mainSystemSettingsHeader,Colonizable System Settings,Header,Colonizable System Settings,,,,,
+sss_canSpawnMainSystem,Can Spawn Colonizable System,Boolean,true,,Default Value: true,,,
+sss_canOverrideMainSystemLoc,Can Override Colonizable System Location,Boolean,false,,"Default Value: false
+
+Set this to true and modify the x and y overrides below to change the spawn location of the colonizable system.",,,
+sss_mainSystemXOverride,Colonizable System X Override,Double,-6000.0,,Default Value: -6000.0,-500000,500000,
+sss_mainSystemYOverride,Colonizable System Y Override,Double,-6000.0,,Default Value: -6000.0,-500000,500000,
 ,,,,,,,,
