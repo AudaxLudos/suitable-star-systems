@@ -1,4 +1,6 @@
 {
+    "sss_IndEvoArtillery": true,
+    "sss_IndEvoMinefields": true,
     "sss_canSpawnMainSystem": true,
     "sss_canOverrideMainSystemLoc": false,
     "sss_mainSystemXOverride": -6000,

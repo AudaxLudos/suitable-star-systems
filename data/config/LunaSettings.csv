@@ -1,5 +1,11 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 sss_mainSystemSettingsHeader,Colonizable System Settings,Header,Colonizable System Settings,,,,,
+sss_IndEvoArtillery,Add Industrial Evolution Artillery Stations,Boolean,true,,"Default Value: true
+
+The three main planets will have artillery stations",,,
+sss_IndEvoMinefields,Add Industrial Evolution Minefields,Boolean,true,,"Default Value: true
+
+The three main planets will have minefields",,,
 sss_canSpawnMainSystem,Can Spawn Colonizable System,Boolean,true,,Default Value: true,,,
 sss_canOverrideMainSystemLoc,Can Override Colonizable System Location,Boolean,false,,"Default Value: false
 
@@ -11,3 +17,4 @@ sss_omegaSystemSettingsHeader,SUPER ALABASTER System Settings,Header,SUPER ALABA
 sss_omegaPlanetQuestOverride,SUPER ALABASTER Planet Quest Override,Boolean,false,,"Default Value: false
 
 Set this to true if you want to skip doing the SUPER ALABASTER planet interactions",,,
+,,,,,,,,

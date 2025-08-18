@@ -37,6 +37,8 @@ public class Utils {
     public static float MAIN_SYSTEM_X_OVERRIDE = 0f;
     public static float MAIN_SYSTEM_Y_OVERRIDE = 0f;
     public static boolean OMEGA_PLANET_QUEST_OVERRIDE = false;
+    public static boolean ADD_INDEVO_ARTILLERY = true;
+    public static boolean ADD_INDEVO_MINEFIELDS = true;
 
     public static float getRandomAngle() {
         return random.nextFloat() * 360f;
@@ -373,11 +375,17 @@ public class Utils {
         return Global.getSettings().getFloat(fieldId);
     }
 
+    public static boolean isModEnabled(String id) {
+        return Global.getSettings().getModManager().isModEnabled(id);
+    }
+
     public static void loadSettings() {
         CAN_SPAWN_MAIN_SYSTEM = getSettingsBoolean("sss_canSpawnMainSystem");
         CAN_OVERRIDE_MAIN_SYSTEM_LOC = getSettingsBoolean("sss_canOverrideMainSystemLoc");
         MAIN_SYSTEM_X_OVERRIDE = getSettingsFloat("sss_mainSystemXOverride");
         MAIN_SYSTEM_Y_OVERRIDE = getSettingsFloat("sss_mainSystemYOverride");
         OMEGA_PLANET_QUEST_OVERRIDE = getSettingsBoolean("sss_omegaPlanetQuestOverride");
+        ADD_INDEVO_ARTILLERY =  getSettingsBoolean("sss_IndEvoArtillery");
+        ADD_INDEVO_MINEFIELDS = getSettingsBoolean("sss_IndEvoMinefields");
     }
 }

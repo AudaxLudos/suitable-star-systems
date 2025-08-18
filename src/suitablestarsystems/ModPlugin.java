@@ -4,7 +4,7 @@ import com.fs.starfarer.api.BaseModPlugin;
 import com.fs.starfarer.api.Global;
 import lunalib.lunaSettings.LunaSettings;
 import suitablestarsystems.campaign.InitialSystemAccess;
-import suitablestarsystems.world.systems.System1;
+import suitablestarsystems.world.systems.System1V3;
 import suitablestarsystems.world.systems.System2;
 import suitablestarsystems.world.systems.System3;
 
@@ -37,7 +37,7 @@ public class ModPlugin extends BaseModPlugin {
     @Override
     public void onNewGameAfterProcGen() {
         if (Utils.CAN_SPAWN_MAIN_SYSTEM) {
-            new System1().generate(Global.getSector());
+            new System1V3().generate(Global.getSector());
         }
 
         new System2().generate(Global.getSector());
