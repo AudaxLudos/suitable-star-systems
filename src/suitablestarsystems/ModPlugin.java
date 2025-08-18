@@ -26,6 +26,10 @@ public class ModPlugin extends BaseModPlugin {
         Global.getSector().getMemoryWithoutUpdate().set("$sss_omegaPlanetCracked", false);
         Global.getSector().getMemoryWithoutUpdate().set("$sss_omegaPlanetFound", false);
         Global.getSector().getMemoryWithoutUpdate().set("$sss_remnantPlanetFound", false);
+
+        if (Utils.CAN_SPAWN_MAIN_SYSTEM && Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC) {
+            new System1V3().generate(Global.getSector());
+        }
     }
 
     @Override
@@ -36,7 +40,7 @@ public class ModPlugin extends BaseModPlugin {
 
     @Override
     public void onNewGameAfterProcGen() {
-        if (Utils.CAN_SPAWN_MAIN_SYSTEM) {
+        if (Utils.CAN_SPAWN_MAIN_SYSTEM && !Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC) {
             new System1V3().generate(Global.getSector());
         }
 

@@ -19,7 +19,11 @@ import java.util.Arrays;
 public class System1V3 {
     public void generate(SectorAPI sector) {
         Constellation constellation = Utils.getNearestConstellation(new Vector2f(-6000, -6000));
-        String systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
+        String nameRef = "";
+        if (constellation != null) {
+            nameRef = constellation.getName();
+        }
+        String systemName = Utils.generateProceduralName(Tags.STAR, nameRef);
         StarSystemAPI system = sector.createStarSystem(systemName);
 
         // Add system themes / tags
