@@ -77,12 +77,12 @@ public class System1V3 {
                         Conditions.RARE_ORE_ULTRARICH,
                         Conditions.NO_ATMOSPHERE,
                         Conditions.VERY_HOT));
-        if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_ARTILLERY) {
-            planet1.getMarket().addCondition("IndEvo_ArtilleryStationCondition");
-        }
-        if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_MINEFIELDS) {
-            planet1.getMarket().addCondition("IndEvo_mineFieldCondition");
-        }
+        // if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_ARTILLERY) {
+        //     planet1.getMarket().addCondition("IndEvo_ArtilleryStationCondition");
+        // }
+        // if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_MINEFIELDS) {
+        //     planet1.getMarket().addCondition("IndEvo_mineFieldCondition");
+        // }
         // Add planet 1 moon 1
         PlanetAPI planet1Moon = Utils.createPlanet(system, planet1, "lava_minor",
                 60f, planet1.getRadius() + 500f, orbitDays,
@@ -107,12 +107,12 @@ public class System1V3 {
                         Conditions.RUINS_VAST,
                         Conditions.HABITABLE,
                         Conditions.MILD_CLIMATE));
-        if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_ARTILLERY) {
-            planet2.getMarket().addCondition("IndEvo_ArtilleryStationCondition");
-        }
-        if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_MINEFIELDS) {
-            planet2.getMarket().addCondition("IndEvo_mineFieldCondition");
-        }
+        // if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_ARTILLERY) {
+        //     planet2.getMarket().addCondition("IndEvo_ArtilleryStationCondition");
+        // }
+        // if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_MINEFIELDS) {
+        //     planet2.getMarket().addCondition("IndEvo_mineFieldCondition");
+        // }
         // Add planet 2 moon 1
         PlanetAPI planet2Moon = Utils.createPlanet(system, planet2, "barren-desert",
                 60f, planet2.getRadius() + 500f, orbitDays,
@@ -136,12 +136,12 @@ public class System1V3 {
                 Arrays.asList(
                         Conditions.VOLATILES_PLENTIFUL,
                         Conditions.HIGH_GRAVITY));
-        if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_ARTILLERY) {
-            planet3.getMarket().addCondition("IndEvo_ArtilleryStationCondition");
-        }
-        if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_MINEFIELDS) {
-            planet3.getMarket().addCondition("IndEvo_mineFieldCondition");
-        }
+        // if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_ARTILLERY) {
+        //     planet3.getMarket().addCondition("IndEvo_ArtilleryStationCondition");
+        // }
+        // if (Utils.isModEnabled("IndEvo") && Utils.ADD_INDEVO_MINEFIELDS) {
+        //     planet3.getMarket().addCondition("IndEvo_mineFieldCondition");
+        // }
         float planet3Radius = planet3.getRadius() + 300f;
         Utils.createMagneticField(planet3, planet3Radius, (planet3Radius) / 2f, planet3.getRadius() + 50f, planet3Radius, 1f);
         // Add planet 3 moon 1

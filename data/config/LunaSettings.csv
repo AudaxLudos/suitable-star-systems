@@ -1,9 +1,9 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 sss_mainSystemSettingsHeader,Colonizable System Settings,Header,Colonizable System Settings,,,,,
-sss_IndEvoArtillery,Add Industrial Evolution Artillery Stations,Boolean,true,,"Default Value: true
+#sss_IndEvoArtillery,Add Industrial Evolution Artillery Stations,Boolean,true,,"Default Value: true
 
 The three main planets will have artillery stations",,,
-sss_IndEvoMinefields,Add Industrial Evolution Minefields,Boolean,true,,"Default Value: true
+#sss_IndEvoMinefields,Add Industrial Evolution Minefields,Boolean,true,,"Default Value: true
 
 The three main planets will have minefields",,,
 sss_canSpawnMainSystem,Can Spawn Colonizable System,Boolean,true,,Default Value: true,,,
