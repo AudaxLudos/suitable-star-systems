@@ -10,10 +10,12 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGener
 import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
+import org.lwjgl.util.vector.Vector2f;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.OmegaFleetSpawnerManager;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -104,7 +106,9 @@ public class System3 {
 
         constellation.getSystems().add(system);
         system.setConstellation(constellation);
-        system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
+        List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 20);
+        Vector2f spawnLocation = Utils.findSystemSpawnLocationInHyperspace(constellation.getLocation(), systems, system, 500f);
+        system.getLocation().set(spawnLocation);
         Utils.clearHyperspaceNebulaAroundSystem(system);
     }
 }

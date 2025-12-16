@@ -23,10 +23,8 @@ import lunalib.lunaSettings.LunaSettings;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 public class Utils {
     public static final float STARTING_RADIUS_STAR_BASE = 750f;
@@ -346,6 +344,53 @@ public class Utils {
                 result = new Vector2f(x0, y0);
             }
         }
+        return result;
+    }
+
+    public static Vector2f findSystemSpawnLocationInHyperspace(Vector2f center, List<StarSystemAPI> otherSystems, StarSystemAPI newSystem, float extraRadius) {
+        Vector2f result = new Vector2f(-6000f, -6000f);
+        boolean isDone = false;
+        float angle = 0f;
+        float radius = 0f;
+        float radiusStep = 50f;
+
+        while (!isDone) {
+            float x = center.getX() + (float)Math.cos(angle) * radius;
+            float y = center.getY() + (float)Math.sin(angle) * radius;
+
+            boolean isValid = true;
+            for (StarSystemAPI s : otherSystems) {
+                float dx = x - s.getHyperspaceAnchor().getLocation().getX();
+                float dy = y - s.getHyperspaceAnchor().getLocation().getY();
+                float minDist = newSystem.getMaxRadiusInHyperspace() + extraRadius + s.getMaxRadiusInHyperspace();
+
+                if (dx * dx + dy * dy < minDist * minDist) {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            if (isValid) {
+                result = new Vector2f(x, y);
+                isDone = true;
+            } else {
+                angle += 0.5f;
+                radius += radiusStep * angle / (2f * (float)Math.PI);
+            }
+        }
+
+        return result;
+    }
+
+    public static List<StarSystemAPI> getNearbyStarSystems(Vector2f center, float maxRangeLY) {
+        List<StarSystemAPI> result = new ArrayList<>();
+
+        for (StarSystemAPI system : Global.getSector().getStarSystems()) {
+            float dist = Misc.getDistanceLY(center, system.getLocation());
+            if (dist > maxRangeLY) continue;
+            result.add(system);
+        }
+
         return result;
     }
 

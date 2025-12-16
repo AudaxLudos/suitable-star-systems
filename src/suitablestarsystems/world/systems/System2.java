@@ -16,6 +16,7 @@ import suitablestarsystems.Utils;
 import suitablestarsystems.world.RemnantFleetSpawnerManager;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -109,7 +110,9 @@ public class System2 {
 
         constellation.getSystems().add(system);
         system.setConstellation(constellation);
-        system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
+        List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 20);
+        Vector2f spawnLocation = Utils.findSystemSpawnLocationInHyperspace(constellation.getLocation(), systems, system, 500f);
+        system.getLocation().set(spawnLocation);
         Utils.clearHyperspaceNebulaAroundSystem(system);
     }
 }

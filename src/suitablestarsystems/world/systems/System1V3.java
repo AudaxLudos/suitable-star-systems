@@ -15,6 +15,7 @@ import suitablestarsystems.Utils;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class System1V3 {
     public void generate(SectorAPI sector) {
@@ -195,7 +196,9 @@ public class System1V3 {
         if (!Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC) {
             constellation.getSystems().add(system);
             system.setConstellation(constellation);
-            system.getLocation().set(Utils.findLocationInConstellation(constellation, Utils.random));
+            List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 20);
+            Vector2f spawnLocation = Utils.findSystemSpawnLocationInHyperspace(constellation.getLocation(), systems, system, 500f);
+            system.getLocation().set(spawnLocation);
         } else {
             Vector2f systemLocation = new Vector2f(Utils.MAIN_SYSTEM_X_OVERRIDE, Utils.MAIN_SYSTEM_Y_OVERRIDE);
             system.getLocation().set(systemLocation);
