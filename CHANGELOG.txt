@@ -1,3 +1,7 @@
+### 2.4.4i
+- Release 2.4.4i
+- Fix crash when generating new save
+
 ### 2.4.4h
 - Release 2.4.4h
 - Fix possible crash when creating a new game
