@@ -360,8 +360,8 @@ public class Utils {
 
             boolean isValid = true;
             for (StarSystemAPI s : otherSystems) {
-                float dx = x - s.getHyperspaceAnchor().getLocation().getX();
-                float dy = y - s.getHyperspaceAnchor().getLocation().getY();
+                float dx = x - s.getLocation().getX();
+                float dy = y - s.getLocation().getY();
                 float minDist = newSystem.getMaxRadiusInHyperspace() + extraRadius + s.getMaxRadiusInHyperspace();
 
                 if (dx * dx + dy * dy < minDist * minDist) {
