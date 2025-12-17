@@ -227,8 +227,8 @@ public class Utils {
     public static Vector2f getCentroid(List<StarSystemAPI> systems) {
         float centroidX = 0, centroidY = 0;
         for (StarSystemAPI system : systems) {
-            centroidX += system.getHyperspaceAnchor().getLocationInHyperspace().getX();
-            centroidY += system.getHyperspaceAnchor().getLocationInHyperspace().getY();
+            centroidX += system.getLocation().getX();
+            centroidY += system.getLocation().getY();
         }
         return new Vector2f(centroidX / systems.size(), centroidY / systems.size());
     }
@@ -348,11 +348,11 @@ public class Utils {
     }
 
     public static Vector2f findSystemSpawnLocationInHyperspace(Vector2f center, List<StarSystemAPI> otherSystems, StarSystemAPI newSystem, float extraRadius) {
-        Vector2f result = new Vector2f(-6000f, -6000f);
+        Vector2f result = null;
         boolean isDone = false;
         float angle = 0f;
         float radius = 0f;
-        float radiusStep = 50f;
+        float radiusStep = 1f;
 
         while (!isDone) {
             float x = center.getX() + (float)Math.cos(angle) * radius;
@@ -362,7 +362,7 @@ public class Utils {
             for (StarSystemAPI s : otherSystems) {
                 float dx = x - s.getLocation().getX();
                 float dy = y - s.getLocation().getY();
-                float minDist = newSystem.getMaxRadiusInHyperspace() + extraRadius + s.getMaxRadiusInHyperspace();
+                float minDist = extraRadius + newSystem.getMaxRadiusInHyperspace() + s.getMaxRadiusInHyperspace();
 
                 if (dx * dx + dy * dy < minDist * minDist) {
                     isValid = false;
@@ -374,8 +374,12 @@ public class Utils {
                 result = new Vector2f(x, y);
                 isDone = true;
             } else {
-                angle += 0.5f;
-                radius += radiusStep * angle / (2f * (float)Math.PI);
+                if (angle >= 360) {
+                    angle = 0f;
+                    radius += radiusStep;
+                } else {
+                    angle += 0.5f;
+                }
             }
         }
 
@@ -387,7 +391,9 @@ public class Utils {
 
         for (StarSystemAPI system : Global.getSector().getStarSystems()) {
             float dist = Misc.getDistanceLY(center, system.getLocation());
-            if (dist > maxRangeLY) continue;
+            if (dist > maxRangeLY) {
+                continue;
+            }
             result.add(system);
         }
 
@@ -430,7 +436,7 @@ public class Utils {
         MAIN_SYSTEM_X_OVERRIDE = getSettingsFloat("sss_mainSystemXOverride");
         MAIN_SYSTEM_Y_OVERRIDE = getSettingsFloat("sss_mainSystemYOverride");
         OMEGA_PLANET_QUEST_OVERRIDE = getSettingsBoolean("sss_omegaPlanetQuestOverride");
-        ADD_INDEVO_ARTILLERY =  getSettingsBoolean("sss_IndEvoArtillery");
+        ADD_INDEVO_ARTILLERY = getSettingsBoolean("sss_IndEvoArtillery");
         ADD_INDEVO_MINEFIELDS = getSettingsBoolean("sss_IndEvoMinefields");
     }
 }

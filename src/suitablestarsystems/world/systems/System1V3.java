@@ -19,12 +19,7 @@ import java.util.List;
 
 public class System1V3 {
     public void generate(SectorAPI sector) {
-        Constellation constellation = Utils.getNearestConstellation(new Vector2f(-6000, -6000));
-        String nameRef = "";
-        if (constellation != null) {
-            nameRef = constellation.getName();
-        }
-        String systemName = Utils.generateProceduralName(Tags.STAR, nameRef);
+        String systemName = Utils.generateProceduralName(Tags.STAR, "");
         StarSystemAPI system = sector.createStarSystem(systemName);
 
         // Add system themes / tags
@@ -194,11 +189,12 @@ public class System1V3 {
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
 
         if (!Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC) {
-            constellation.getSystems().add(system);
-            system.setConstellation(constellation);
-            List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 20);
+            Constellation constellation = Utils.getNearestConstellation(Misc.getCoreCenter());
+            List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 15f);
             Vector2f spawnLocation = Utils.findSystemSpawnLocationInHyperspace(constellation.getLocation(), systems, system, 500f);
             system.getLocation().set(spawnLocation);
+            constellation.getSystems().add(system);
+            system.setConstellation(constellation);
         } else {
             Vector2f systemLocation = new Vector2f(Utils.MAIN_SYSTEM_X_OVERRIDE, Utils.MAIN_SYSTEM_Y_OVERRIDE);
             system.getLocation().set(systemLocation);

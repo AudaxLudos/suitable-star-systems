@@ -108,11 +108,11 @@ public class System2 {
         RemnantThemeGenerator.addBeacon(system, RemnantThemeGenerator.RemnantSystemType.RESURGENT);
         system.addScript(new RemnantFleetSpawnerManager(planet1, 1f, 0, 8, 15f, 16, 32));
 
-        constellation.getSystems().add(system);
-        system.setConstellation(constellation);
-        List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 20);
+        List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 15f);
         Vector2f spawnLocation = Utils.findSystemSpawnLocationInHyperspace(constellation.getLocation(), systems, system, 500f);
         system.getLocation().set(spawnLocation);
+        constellation.getSystems().add(system);
+        system.setConstellation(constellation);
         Utils.clearHyperspaceNebulaAroundSystem(system);
     }
 }

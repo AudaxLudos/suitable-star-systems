@@ -104,11 +104,11 @@ public class System3 {
         theme.addCaches(systemData, 1f, 2, 2, theme.createStringPicker(Entities.EQUIPMENT_CACHE, 10f));
         system.addScript(new OmegaFleetSpawnerManager(planet1, 1f, 0, 8, 15f));
 
-        constellation.getSystems().add(system);
-        system.setConstellation(constellation);
-        List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 20);
+        List<StarSystemAPI> systems = Utils.getNearbyStarSystems(constellation.getLocation(), 15f);
         Vector2f spawnLocation = Utils.findSystemSpawnLocationInHyperspace(constellation.getLocation(), systems, system, 500f);
         system.getLocation().set(spawnLocation);
+        constellation.getSystems().add(system);
+        system.setConstellation(constellation);
         Utils.clearHyperspaceNebulaAroundSystem(system);
     }
 }
