@@ -225,17 +225,21 @@ public class Utils {
     }
 
     public static Vector2f getCentroid(List<StarSystemAPI> systems) {
-        float centroidX = 0, centroidY = 0;
+        float centroidX = 0;
+        float centroidY = 0;
+
         for (StarSystemAPI system : systems) {
             centroidX += system.getLocation().getX();
             centroidY += system.getLocation().getY();
         }
+
         return new Vector2f(centroidX / systems.size(), centroidY / systems.size());
     }
 
     public static Constellation getNearestConstellation(Vector2f origin) {
         float minDist = Float.MAX_VALUE;
         Constellation closest = null;
+
         for (Constellation constellation : getAllConstellations()) {
             float dist = Misc.getDistance(origin, constellation.getLocation());
             if (dist < minDist) {
@@ -243,12 +247,14 @@ public class Utils {
                 closest = constellation;
             }
         }
+
         return closest;
     }
 
     public static Constellation getNearestConstellation(Vector2f origin, Set<Constellation> constellations) {
         float minDist = Float.MAX_VALUE;
         Constellation closest = null;
+
         for (Constellation constellation : constellations) {
             float dist = Misc.getDistance(origin, constellation.getLocation());
             if (dist < minDist) {
@@ -256,11 +262,13 @@ public class Utils {
                 closest = constellation;
             }
         }
+
         return closest;
     }
 
     public static Set<Constellation> getAllConstellations() {
         Set<Constellation> constellations = new HashSet<>();
+
         for (StarSystemAPI system : Global.getSector().getStarSystems()) {
             if (!system.isInConstellation() || !system.isProcgen()) {
                 continue;
@@ -270,6 +278,7 @@ public class Utils {
                 constellations.add(c);
             }
         }
+
         return constellations;
     }
 
@@ -325,11 +334,13 @@ public class Utils {
     public static Vector2f findLocationInConstellation(Constellation constellation, Random random) {
         Vector2f result = null;
         Vector2f centroid = Utils.getCentroid(constellation.getSystems());
+
         while (result == null) {
             float x0 = centroid.x + random.nextFloat() * 4000f;
             float y0 = centroid.y + random.nextFloat() * 4000f;
             float r0 = 1200f;
             boolean isIntersect = false;
+
             for (StarSystemAPI system : constellation.getSystems()) {
                 float x1 = system.getHyperspaceAnchor().getLocationInHyperspace().getX();
                 float y1 = system.getHyperspaceAnchor().getLocationInHyperspace().getY();
@@ -340,6 +351,7 @@ public class Utils {
                     break;
                 }
             }
+
             if (!isIntersect) {
                 result = new Vector2f(x0, y0);
             }
@@ -355,8 +367,8 @@ public class Utils {
         float radiusStep = 1f;
 
         while (!isDone) {
-            float x = center.getX() + (float)Math.cos(angle) * radius;
-            float y = center.getY() + (float)Math.sin(angle) * radius;
+            float x = center.getX() + (float) Math.cos(angle) * radius;
+            float y = center.getY() + (float) Math.sin(angle) * radius;
 
             boolean isValid = true;
             for (StarSystemAPI s : otherSystems) {
