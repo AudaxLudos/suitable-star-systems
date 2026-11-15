@@ -1,5 +1,5 @@
 ### 2.5.0
-#### Not compatible with saves below 2.4.4j and below
+#### Not compatible with saves on 2.4.4j and below
 - Add setting to disable the omega system from spawning
 - Add setting to disable the remnant system from spawning
 
