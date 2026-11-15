@@ -1,11 +1,9 @@
 {
-    "sss_IndEvoArtillery": true,
-    "sss_IndEvoMinefields": true,
-    "sss_canSpawnMainSystem": true,
-    "sss_canOverrideMainSystemLoc": false,
-    "sss_mainSystemXOverride": -6000,
-    "sss_mainSystemYOverride": -6000,
-    "sss_omegaPlanetQuestOverride": false,
+    "sss_spawnMainSystem": true, # Default Value: TRUE. Set this to false if you don't want the colonizable system to spawn
+    "sss_overrideMainSystemLoc": false, # Default Value: FALSE. Set this to true and modify the x and y values below to change the spawn location of the colonizable system.
+    "sss_overrideMainSystemXPos": -6000, # Default Value: -6000. Default x and y values spawns the colonizable system nearby askonia star system
+    "sss_overrideMainSystemYPos": -6000, # Default Value: -6000. Default x and y values spawns the colonizable system nearby askonia star system
+    "sss_skipOmegaPlanetInteraction": false, # Default Value: FALSE. Set this to true if you want to skip the omega planet interactions
     "graphics": {
         "suitablestarsystems": {
             "planetary_shield_purple_strong": "graphics/planets/planetary_shield_purple_strong.png",

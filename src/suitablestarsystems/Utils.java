@@ -19,7 +19,6 @@ import com.fs.starfarer.api.impl.campaign.terrain.*;
 import com.fs.starfarer.api.impl.campaign.terrain.BaseRingTerrain.RingParams;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
-import lunalib.lunaSettings.LunaSettings;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
@@ -28,15 +27,7 @@ import java.util.List;
 
 public class Utils {
     public static final float STARTING_RADIUS_STAR_BASE = 750f;
-    //    public static final float STARTING_RADIUS_STAR_RANGE = 500f;
     public static Random random = StarSystemGenerator.random;
-    public static boolean CAN_SPAWN_MAIN_SYSTEM = true;
-    public static boolean CAN_OVERRIDE_MAIN_SYSTEM_LOC = false;
-    public static float MAIN_SYSTEM_X_OVERRIDE = 0f;
-    public static float MAIN_SYSTEM_Y_OVERRIDE = 0f;
-    public static boolean OMEGA_PLANET_QUEST_OVERRIDE = false;
-    public static boolean ADD_INDEVO_ARTILLERY = true;
-    public static boolean ADD_INDEVO_MINEFIELDS = true;
 
     public static float getRandomAngle() {
         return random.nextFloat() * 360f;
@@ -410,45 +401,5 @@ public class Utils {
         }
 
         return result;
-    }
-
-    public static boolean isLunaLibEnabled() {
-        return Global.getSettings().getModManager().isModEnabled("lunalib");
-    }
-
-    protected static boolean getSettingsBoolean(String fieldId) {
-        if (isLunaLibEnabled()) {
-            Boolean val = LunaSettings.getBoolean("suitablestarsystems", fieldId);
-            if (val == null) {
-                return Global.getSettings().getBoolean(fieldId);
-            }
-            return val;
-        }
-        return Global.getSettings().getBoolean(fieldId);
-    }
-
-    protected static float getSettingsFloat(String fieldId) {
-        if (isLunaLibEnabled()) {
-            Float val = LunaSettings.getFloat("suitablestarsystems", fieldId);
-            if (val == null) {
-                return Global.getSettings().getFloat(fieldId);
-            }
-            return val;
-        }
-        return Global.getSettings().getFloat(fieldId);
-    }
-
-    public static boolean isModEnabled(String id) {
-        return Global.getSettings().getModManager().isModEnabled(id);
-    }
-
-    public static void loadSettings() {
-        CAN_SPAWN_MAIN_SYSTEM = getSettingsBoolean("sss_canSpawnMainSystem");
-        CAN_OVERRIDE_MAIN_SYSTEM_LOC = getSettingsBoolean("sss_canOverrideMainSystemLoc");
-        MAIN_SYSTEM_X_OVERRIDE = getSettingsFloat("sss_mainSystemXOverride");
-        MAIN_SYSTEM_Y_OVERRIDE = getSettingsFloat("sss_mainSystemYOverride");
-        OMEGA_PLANET_QUEST_OVERRIDE = getSettingsBoolean("sss_omegaPlanetQuestOverride");
-        ADD_INDEVO_ARTILLERY = getSettingsBoolean("sss_IndEvoArtillery");
-        ADD_INDEVO_MINEFIELDS = getSettingsBoolean("sss_IndEvoMinefields");
     }
 }

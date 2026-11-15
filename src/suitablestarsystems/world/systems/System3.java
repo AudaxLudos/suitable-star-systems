@@ -11,6 +11,7 @@ import com.fs.starfarer.api.impl.campaign.procgen.themes.SalvageSpecialAssigner;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 import org.lwjgl.util.vector.Vector2f;
+import suitablestarsystems.Settings;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.OmegaFleetSpawnerManager;
 
@@ -25,7 +26,7 @@ public class System3 {
         Constellation constellation;
         StarSystemAPI system;
         String systemName;
-        if (Utils.CAN_SPAWN_MAIN_SYSTEM && !Utils.CAN_OVERRIDE_MAIN_SYSTEM_LOC) {
+        if (Settings.SPAWN_MAIN_SYSTEM && !Settings.OVERRIDE_MAIN_SYSTEM_LOC) {
             Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
             Constellation constellation2 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_2")).getConstellation();
             constellations.remove(constellation1);
