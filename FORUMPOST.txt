@@ -1,0 +1,51 @@
+[center]
+[img]https://i.imgur.com/1kq5e2Z.gif[/img]
+
+[size=36pt]Suitable Star Systems [color=blue]2.5.0[/color][/size]
+
+[url="https://www.patreon.com/posts/104645308"][img]https://img.shields.io/github/downloads/audaxludos/suitable-star-systems/total?style=for-the-badge&label=Download%20Latest[/img][/url] [url="https://raw.githubusercontent.com/AudaxLudos/suitable-star-systems/main/CHANGELOG.txt"][img]https://img.shields.io/github/v/release/AudaxLudos/suitable-star-systems?style=for-the-badge&label=Changelog[/img][/url] [url="https://github.com/AudaxLudos/suitable-star-systems/releases"][img]https://img.shields.io/badge/Releases%20-%20GitHub%20-%20light%20green?style=for-the-badge[/img][/url]
+
+[size=12pt][color=red]Compatibility[/color][/size]
+Needs a new save
+Not compatible with saves on 2.4.4j and below
+No known mod conflicts
+
+[size=12pt][color=red]Integrations[/color][/size]
+LunaLib - Has native support for mod settings
+[hr]
+A mod that adds three star systems to explore and conquer.
+The first is a perfect star system with planets optimized for colonization.
+The second is a remnant star system perfect for farming AI cores and experience.
+The last is a [SUPER REDACTED] system perfect for farming unique weapons.
+[/center]
+
+[spoiler=Previews]
+[center]
+Click the image to enlarge
+[img width=480]https://i.imgur.com/qduJJP8.png[/img]
+[/center]
+[/spoiler]
+[spoiler=Spoilers]
+For the omega star system, you need the planet killer and use it on the omega planet to make omega fleets spawn.
+The planet killer can be found during the [url=https://starsector.wiki.gg/wiki/The_Scythe_of_Orion]"The Scythe of Orion"[/url] quest or through exploration by discovering a star system with a tundra planet called "Sentinel".
+[/spoiler]
+[spoiler=Settings]
+- Option to not spawn any of the three star systems
+- Option to manually place the perfect star system
+- Option to skip the [SUPER REDACTED] planet interaction
+
+- If you have lunalib, options are in the mod settings
+- If you don't have lunalib, options are in the settings.json file located in "thismodname/data/config/..."
+[/spoiler]
+
+[center]
+If you need help or want to send feedback, you can make a post on this thread.
+If you want to support me, you can do so through my Patreon page.
+
+[url="https://www.patreon.com/audaxludos/"][img]https://img.shields.io/badge/patreon-%23f96854?style=for-the-badge&logo=patreon[/img][/url]
+
+[size=18pt][color=teal]Credits[/color][/size]
+[b][url="https://fractalsoftworks.com/forum/index.php?action=profile;u=7678"]Wispborne[/url][/b] - for the starsector intellij mod template and the github action script.
+[b][url="https://discord.com/invite/a8AWVcPCPr"]starsector community[/url][/b] - for many resources in regard to modding and spriting.
+[b][url="https://fractalsoftworks.com/"]Alex and Co[/url][/b] - for making a great game and community.
+[/center]
