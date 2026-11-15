@@ -8,6 +8,7 @@ public class Settings {
     public static final String MOD_ID = "suitablestarsystems";
     public static boolean SPAWN_MAIN_SYSTEM = true;
     public static boolean SPAWN_REMNANT_SYSTEM = true;
+    public static boolean SPAWN_OMEGA_SYSTEM = true;
     public static boolean OVERRIDE_MAIN_SYSTEM_LOC = false;
     public static float OVERRIDE_MAIN_SYSTEM_X_POS = 0f;
     public static float OVERRIDE_MAIN_SYSTEM_Y_POS = 0f;
@@ -24,6 +25,7 @@ public class Settings {
     public static void setSettings() {
         SPAWN_MAIN_SYSTEM = getBoolean("sss_spawnMainSystem");
         SPAWN_REMNANT_SYSTEM = getBoolean("sss_spawnRemnantSystem");
+        SPAWN_OMEGA_SYSTEM = getBoolean("sss_spawnOmegaSystem");
         OVERRIDE_MAIN_SYSTEM_LOC = getBoolean("sss_overrideMainSystemLoc");
         OVERRIDE_MAIN_SYSTEM_X_POS = getFloat("sss_overrideMainSystemXPos");
         OVERRIDE_MAIN_SYSTEM_Y_POS = getFloat("sss_overrideMainSystemYPos");

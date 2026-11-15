@@ -5,7 +5,7 @@ sss_spawnMainSystem,Spawn Colonizable System,Boolean,true,,"Default Value: TRUE
 Set this to false if you don't want the colonizable system to spawn",,,
 sss_overrideMainSystemLoc,Override Colonizable System Location,Boolean,false,,"Default Value: FALSE
 
-Set this to true and modify the x and y values below to change the spawn location of the colonizable system.",,,
+Set this to true and modify the x and y values below to change the spawn location of the colonizable system",,,
 sss_overrideMainSystemXPos,Colonizable System X Override,Double,-6000.0,,"Default Value: -6000
 
 Default x and y values spawns the colonizable system nearby askonia star system",-500000,500000,
@@ -19,6 +19,9 @@ sss_spawnRemnantSystem,Spawn Remnant System,Boolean,true,,"Default Value: TRUE
 Set this to false if you don't want the remnant system where you can farm AI cores to spawn",,,
 ,,,,,,,,
 sss_omegaSystemSettingsHeader,Omega System Settings,Header,Omega System Settings,,,,,
+sss_spawnOmegaSystem,Spawn Omega System,Boolean,true,,"Default Value: TRUE
+
+Set this to false if you don't want the omega system where you can farm omega weapons to spawn",,,
 sss_skipOmegaPlanetInteraction,Skip Omega Planet Interaction,Boolean,false,,"Default Value: FALSE
 
 Set this to true if you want to skip the omega planet interactions",,,

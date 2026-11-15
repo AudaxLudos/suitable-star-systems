@@ -40,6 +40,8 @@ public class ModPlugin extends BaseModPlugin {
             new System2().generate(Global.getSector());
         }
 
-        new System3().generate(Global.getSector());
+        if (Settings.SPAWN_OMEGA_SYSTEM) {
+            new System3().generate(Global.getSector());
+        }
     }
 }

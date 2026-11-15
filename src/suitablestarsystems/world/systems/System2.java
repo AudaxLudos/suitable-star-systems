@@ -16,29 +16,24 @@ import suitablestarsystems.Settings;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.RemnantFleetSpawnerManager;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class System2 {
     public void generate(SectorAPI sector) {
-        Set<Constellation> constellations = Utils.getAllConstellations();
         Constellation constellation;
         StarSystemAPI system;
         String systemName;
-        if (Settings.SPAWN_MAIN_SYSTEM) {
-            if (!Settings.OVERRIDE_MAIN_SYSTEM_LOC) {
-                Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
-                constellations.remove(constellation1);
-                constellation = Utils.getNearestConstellation(constellation1.getLocation(), constellations);
-            } else {
-                Vector2f system1Loc = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getHyperspaceAnchor().getLocationInHyperspace();
-                constellation = Utils.getNearestConstellation(system1Loc, constellations);
-            }
-        } else {
-            constellation = Utils.getNearestConstellation(new Vector2f(-6000, -6000));
+        Vector2f position = new Vector2f(-6000, -6000); // Center of sector map
+        Set<Constellation> constellations = Utils.getAllConstellations();
+        StarSystemAPI playerSystem = Utils.getStarSystemWithTag("sss_system_1");
+        List<Constellation> constellationsToRemove = new ArrayList<>();
+        if (playerSystem != null && playerSystem.getConstellation() != null) {
+            constellationsToRemove.add(playerSystem.getConstellation());
+            position = playerSystem.getConstellation().getLocation();
         }
+        constellations.removeAll(constellationsToRemove);
+        constellation = Utils.getNearestConstellation(position, constellations);
+
         systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
         system = sector.createStarSystem(systemName);
 

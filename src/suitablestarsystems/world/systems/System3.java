@@ -15,28 +15,29 @@ import suitablestarsystems.Settings;
 import suitablestarsystems.Utils;
 import suitablestarsystems.world.OmegaFleetSpawnerManager;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class System3 {
     public void generate(SectorAPI sector) {
-        Set<Constellation> constellations = Utils.getAllConstellations();
         Constellation constellation;
         StarSystemAPI system;
         String systemName;
-        if (Settings.SPAWN_MAIN_SYSTEM && !Settings.OVERRIDE_MAIN_SYSTEM_LOC) {
-            Constellation constellation1 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_1")).getConstellation();
-            Constellation constellation2 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_2")).getConstellation();
-            constellations.remove(constellation1);
-            constellations.remove(constellation2);
-            constellation = Utils.getNearestConstellation(constellation2.getLocation(), constellations);
-        } else {
-            Constellation constellation2 = Objects.requireNonNull(Utils.getStarSystemWithTag("sss_system_2")).getConstellation();
-            constellations.remove(constellation2);
-            constellation = Utils.getNearestConstellation(constellation2.getLocation(), constellations);
+        Vector2f position = new Vector2f(-6000, -6000); // Center of sector map
+        Set<Constellation> constellations = Utils.getAllConstellations();
+        StarSystemAPI playerSystem = Utils.getStarSystemWithTag("sss_system_1");
+        StarSystemAPI remnantSystem = Utils.getStarSystemWithTag("sss_system_2");
+        List<Constellation> constellationsToRemove = new ArrayList<>();
+        if (playerSystem != null && playerSystem.getConstellation() != null) {
+            constellationsToRemove.add(playerSystem.getConstellation());
+            position = playerSystem.getConstellation().getLocation();
         }
+        if (remnantSystem != null && remnantSystem.getConstellation() != null) {
+            constellationsToRemove.add(remnantSystem.getConstellation());
+            position = remnantSystem.getConstellation().getLocation();
+        }
+        constellations.removeAll(constellationsToRemove);
+        constellation = Utils.getNearestConstellation(position, constellations);
+
         systemName = Utils.generateProceduralName(Tags.STAR, constellation.getName());
         system = sector.createStarSystem(systemName);
 
