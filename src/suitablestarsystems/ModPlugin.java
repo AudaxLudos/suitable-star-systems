@@ -36,7 +36,10 @@ public class ModPlugin extends BaseModPlugin {
             new System1().generate(Global.getSector());
         }
 
-        new System2().generate(Global.getSector());
+        if (Settings.SPAWN_REMNANT_SYSTEM) {
+            new System2().generate(Global.getSector());
+        }
+
         new System3().generate(Global.getSector());
     }
 }

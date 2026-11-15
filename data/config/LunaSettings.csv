@@ -13,6 +13,11 @@ sss_overrideMainSystemYPos,Colonizable System Y Override,Double,-6000.0,,"Defaul
 
 Default x and y values spawns the colonizable system nearby askonia star system",-500000,500000,
 ,,,,,,,,
+sss_remnantSystemSettingsHeader,Remnant System Settings,Header,Omega System Settings,,,,,
+sss_spawnRemnantSystem,Spawn Remnant System,Boolean,true,,"Default Value: TRUE
+
+Set this to false if you don't want the remnant system where you can farm AI cores to spawn",,,
+,,,,,,,,
 sss_omegaSystemSettingsHeader,Omega System Settings,Header,Omega System Settings,,,,,
 sss_skipOmegaPlanetInteraction,Skip Omega Planet Interaction,Boolean,false,,"Default Value: FALSE
 
